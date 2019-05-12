@@ -1,0 +1,151 @@
+---
+title: 'CAMDA: Classify DILI drugs using combinations of features (Less+Most-Concern-DILI vs. No-Concern-DILI)'
+author: "Joaquim Aguirre-Plans"
+date: "6/5/2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r, include=FALSE}
+### Install packages ###
+# Install Bioconductor to install "rhdf5", a dependency of cmapR
+#install.packages("BiocManager")
+#BiocManager::install("rhdf5")
+# Install data.table, testthat, dependencies of cmapR
+#install.packages("data.table")
+#install.packages("testthat")
+# cmapR has been installed manually by downloading the package on github (https://github.com/cmap/cmapR) and running the following commands:
+# R CMD build cmapR
+# R CMD check cmapR_1.0.1.tar.gz
+#install.packages("/home/quim/R/x86_64-pc-linux-gnu-library/3.5/cmapR_1.0.1.tar.gz", type="source", repos=NULL)
+# Install GGPlot2 and its dependencies
+#install.packages('Rcpp', dependencies = TRUE)
+#install.packages('ggplot2', dependencies = TRUE)
+#install.packages('data.table', dependencies = TRUE)
+# Install ggbiplot to plot the PCA
+#library(devtools)
+#install_github("vqv/ggbiplot")
+
+### Load packages ###
+library(cmapR)
+library(ggplot2)
+library(caret)
+```
+
+```{r, include=FALSE}
+### Define files ###
+#setwd("/sbi/users/interchange/emre/quim/camda")
+drugs_file <- "/home/quim/PHD/Projects/camda/camda_data/CAMDA_l1000_1314compounds-pert_iname.rda"
+drug_info_file <- "/sbi/users/interchange/emre/quim/camda/CAMDA_l1000_1314compounds-info.rda"
+dilirank_file <- "/home/quim/PHD/Projects/camda/camda_data/CAMDA_l1000_1314compounds-dilirank.v2.rda"
+expression_file <- "/sbi/users/interchange/emre/quim/camda/CAMDA_l1000_1314compounds-GSE92742_Level5_gct.rda"
+landmark_genes_file <- "/home/quim/PHD/Projects/camda/additional_data/GSE92742_Broad_LINCS_gene_info_delta_landmark.txt"
+gene_info_file <- "/home/quim/PHD/Projects/camda/additional_data/GSE92742_Broad_LINCS_gene_info.txt"
+cell_info_file <- "/home/quim/PHD/Projects/camda/additional_data/GSE92742_Broad_LINCS_cell_info.txt"
+```
+
+
+First we load the R objects needed.
+
+```{r}
+load(drugs_file)
+load(drug_info_file)
+load(dilirank_file)
+load(expression_file) # Requires cmapR
+gene_info_df <- read.csv(gene_info_file, header=TRUE, sep="\t")
+landmark_genes <- gene_info_df$pr_gene_id[gene_info_df$pr_is_lm==1]
+```
+
+
+We subset the DILIConcern data by those drugs that have the same label in the columns DILIConcern and vDILIConcern. We keep the ambiguous for the independent validation.
+
+```{r process_dili_info}
+# Get independent dataset (Ambiguous drugs)
+independent_df <- drank.sel[drank.sel$vDILIConcern == "Ambiguous DILI-concern",]
+independent_drugs <- independent_df$pert_iname
+
+# Get cross-validation dataset
+drank.sel$DILIConcern[drank.sel$DILIConcern == "No-DILI-concern"] <- "No-DILI-Concern" # Correct the 4 entries with lowercase concern
+# We remove the first letter from vDILIConcern entries (except Ambiguous)
+drank.sel$vDILIConcern[drank.sel$vDILIConcern != "Ambiguous DILI-concern"] <- sub('.', '', drank.sel$vDILIConcern[drank.sel$vDILIConcern != "Ambiguous DILI-concern"])
+# We subset the table by those drugs that have the same value in vDILIConcern and DILIConcern columns
+dilirank_df <- drank.sel[drank.sel$vDILIConcern == drank.sel$DILIConcern,]
+all_drugs <- dilirank_df$pert_iname
+
+# Remove the outliers
+outliers = c('daunorubicin', 'vorinostat')
+
+# Define drugs without outliers
+all_drugs_no_outliers <- all_drugs[!all_drugs %in% outliers]
+
+# Check how many drugs there are in the different groups with respect to severity
+table(dilirank_df$DILIConcern[dilirank_df$pert_iname%in%all_drugs_no_outliers], dilirank_df$Severity.Class[dilirank_df$pert_iname%in%all_drugs_no_outliers])
+
+# Define different groups of drugs and calculate proportions
+most_concern_drugs <- dilirank_df$pert_iname[dilirank_df$pert_iname %in% all_drugs_no_outliers & dilirank_df$DILIConcern == "Most-DILI-Concern"]
+less_concern_drugs <- dilirank_df$pert_iname[dilirank_df$pert_iname %in% all_drugs_no_outliers & dilirank_df$DILIConcern == "Less-DILI-Concern"]
+no_concern_drugs <- dilirank_df$pert_iname[dilirank_df$pert_iname %in% all_drugs_no_outliers & dilirank_df$DILIConcern == "No-DILI-Concern"]
+```
+
+
+We read the validation files:
+
+```{r process_dili_info}
+validation_directory <- "/home/quim/PHD/Projects/camda/results/validations"
+#file_names <- c("GRIB_predictions_mix_disgenet_discrete_rf.txt", "GRIB_predictions_mix_disgenet_discrete_gbm.txt", "GRIB_predictions_mix_targets_discrete_gbm.txt", "GRIB_predictions_mix_wilcoxtargets_discrete_rf.txt", "GRIB_predictions_mix_wilcox_discrete_gbm.txt", "GRIB_predictions_mix_wilcox_discrete_rf.txt", "GRIB_predictions_mix_hub_discrete_gbm.txt", "GRIB_predictions_mix_hub_discrete_rf.txt", "GRIB_predictions_mix_targets_discrete_rf.txt")
+
+file_names <- c("val.JAguirre_predictions_mix_smiles_continuous_gbm.txt",
+"val.JAguirre_predictions_mix_smiles_continuous_rf.txt",
+"val.JAguirre_predictions_mix_smiles_discrete_gbm.txt",
+"val.JAguirre_predictions_mix_smiles_discrete_rf.txt",
+"val.JAguirre_predictions_mix_wilcox_continuous_gbm.txt",
+"val.JAguirre_predictions_mix_wilcox_continuous_rf.txt",
+"val.JAguirre_predictions_mix_wilcox_discrete_gbm.txt",
+"val.JAguirre_predictions_mix_wilcox_discrete_rf.txt",
+"val.JAguirre_predictions_mix_wilcoxsmiles_continuous_gbm.txt",
+"val.JAguirre_predictions_mix_wilcoxsmiles_continuous_rf.txt",
+"val.JAguirre_predictions_mix_wilcoxsmiles_discrete_gbm.txt",
+"val.JAguirre_predictions_mix_wilcoxsmiles_discrete_rf.txt",
+"val.GRIB_predictions_mix_disgenet_discrete_rf.txt",
+"val.GRIB_predictions_mix_disgenet_discrete_gbm.txt", 
+"val.GRIB_predictions_mix_targets_discrete_rf.txt",
+"val.GRIB_predictions_mix_targets_discrete_gbm.txt", 
+"val.GRIB_predictions_mix_wilcox_discrete_gbm.txt", 
+"val.GRIB_predictions_mix_wilcox_discrete_rf.txt", 
+"val.GRIB_predictions_mix_hub_discrete_gbm.txt", 
+"val.GRIB_predictions_mix_hub_discrete_rf.txt", 
+"val.GRIB_predictions_mix_wilcoxtargets_discrete_rf.txt",
+"val.GRIB_predictions_mix_wilcoxtargets_discrete_gbm.txt",
+"val.GRIB_predictions_mix_wilcoxtargetsmiles_discrete_rf.txt",
+"val.GRIB_predictions_mix_wilcoxtargetsmiles_discrete_gbm.txt"
+)
+
+sum <- data.frame(matrix(ncol = 2, nrow = 0))
+colnames(sum) <- c("Name", "Accuracy")
+for (file_name in file_names){
+  file <- file.path(validation_directory, file_name)
+  cm = as.matrix(read.csv(file, header=TRUE, sep=",", stringsAsFactors=FALSE))
+  n = sum(cm) # number of instances
+  nc = nrow(cm) # number of classes
+  diag = diag(cm) # number of correctly classified instances per class 
+  rowsums = apply(cm, 1, sum) # number of instances per class
+  colsums = apply(cm, 2, sum) # number of predictions per class
+  p = rowsums / n # distribution of instances over the actual classes
+  q = colsums / n # distribution of instances over the predicted classes
+  accuracy = sum(diag) / n 
+  precision = diag / colsums 
+  recall = diag / rowsums 
+  f1 = 2 * precision * recall / (precision + recall) 
+  res <-  data.frame(precision, recall, f1) 
+  print(file_name)
+  print(accuracy)
+  sum[nrow(sum)+1,] <- c(file_name, accuracy)
+  #print(res)
+}
+output_table <- "/home/quim/PHD/Projects/camda/results/summary_validations.tsv"
+write.table(sum, file = output_table,row.names=FALSE, na="-",col.names=TRUE, sep="\t")
+
+```

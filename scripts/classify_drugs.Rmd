@@ -1,0 +1,992 @@
+---
+title: 'CAMDA: Classify DILI drugs'
+author: "Joaquim Aguirre-Plans"
+date: "6/5/2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r, include=FALSE}
+### Install packages ###
+# Install Bioconductor to install "rhdf5", a dependency of cmapR
+#install.packages("BiocManager")
+#BiocManager::install("rhdf5")
+# Install data.table, testthat, dependencies of cmapR
+#install.packages("data.table")
+#install.packages("testthat")
+# cmapR has been installed manually by downloading the package on github (https://github.com/cmap/cmapR) and running the following commands:
+# R CMD build cmapR
+# R CMD check cmapR_1.0.1.tar.gz
+#install.packages("/home/quim/R/x86_64-pc-linux-gnu-library/3.5/cmapR_1.0.1.tar.gz", type="source", repos=NULL)
+# Install GGPlot2 and its dependencies
+#install.packages('Rcpp', dependencies = TRUE)
+#install.packages('ggplot2', dependencies = TRUE)
+#install.packages('data.table', dependencies = TRUE)
+# Install ggbiplot to plot the PCA
+#library(devtools)
+#install_github("vqv/ggbiplot")
+
+### Load packages ###
+library(cmapR)
+library(ggplot2)
+library(caret)
+```
+
+```{r, include=FALSE}
+### Define files ###
+#setwd("/sbi/users/interchange/emre/quim/camda")
+drugs_file <- "/home/quim/PHD/Projects/camda/camda_data/CAMDA_l1000_1314compounds-pert_iname.rda"
+drug_info_file <- "/sbi/users/interchange/emre/quim/camda/CAMDA_l1000_1314compounds-info.rda"
+dilirank_file <- "/home/quim/PHD/Projects/camda/camda_data/CAMDA_l1000_1314compounds-dilirank.v2.rda"
+expression_file <- "/sbi/users/interchange/emre/quim/camda/CAMDA_l1000_1314compounds-GSE92742_Level5_gct.rda"
+landmark_genes_file <- "/home/quim/PHD/Projects/camda/additional_data/GSE92742_Broad_LINCS_gene_info_delta_landmark.txt"
+gene_info_file <- "/home/quim/PHD/Projects/camda/additional_data/GSE92742_Broad_LINCS_gene_info.txt"
+cell_info_file <- "/home/quim/PHD/Projects/camda/additional_data/GSE92742_Broad_LINCS_cell_info.txt"
+```
+
+
+First we load the R objects needed.
+
+```{r}
+load(drugs_file)
+load(drug_info_file)
+load(dilirank_file)
+load(expression_file) # Requires cmapR
+gene_info_df <- read.csv(gene_info_file, header=TRUE, sep="\t")
+landmark_genes <- gene_info_df$pr_gene_id[gene_info_df$pr_is_lm==1]
+```
+
+
+We subset the DILIConcern data by those drugs that have the same label in the columns DILIConcern and vDILIConcern.
+
+```{r process_dili_info}
+# Get independent dataset (Ambiguous drugs)
+independent_df <- drank.sel[drank.sel$vDILIConcern == "Ambiguous DILI-concern",]
+independent_drugs <- independent_df$pert_iname
+
+# Get cross-validation dataset
+drank.sel$DILIConcern[drank.sel$DILIConcern == "No-DILI-concern"] <- "No-DILI-Concern" # Correct the 4 entries with lowercase concern
+# We remove the first letter from vDILIConcern entries (except Ambiguous)
+drank.sel$vDILIConcern[drank.sel$vDILIConcern != "Ambiguous DILI-concern"] <- sub('.', '', drank.sel$vDILIConcern[drank.sel$vDILIConcern != "Ambiguous DILI-concern"])
+# We subset the table by those drugs that have the same value in vDILIConcern and DILIConcern columns
+dilirank_df <- drank.sel[drank.sel$vDILIConcern == drank.sel$DILIConcern,]
+all_drugs <- dilirank_df$pert_iname
+
+# Remove the outliers
+outliers = c('daunorubicin', 'vorinostat')
+
+# Define drugs without outliers
+all_drugs_no_outliers <- all_drugs[!all_drugs %in% outliers]
+
+# Check how many drugs there are in the different groups with respect to severity
+table(dilirank_df$DILIConcern[dilirank_df$pert_iname%in%all_drugs_no_outliers], dilirank_df$Severity.Class[dilirank_df$pert_iname%in%all_drugs_no_outliers])
+```
+
+
+We define the functions to train the machine learning classifiers:
+
+```{r machine_learning}
+
+#### MACHINE LEARNING TRAINING FUNCTION (by cross-validation) ####
+train.model<-function(data, type_analysis="discrete", ml.method="rf") {
+
+  # Create train and test set
+  inTrain = createDataPartition(data$cat, p = 0.7, list=F)
+  training <- data[ inTrain,]
+  testing <- data[-inTrain,]
+  
+  # Define parameters
+  ctrl = trainControl(method = "repeatedcv", number = 10, repeats = 3)
+
+  # Train
+  print(ml.method)
+  modFit = train(cat ~ ., data = training, method = ml.method, trControl = ctrl, verbose=F) 
+  pred = predict(modFit, testing)
+  #print('PREDICTORS:')
+  #print(predictors(modFit))
+  #print(modFit)
+  if(type_analysis == "discrete") { 
+		cor = NA
+		a = confusionMatrix(table(pred, testing$cat))
+		print('CONFUSION MATRIX:')
+    print(a)
+  } else {
+    # Calculate correlation
+    pred <- as.numeric(pred)
+    testing$cat <- as.numeric(testing$cat)
+    cor = cor(as.numeric(pred), as.numeric(testing$cat))
+    # Assign category to testing and predictions
+    pred_df<-data.frame(pred)
+    pred_df$DILI <- "no"
+    if (length(pred_df[pred_df$pred<2,]$DILI)>0){
+      pred_df[pred_df$pred<2,]$DILI <- "no"
+    }
+    if (length(pred_df[pred_df$pred>=2 & pred_df$pred<=5,]$DILI)>0){
+      pred_df[pred_df$pred>=2 & pred_df$pred<=5,]$DILI <- "less/most"
+    }
+    if (length(pred_df[pred_df$pred>5,]$DILI)>0){
+      pred_df[pred_df$pred>5,]$DILI <- "less/most"
+    }
+    testing$DILI <- "no"
+    if (length(testing$cat>=2 & testing$cat<=5)){
+      testing[testing$cat>=2 & testing$cat<=5,]$DILI <- "less/most"
+    }
+    if (length(testing[testing$cat>5,]$DILI)){
+      testing[testing$cat>5,]$DILI <- "less/most"
+    }
+    # Create confusion matrix based on category
+    u <- union(pred_df$DILI, testing$DILI)
+    t <- table(factor(pred_df$DILI, u), factor(testing$DILI, u))
+		a = confusionMatrix(t)
+		print('CONFUSION MATRIX:')
+		print(a)
+		print('TESTING VALUES:')
+		print(testing$cat)
+		print('PREDICTION VALUES:')
+		print(pred)
+		print('CORRELATION:')
+		print(cor)
+  }
+
+  return(list(modFit=modFit, a=a, cor=cor));
+}
+
+```
+
+
+We also define a function to subset the gene expression data from the gct file:
+
+```{r subset_gene_expression}
+
+#### SUBSET EXPRESSION FUNCTION ####
+subset.expression<-function(gct, selected_genes, drugs, cell_id="PHH", pert_idose="10 µM", pert_itime="24 h", merge_samples=FALSE, independent=FALSE) {
+
+  # Subset the gct object by cell line, dose, time and genes
+  id_selected_samples <- which(gct@cdesc$cell_id == cell_id & gct@cdesc$pert_idose == pert_idose & gct@cdesc$pert_itime == pert_itime)
+  id_selected_genes <- which(gct@rid %in% selected_genes)
+  gct_subset <- subset.gct(gct, cid=id_selected_samples, rid=id_selected_genes)
+
+  # Subset by all drugs of interest
+  id_drugs <- which(gct_subset@cdesc$pert_iname %in% drugs)
+  gct_drugs <- subset.gct(gct_subset, cid=id_drugs)
+  
+  # Create table of expression
+  expression_df <- data.frame(t(gct_drugs@mat))
+  
+  # Get info of DILIrank
+  mapping_drugs <- data.frame(gct_drugs@cid, gct_drugs@cdesc$pert_id, gct_drugs@cdesc$pert_iname)
+  colnames(mapping_drugs) <- c("cid", "pert_id", "pert_iname")
+  if (independent == FALSE){
+    mapping_drugs <- merge(x = mapping_drugs, y = dilirank_df[c("pert_iname", "Severity.Class", "DILIConcern")], by = "pert_iname")
+  } else {
+    mapping_drugs <- merge(x = mapping_drugs, y = independent_df[c("pert_iname", "Severity.Class", "DILIConcern")], by = "pert_iname")
+  }
+  
+  # Get severity values and DILIrank categories and map them to the table of expression
+  severity <- c()
+  dilirank <- c()
+  pert_inames <- c()
+  for (cid in rownames(expression_df)){
+    row <- mapping_drugs[mapping_drugs$cid==cid,]
+    severity[length(severity)+1] <- row$Severity.Class
+    dilirank[length(dilirank)+1] <- row$DILIConcern
+    pert_inames[length(pert_inames)+1] <- as.character(row$pert_iname)
+  }
+  expression_df$pert_iname <- pert_inames
+  expression_df$severity <- severity
+  expression_df$dilirank <- dilirank
+  if (merge_samples==TRUE){
+    #expression_df <- aggregate(.~pert_iname+severity+dilirank,expression_df,median) # Join samples from same drug
+    expression_df <- aggregate(.~pert_iname+severity+dilirank,expression_df,function(val){y <- val[which.max( abs(val) )]; return(y)}) # Join samples from same drug
+  }
+  return(expression_df);
+}
+
+
+#### SUBSET EXPRESSION FUNCTION (for multiple cell lines) ####
+subset.expression.multiple.cells<-function(gct, selected_genes, drugs, cell_ids, pert_idose="10 µM", pert_itime="24 h", merge_samples=FALSE) {
+
+  # Subset the gct object by cell line, dose, time and genes
+  id_selected_samples <- which(gct@cdesc$cell_id %in% cell_ids & gct@cdesc$pert_idose == pert_idose & gct@cdesc$pert_itime == pert_itime)
+  id_selected_genes <- which(gct@rid %in% selected_genes)
+  gct_subset <- subset.gct(gct, cid=id_selected_samples, rid=id_selected_genes)
+
+  # Subset by all drugs of interest
+  id_drugs <- which(gct_subset@cdesc$pert_iname %in% drugs)
+  gct_drugs <- subset.gct(gct_subset, cid=id_drugs)
+  
+  # Create table of expression
+  expression_df <- data.frame(t(gct_drugs@mat))
+  
+  # Get info of DILIrank
+  mapping_drugs <- data.frame(gct_drugs@cid, gct_drugs@cdesc$pert_id, gct_drugs@cdesc$pert_iname, gct_drugs@cdesc$cell_id)
+  colnames(mapping_drugs) <- c("cid", "pert_id", "pert_iname", "cell_id")
+  mapping_drugs <- merge(x = mapping_drugs, y = dilirank_df[c("pert_iname", "Severity.Class", "DILIConcern")], by = "pert_iname")
+  
+  # Get severity values and DILIrank categories and map them to the table of expression
+  severity <- c()
+  dilirank <- c()
+  pert_inames <- c()
+  cell_ids <- c()
+  for (cid in rownames(expression_df)){
+    row <- mapping_drugs[mapping_drugs$cid==cid,]
+    severity[length(severity)+1] <- row$Severity.Class
+    dilirank[length(dilirank)+1] <- row$DILIConcern
+    pert_inames[length(pert_inames)+1] <- as.character(row$pert_iname)
+    cell_ids[length(cell_ids)+1] <- as.character(row$cell_id)
+  }
+  expression_df$pert_iname <- pert_inames
+  #expression_df$cell_id <- cell_ids
+  expression_df$severity <- severity
+  expression_df$dilirank <- dilirank
+  if (merge_samples==TRUE){
+    #expression_df <- aggregate(.~pert_iname+cell_id+severity+dilirank,expression_df,median) # Join samples from same drug
+    expression_df <- aggregate(. ~ pert_iname+severity+dilirank,expression_df,function(val){y <- val[which.max( abs(val) )]; return(y)}) # Join samples from same drug
+  }
+  return(expression_df);
+}
+
+```
+
+
+
+## Use landmark genes from Wilcoxon test with p-value > 0.05 (PHH, 10 µM, 24 h)
+
+We will use the genes that where differentiating better Most vs. No DILI drugs when calculating the Wilcoxon test:
+
+```{r wilcox_read}
+# Read the wilcoxon file and get the genes
+wilcox_file <- "/home/quim/PHD/Projects/camda/results/gene_test_landmark_phh_10_24.tsv"
+wilcox_df = read.csv(wilcox_file, header = TRUE, sep = "\t")
+selected_genes <- unique(wilcox_df$gene_id[wilcox_df$p.value<0.05 & wilcox_df$landmark==TRUE])
+```
+
+We will subset gene expression data by PHH, 10 µM, 24 h:
+
+```{r wilcox_subset}
+# Subset the GCT object by cell ID PHH, 10 µM, 24 h
+expression_wilcox_df<- subset.expression(gct, selected_genes, all_drugs_no_outliers, cell_id="PHH", pert_idose="10 µM", pert_itime="24 h", merge_samples = TRUE)
+
+# Subset gene expression for independent drugs as well
+expression_wilcox_ind_df <- subset.expression(gct, selected_genes, independent_drugs, cell_id="PHH", pert_idose="10 µM", pert_itime="24 h", merge_samples = TRUE, independent = TRUE)
+
+```
+
+We will prepare the data to train:
+
+```{r wilcox_prepare}
+# Get the expression data in an appropriate format
+train.data <- expression_wilcox_df
+train.data$pert_iname <- NULL
+train.data$severity <- NULL
+colnames(train.data)[match("dilirank", colnames(train.data))] <- "cat"
+train.data <- train.data[train.data$cat != "Less-DILI-Concern",] # Remove Less-DILI records
+```
+
+We will train the classifier using discrete category (Most/Less vs. No):
+
+```{r wilcox_train_discrete}
+# Train the classifier by RF
+train.list.wilcox.discrete.rf <- train.model(data=train.data, type_analysis = "discrete", ml.method = "rf")
+
+# Train the classifier by GBM
+train.list.wilcox.discrete.gbm <- train.model(data=train.data, type_analysis = "discrete", ml.method = "gbm")
+
+# Test the independent dataset
+test.data <- expression_wilcox_ind_df
+test.data$pert_iname <- NULL
+test.data$severity <- NULL
+colnames(test.data)[match("dilirank", colnames(test.data))] <- "cat"
+pred = predict(train.list.wilcox.discrete.rf$modFit, test.data)
+pred_df <- data.frame(expression_wilcox_ind_df$pert_iname, pred)
+colnames(pred_df) <- c("Compound.Name","Predicted.Label")
+pred_df$Predicted.Label <- paste("v", pred_df$Predicted.Label, sep="")
+output_table = "/home/quim/PHD/Projects/camda/camda_data/independent_validation/JAguirre_predictions_no1_wilcox_discrete_rf.txt"
+write.table(pred_df, file = output_table,row.names=FALSE, na="-",col.names=TRUE, sep=",", quote=FALSE)
+```
+
+Now, we will try with continuous category (Severity):
+
+```{r wilcox_train_continuous}
+# Get the expression data in an appropriate format
+train.data <- expression_wilcox_df
+train.data$pert_iname <- NULL
+train.data$dilirank <- NULL
+colnames(train.data)[match("severity", colnames(train.data))] <- "cat"
+
+# Train
+train.list.wilcox.continuous.rf <- train.model(data=train.data, type_analysis = "continuous", ml.method = "rf")
+#train.list.wilcox.continuous.gbm <- train.model(data=train.data, type_analysis = "continuous", ml.method = "gbm")
+```
+
+
+
+## Use landmark genes from Wilcoxon test with p-value > 0.05 (Specific cell lines, 10 µM, 24 h)
+
+We will use the genes that where differentiating better Most vs. No DILI drugs when calculating the Wilcoxon test. We will subset by the following cell lines: 
+
+* A375, FIBRNPC (skin)
+* A549, HCC515 (lung)
+* BT20, HS578T, MCF10A, MCF7, MDAMB231, SKBR3 (breast)
+* HA1E, HEK293T, NKDBA (kidney)
+* HEPG2, PHH (liver)
+* HT29, SW480 (large intestine)
+
+
+```{r wilcox_spec_read}
+# Read the wilcoxon file and get the genes
+wilcox_spec_table <- "/home/quim/PHD/Projects/camda/results/gene_test_landmark_spec_10_24.tsv"
+wilcox_spec_df = read.csv(wilcox_spec_table, header = TRUE, sep = "\t")
+selected_genes_spec <- unique(wilcox_spec_df$gene_id[wilcox_spec_df$p.adjust<0.01 & wilcox_spec_df$landmark==TRUE])
+```
+
+We will subset gene expression data by PHH, 10 µM, 24 h:
+
+```{r wilcox_spec_subset}
+# Subset the GCT object by cell ID PHH, 10 µM, 24 h
+cell_ids_selected <- c("A375", "FIBRNPC", "A549", "HCC515", "BT20", "HS578T", "MCF10A", "MCF7", "MDAMB231", "SKBR3", "HA1E", "HEK293T", "NKDBA", "HEPG2", "PHH", "HT29", "SW480")
+expression_wilcox_spec_df <- subset.expression.multiple.cells(gct, _spec, all_drugs_no_outliers, cell_ids_selected, pert_idose="10 µM", pert_itime="24 h", merge_samples = TRUE)
+```
+
+We will train the classifier using a discrete category (Most vs. No DILI):
+
+```{r wilcox_spec_train_discrete}
+# Get the expression data in an appropriate format
+train.data <- expression_wilcox_spec_df
+train.data$pert_iname <- NULL
+train.data$severity <- NULL
+train.data$cell_id <- NULL
+colnames(train.data)[match("dilirank", colnames(train.data))] <- "cat"
+train.data <- train.data[train.data$cat != "Less-DILI-Concern",] # Remove Less-DILI records
+
+# Train the classifier
+train.list.wilcoxspec.discrete.rf <- train.model(data=train.data, type_analysis = "discrete", ml.method = "rf")
+train.list.wilcoxspec.discrete.gbm <- train.model(data=train.data, type_analysis = "discrete", ml.method = "gbm")
+```
+
+Now, we will try with continuous category (Severity):
+
+```{r wilcox_spec_train_continuous}
+# Get the expression data in an appropriate format
+#train.data <- expression_wilcox_spec_df
+#train.data$pert_iname <- NULL
+#train.data$dilirank <- NULL
+#train.data$cell_id <- NULL
+#colnames(train.data)[match("severity", colnames(train.data))] <- "cat"
+
+# Train
+#train.list.wilcoxspec.continuous.rf <- train.model(data=train.data, type_analysis = "continuous", ml.method = "rf")
+#train.list.wilcoxspec.continuous.gbm <- train.model(data=train.data, type_analysis = "continuous", ml.method = "gbm")
+```
+
+
+
+## Use Hub Genes (PHH, 10 µM, 24 h)
+
+Let's select the hub genes:
+
+```{r hub_subset}
+# Load hub genes
+hubgenes_file <- "/home/quim/PHD/Projects/camda/additional_data/PHH_hubgenes.tsv"
+hub_df = read.csv(hubgenes_file, header = TRUE, sep = "\t")
+hub_genes <- unique(hub_df$entrezID)
+hub_genes_apoptosis <- unique(hub_df$entrezID[!is.na(hub_df$enriched_apoptosis_relTerms)])
+hub_genes_necroptosis <- unique(hub_df$entrezID[!is.na(hub_df$enriched_necroptosis)])
+hub_genes_inflammation <- unique(hub_df$entrezID[!is.na(hub_df$enriched_inflammation)])
+
+# Subset expression
+expression_hub_df <- subset.expression(gct, hub_genes, all_drugs_no_outliers, cell_id="PHH", pert_idose="10 µM", pert_itime="24 h", merge_samples = TRUE)
+expression_hub_apoptosis_df <- subset.expression(gct, hub_genes_apoptosis, all_drugs_no_outliers, cell_id="PHH", pert_idose="10 µM", pert_itime="24 h", merge_samples = TRUE)
+expression_hub_necroptosis_df <- subset.expression(gct, hub_genes_necroptosis, all_drugs_no_outliers, cell_id="PHH", pert_idose="10 µM", pert_itime="24 h", merge_samples = TRUE)
+expression_hub_inflammation_df <- subset.expression(gct, hub_genes_inflammation, all_drugs_no_outliers, cell_id="PHH", pert_idose="10 µM", pert_itime="24 h", merge_samples = TRUE)
+```
+
+### All hub genes
+
+We will train the classifier using a discrete category (Most vs. No DILI):
+
+```{r all_hub_train_discrete}
+# Get the expression data in an appropriate format
+train.data <- expression_hub_df
+train.data$pert_iname <- NULL
+train.data$severity <- NULL
+colnames(train.data)[match("dilirank", colnames(train.data))] <- "cat"
+train.data <- train.data[train.data$cat != "Less-DILI-Concern",] # Remove Less-DILI records
+
+# Train the classifier
+train.list.hub.discrete.rf <- train.model(data=train.data, type_analysis = "discrete", ml.method = "rf")
+train.list.hub.discrete.gbm <- train.model(data=train.data, type_analysis = "discrete", ml.method = "gbm")
+```
+
+Now, we will try with continuous category (Severity):
+
+```{r all_hub_train_continuous}
+# Get the expression data in an appropriate format
+train.data <- expression_hub_df
+train.data$pert_iname <- NULL
+train.data$dilirank <- NULL
+colnames(train.data)[match("severity", colnames(train.data))] <- "cat"
+
+# Train
+#train.list.hub.continuous.rf <- train.model(data=train.data, type_analysis = "continuous", ml.method = "rf")
+#train.list.hub.continuous.gbm <- train.model(data=train.data, type_analysis = "continuous", ml.method = "gbm")
+```
+
+
+### Inflammation hub genes
+
+```{r inflammation_hub}
+# Get the expression data in an appropriate format
+train.data <- expression_hub_inflammation_df
+train.data$pert_iname <- NULL
+train.data$severity <- NULL
+colnames(train.data)[match("dilirank", colnames(train.data))] <- "cat"
+train.data <- train.data[train.data$cat != "Less-DILI-Concern",] # Remove Less-DILI records
+
+# Train the classifier
+#train.list.hub.discrete.rf <- train.model(data=train.data, type_analysis = "discrete", ml.method = "rf")
+#train.list.hub.discrete.gbm <- train.model(data=train.data, type_analysis = "discrete", ml.method = "gbm")
+```
+
+
+### Apoptosis hub genes
+
+```{r apoptosis_hub}
+# Get the expression data in an appropriate format
+train.data <- expression_hub_apoptosis_df
+train.data$pert_iname <- NULL
+train.data$severity <- NULL
+colnames(train.data)[match("dilirank", colnames(train.data))] <- "cat"
+train.data <- train.data[train.data$cat != "Less-DILI-Concern",] # Remove Less-DILI records
+
+# Train the classifier
+#train.list.hub.discrete.rf <- train.model(data=train.data, type_analysis = "discrete", ml.method = "rf")
+#train.list.hub.discrete.gbm <- train.model(data=train.data, type_analysis = "discrete", ml.method = "gbm")
+```
+
+
+### Necroptosis hub genes
+
+```{r necroptosis_hub}
+# Get the expression data in an appropriate format
+train.data <- expression_hub_necroptosis_df
+train.data$pert_iname <- NULL
+train.data$severity <- NULL
+colnames(train.data)[match("dilirank", colnames(train.data))] <- "cat"
+train.data <- train.data[train.data$cat != "Less-DILI-Concern",] # Remove Less-DILI records
+
+# Train the classifier
+#train.list.hub.discrete.rf <- train.model(data=train.data, type_analysis = "discrete", ml.method = "rf")
+#train.list.hub.discrete.gbm <- train.model(data=train.data, type_analysis = "discrete", ml.method = "gbm")
+```
+
+
+## Use target information
+
+Let's prepare the target data:
+
+```{r target_read}
+# Read files
+targets_file <- "/home/quim/PHD/Projects/camda/additional_data/targets/targets_dgidb_hitpick_sea.tsv"
+targets_df <- read.csv(targets_file, header=TRUE, sep="\t")
+targets_df$DILI[targets_df$DILI == "No-DILI-concern"] <- "No-DILI-Concern" # Correct the 4 entries with lowercase concern
+targets_ind_df <- targets_df[targets_df$drug %in% independent_drugs,]
+targets_df <- targets_df[targets_df$drug %in% all_drugs_no_outliers,]
+```
+
+We will train the classifier using a discrete category (Most vs. No DILI):
+
+```{r target_train_discrete}
+# Get the target data in an appropriate format
+train.data <- targets_df
+train.data$severity <- NULL
+colnames(train.data)[match("DILI", colnames(train.data))] <- "cat"
+train.data <- train.data[!is.na(train.data$cat),] # Remove NA records
+train.data <- train.data[train.data$cat != "Less-DILI-Concern",] # Remove Less-DILI records
+train.data$drug <- NULL
+train.data$cat <- factor(train.data$cat) # Drop the unused factors
+
+# Train the classifier
+train.list.target.discrete.rf <- train.model(data=train.data, type_analysis = "discrete", ml.method = "rf")
+#train.list.target.discrete.gbm <- train.model(data=train.data, type_analysis = "discrete", ml.method = "gbm")
+
+# Test in an independent dataset
+test.data <- targets_ind_df
+test.data$severity <- NULL
+test.data$drug <- NULL
+test.data$DILI <- NULL
+#colnames(test.data)[match("DILI", colnames(test.data))] <- "cat"
+#test.data <- test.data[!is.na(test.data$cat),] # Remove NA records
+#test.data$cat <- factor(test.data$cat) # Drop the unused factors
+pred = predict(train.list.target.discrete.rf$modFit, test.data)
+pred_df <- data.frame(targets_ind_df$drug, pred)
+colnames(pred_df) <- c("Compound.Name","Predicted.Label")
+pred_df$Predicted.Label <- paste("v", pred_df$Predicted.Label, sep="")
+output_table = "/home/quim/PHD/Projects/camda/camda_data/independent_validation/JAguirre_predictions_no2_targets_discrete_rf.txt"
+write.table(pred_df, file = output_table,row.names=FALSE, na="-",col.names=TRUE, sep=",", quote=FALSE)
+```
+
+Now, we will try with continuous category (Severity):
+
+```{r target_train_continuous}
+# Get the expression data in an appropriate format
+train.data <- targets_df
+train.data$DILI <- NULL
+colnames(train.data)[match("severity", colnames(train.data))] <- "cat"
+train.data <- train.data[!is.na(train.data$cat),] # Remove NA records
+train.data$drug <- NULL
+train.data$cat <- factor(train.data$cat) # Drop the unused factors
+
+# Train
+#train.list.target.continuous.rf <- train.model(data=train.data, type_analysis = "continuous", ml.method = "rf")
+#train.list.target.continuous.gbm <- train.model(data=train.data, type_analysis = "continuous", ml.method = "gbm")
+```
+
+
+
+## Use SMILES information
+
+Let's prepare the SMILES data:
+
+```{r smiles_process}
+# Read files
+tanimoto_file <- "/home/quim/PHD/Projects/camda/additional_data/tanimoto_smiles.tsv"
+tanimoto_df <- read.csv(tanimoto_file, header=TRUE, sep="\t")
+tanimoto_df$DILIConcern[tanimoto_df$DILIConcern == "No-DILI-concern"] <- "No-DILI-Concern" # Correct the 4 entries with lowercase concern
+tanimoto_ind_df <- tanimoto_df[colnames(tanimoto_df) %in% independent_drugs, rownames(tanimoto_df) %in% all_drugs_no_outliers]
+tanimoto_df<-tanimoto_df[colnames(tanimoto_df) %in% all_drugs_no_outliers, rownames(tanimoto_df) %in% all_drugs_no_outliers]
+```
+
+We will train the classifier using a discrete category (Most vs. No DILI):
+
+```{r smiles_train_discrete}
+# Get the target data in an appropriate format
+train.data <- tanimoto_df
+train.data$severity <- NULL
+train.data$vDILIConcern <- NULL
+colnames(train.data)[match("DILIConcern", colnames(train.data))] <- "cat"
+train.data <- train.data[train.data$cat != "Less-DILI-Concern",] # Remove Less-DILI records
+train.data$cat <- factor(train.data$cat) # Drop the unused factors
+
+# Train the classifier
+train.list.smiles.discrete.rf <- train.model(data=train.data, type_analysis = "discrete", ml.method = "rf")
+train.list.smiles.discrete.gbm <- train.model(data=train.data, type_analysis = "discrete", ml.method = "gbm")
+
+# Test the independent dataset
+test.data <- tanimoto_ind_df
+#colnames(test.data)[match("dilirank", colnames(test.data))] <- "cat"
+pred = predict(train.list.smiles.discrete.rf$modFit, test.data)
+pred_df <- data.frame(rownames(tanimoto_ind_df), pred)
+colnames(pred_df) <- c("Compound.Name","Predicted.Label")
+pred_df$Predicted.Label <- paste("v", pred_df$Predicted.Label, sep="")
+output_table = "/home/quim/PHD/Projects/camda/camda_data/independent_validation/JAguirre_predictions_no1_smiles_discrete_rf.txt"
+write.table(pred_df, file = output_table,row.names=FALSE, na="-",col.names=TRUE, sep=",", quote=FALSE)
+```
+
+Now, we will try with continuous category (Severity):
+
+```{r smiles_train_continuous}
+# Get the expression data in an appropriate format
+train.data <- tanimoto_df
+train.data$DILIConcern <- NULL
+train.data$vDILIConcern <- NULL
+colnames(train.data)[match("severity", colnames(train.data))] <- "cat"
+
+# Train
+train.list.smiles.continuous.rf <- train.model(data=train.data, type_analysis = "continuous", ml.method = "rf")
+#train.list.smiles.continuous.gbm <- train.model(data=train.data, type_analysis = "continuous", ml.method = "gbm")
+```
+
+
+## Use imaging features from paper
+
+Let's prepare the cell painting data:
+
+```{r imaging_process}
+# Read table of imaging data
+imaging_file_filtered <- "/home/quim/PHD/Projects/camda/camda_data/cell_painting_data/features_values_filtered.tsv"
+imaging_filt_df <- read.csv(imaging_file_filtered, header=TRUE, sep="\t")
+colnames(imaging_filt_df)[1] <- "BROAD_ID"
+
+# Read and process dilirank imaging data
+imaging_dilirank_file <- "/home/quim/PHD/Projects/camda/camda_data/cell_painting_data/l1000_1314pert_inames.872matchedBROAD_ids-dilirank.rda"
+load(imaging_dilirank_file)
+drank.sel$DILIConcern[drank.sel$DILIConcern == "No-DILI-concern"] <- "No-DILI-Concern" # Correct the 4 entries with lowercase concern
+
+independent_imaging_df <- drank.sel[drank.sel$vDILIConcern == "Ambiguous DILI-concern",]
+independent_imaging_drugs <- independent_df$pert_iname
+
+# We remove the first letter from vDILIConcern entries (except Ambiguous)
+drank.sel$vDILIConcern[drank.sel$vDILIConcern != "Ambiguous DILI-concern"] <- sub('.', '', drank.sel$vDILIConcern[drank.sel$vDILIConcern != "Ambiguous DILI-concern"])
+# We subset the table by those drugs that have the same value in vDILIConcern and DILIConcern columns
+dilirank_imaging_df <- drank.sel[drank.sel$vDILIConcern == drank.sel$DILIConcern,]
+all_imaging_drugs <- dilirank_imaging_df$pert_iname
+
+# Map broad IDs (https://clue.io/connectopedia/what_is_a_brd_id)
+mapping_imaging <- merge(x = imaging_filt_df, y = dilirank_imaging_df[c("BROAD_ID", "pert_iname", "DILIConcern", "Severity.Class")], by = "BROAD_ID")
+
+# Merge replicated samples from same drug
+mapping_imaging$sample_ids <- NULL
+mapping_imaging <- aggregate(.~pert_iname+BROAD_ID+DILIConcern+Severity.Class,mapping_imaging,function(val){y <- val[which.max( abs(val) )]; return(y)})
+```
+
+Let's train the classifier with discrete data:
+
+```{r imaging_train_discrete}
+# Get the imaging data in an appropriate format
+train.data <- mapping_imaging
+train.data$BROAD_ID <- NULL
+train.data$pert_iname <- NULL
+train.data$Severity.Class <- NULL
+colnames(train.data)[match("DILIConcern", colnames(train.data))] <- "cat"
+
+# Train
+#train.list.imaging.discrete.rf <- train.model(data=train.data, type_analysis = "discrete", ml.method = "rf")
+#train.list.imaging.discrete.gbm <- train.model(data=train.data, type_analysis = "discrete", ml.method = "gbm")
+
+# Test the independent dataset
+mapping_imaging_independent <- merge(x = imaging_filt_df, y = independent_imaging_df[c("BROAD_ID", "pert_iname", "DILIConcern", "Severity.Class")], by = "BROAD_ID")
+mapping_imaging_independent$sample_ids <- NULL
+mapping_imaging_independent <- aggregate(.~pert_iname+BROAD_ID+DILIConcern+Severity.Class,mapping_imaging_independent,function(val){y <- val[which.max( abs(val) )]; return(y)})
+test.data <- mapping_imaging_independent
+test.data$pert_iname <- NULL
+test.data$DILIConcern <- NULL
+test.data$Class <- NULL
+test.data$BROAD_ID <- NULL
+#pred = predict(train.list.imaging.discrete.rf$modFit, test.data)
+#pred_df <- data.frame(mapping_imaging_independent$pert_iname, pred)
+#colnames(pred_df) <- c("Compound.Name","Predicted.Label")
+#pred_df$Predicted.Label <- paste("v", pred_df$Predicted.Label, sep="")
+#output_table = "/home/quim/PHD/Projects/camda/camda_data/independent_validation/JAguirre_predictions_no1_imaging_discrete_rf.txt"
+#write.table(pred_df, file = output_table,row.names=FALSE, na="-",col.names=TRUE, sep=",", quote=FALSE)
+
+```
+
+Let's train the classifier with continuous data:
+
+```{r imaging_train_continuous}
+# Get the imaging data in an appropriate format
+train.data <- mapping_imaging
+train.data$BROAD_ID <- NULL
+train.data$sample_ids <- NULL
+train.data$pert_iname <- NULL
+train.data$DILIConcern <- NULL
+colnames(train.data)[match("Severity.Class", colnames(train.data))] <- "cat"
+
+# Train
+#train.list.imaging.continuous.rf <- train.model(data=train.data, type_analysis = "continuous", ml.method = "rf")
+#train.list.imaging.continuous.gbm <- train.model(data=train.data, type_analysis = "continuous", ml.method = "gbm")
+```
+
+
+## Use all imaging features
+
+Let's prepare the cell painting data:
+
+```{r}
+# Read table of imaging data
+#imaging_file <- "/home/quim/PHD/Projects/camda/camda_data/cell_painting_data/features_values.tsv"
+#imaging_df <- read.csv(imaging_file, header=TRUE, sep="\t")
+#colnames(imaging_df)[1] <- "BROAD_ID"
+
+# Map broad IDs (https://clue.io/connectopedia/what_is_a_brd_id)
+#mapping_imaging_all <- merge(x = imaging_df, y = dilirank_imaging_df[c("BROAD_ID", "pert_iname", "DILIConcern", "Severity.Class")], by = "BROAD_ID")
+```
+
+
+Let's train the classifier with discrete data:
+
+```{r}
+# Get the imaging data in an appropriate format
+#train.data <- mapping_imaging_all
+#train.data$BROAD_ID <- NULL
+#train.data$sample_ids <- NULL
+#train.data$pert_iname <- NULL
+#train.data$Severity.Class <- NULL
+#colnames(train.data)[match("DILIConcern", colnames(train.data))] <- "cat"
+
+# Train
+#train.list.imagingall.discrete.rf <- train.model(data=train.data, type_analysis = "discrete", ml.method = "rf")
+#train.list.imagingall.discrete.gbm <- train.model(data=train.data, type_analysis = "discrete", ml.method = "gbm")
+```
+
+
+Let's train the classifier with continuous data:
+
+```{r}
+# Get the imaging data in an appropriate format
+#train.data <- mapping_imaging_all
+#train.data$BROAD_ID <- NULL
+#train.data$sample_ids <- NULL
+#train.data$pert_iname <- NULL
+#train.data$DILIConcern <- NULL
+#colnames(train.data)[match("Severity.Class", colnames(train.data))] <- "cat"
+
+# Train
+#train.list.imagingall.continuous.rf <- train.model(data=train.data, type_analysis = "continuous", ml.method = "rf")
+#train.list.imagingall.continuous.gbm <- train.model(data=train.data, type_analysis = "continuous", ml.method = "gbm")
+```
+
+
+
+## Use DisGeNET Genes (PHH, 10 µM, 24 h)
+
+Let's select the DisGeNET genes:
+
+```{r}
+# Read files and get phenotypes
+phenotype2gene_file <- "/home/quim/PHD/Projects/camda/guildify_data/phenotype2gene.tsv"
+phenotype2gene <- read.csv(phenotype2gene_file, header=TRUE, sep="\t")
+phenotypes <- unique(phenotype2gene$diseaseid)
+curated_phenotypes <- unique(phenotype2gene$diseaseid[phenotype2gene$source == "CURATED"])
+curated_phenotypes <- c("C0023890")
+# Get data of phenotypes
+for (phenotype in curated_phenotypes){
+  curated_gene_ids <-unique(phenotype2gene$geneid[phenotype2gene$diseaseid==phenotype & phenotype2gene$source=="CURATED"])
+  name <- unique(phenotype2gene$name[phenotype2gene$diseaseid==phenotype])
+
+  if (length(curated_gene_ids)>10) {
+    print(phenotype)
+    print(name)
+    #print(curated_gene_ids)
+  
+    # Subset expression
+    expression_dg_df <- subset.expression(gct, curated_gene_ids, all_drugs_no_outliers, cell_id="PHH", pert_idose="10 µM", pert_itime="24 h", merge_samples = TRUE)
+    
+    # Train data in using discrete category
+    train.data <- expression_dg_df
+    train.data$pert_iname <- NULL
+    train.data$severity <- NULL
+    colnames(train.data)[match("dilirank", colnames(train.data))] <- "cat"
+    train.data <- train.data[train.data$cat != "Less-DILI-Concern",] # Remove Less-DILI records
+    train.list.dg.discrete.rf <- train.model(data=train.data, type_analysis = "discrete", ml.method = "rf")
+    train.list.dg.discrete.gbm <- train.model(data=train.data, type_analysis = "discrete", ml.method = "gbm")
+  
+    # Train data using continuous category
+    train.data <- expression_dg_df
+    train.data$dilirank <- NULL
+    colnames(train.data)[match("severity", colnames(train.data))] <- "cat"
+    #train.list.dg.continuous.rf <- train.model(data=train.data, type_analysis = "continuous", ml.method = "rf")
+    #train.list.dg.continuous.gbm <- train.model(data=train.data, type_analysis = "continuous", ml.method = "gbm")
+
+  }
+
+}
+
+```
+
+
+
+## Use Wilcoxon + Targets information
+
+Let's prepare the target data:
+
+```{r wilcox_target_process}
+# Load target data
+targets_file <- "/home/quim/PHD/Projects/camda/additional_data/targets/targets_dgidb_hitpick_sea.tsv"
+targets_df <- read.csv(targets_file, header=TRUE, sep="\t")
+targets_df$DILI[targets_df$DILI == "No-DILI-concern"] <- "No-DILI-Concern" # Correct the 4 entries with lowercase concern
+targets_df <- targets_df[targets_df$drug %in% all_drugs_no_outliers,]
+targets_df <- targets_df[!is.na(targets_df$severity),] # Remove NA records
+
+# Load wilcoxon data
+wilcox_file <- "/home/quim/PHD/Projects/camda/results/gene_test_landmark_phh_10_24.tsv"
+wilcox_df = read.csv(wilcox_file, header = TRUE, sep = "\t")
+selected_genes <- unique(wilcox_df$gene_id[wilcox_df$p.value<0.05 & wilcox_df$landmark==TRUE])
+
+# Subset the GCT object by cell ID PHH, 10 µM, 24 h
+expression_wilcox_df <- subset.expression(gct, selected_genes, all_drugs_no_outliers, cell_id="PHH", pert_idose="10 µM", pert_itime="24 h", merge_samples = TRUE)
+```
+
+
+Join both types of data and train the classifier (discrete):
+
+```{r wilcox_target_train_discrete}
+# Combine the datasets
+colnames(targets_df)[1] <- "pert_iname"
+targets_df$DILI <- NULL
+targets_df$severity <- NULL
+combined_data <- merge(x = expression_wilcox_df, y = targets_df, by = "pert_iname")
+
+# Put the data in the appropriate format
+train.data <- combined_data
+train.data$pert_iname <- NULL
+train.data$severity <- NULL
+colnames(train.data)[match("dilirank", colnames(train.data))] <- "cat"
+train.data <- train.data[train.data$cat != "Less-DILI-Concern",] # Remove Less-DILI records
+
+# Train the classifier
+train.list.wilcox.target.discrete.rf <- train.model(data=train.data, type_analysis = "discrete", ml.method = "rf")
+#train.list.wilcox.target.discrete.gbm <- train.model(data=train.data, type_analysis = "discrete", ml.method = "gbm")
+```
+
+Now, we will try with continuous category (Severity):
+
+```{r wilcox_target_train_continuous}
+train.data <- combined_data
+train.data$pert_iname <- NULL
+train.data$dilirank <- NULL
+colnames(train.data)[match("severity", colnames(train.data))] <- "cat"
+
+# Train
+#train.list.wilcox.target.continuous.rf <- train.model(data=train.data, type_analysis = "continuous", ml.method = "rf")
+#train.list.wilcox.target.continuous.gbm <- train.model(data=train.data, type_analysis = "continuous", ml.method = "gbm")
+```
+
+
+
+
+
+## Use Wilcoxon + SMILES information
+
+Let's prepare the target data:
+
+```{r wilcox_smiles_process}
+# Read SMILES file
+tanimoto_file <- "/home/quim/PHD/Projects/camda/additional_data/tanimoto_smiles.tsv"
+tanimoto_df <- read.csv(tanimoto_file, header=TRUE, sep="\t")
+tanimoto_df$DILIConcern[tanimoto_df$DILIConcern == "No-DILI-concern"] <- "No-DILI-Concern" # Correct the 4 entries with lowercase concern
+tanimoto_ind_df <- tanimoto_df[colnames(tanimoto_df) %in% independent_drugs, rownames(tanimoto_df) %in% all_drugs_no_outliers]
+tanimoto_df<-tanimoto_df[colnames(tanimoto_df) %in% all_drugs_no_outliers, rownames(tanimoto_df) %in% all_drugs_no_outliers]
+
+# Load wilcoxon data
+wilcox_file <- "/home/quim/PHD/Projects/camda/results/gene_test_landmark_phh_10_24.tsv"
+wilcox_df = read.csv(wilcox_file, header = TRUE, sep = "\t")
+selected_genes <- unique(wilcox_df$gene_id[wilcox_df$p.value<0.05 & wilcox_df$landmark==TRUE])
+
+# Subset the GCT object by cell ID PHH, 10 µM, 24 h
+expression_wilcox_df <- subset.expression(gct, selected_genes, all_drugs_no_outliers, cell_id="PHH", pert_idose="10 µM", pert_itime="24 h", merge_samples = TRUE)
+expression_wilcox_ind_df <- subset.expression(gct, selected_genes, independent_drugs, cell_id="PHH", pert_idose="10 µM", pert_itime="24 h", merge_samples = TRUE, independent = TRUE)
+```
+
+
+Join both types of data and train the classifier (discrete):
+
+```{r wilcox_smiles_train_discrete}
+# Combine wilcox and targets
+tanimoto_df$pert_iname = rownames(tanimoto_df)
+tanimoto_df$vDILIConcern <- NULL
+tanimoto_df$DILIConcern <- NULL
+tanimoto_df$severity <- NULL
+combined_data <- merge(x = expression_wilcox_df, y = tanimoto_df, by = "pert_iname")
+
+# Put the data in the appropriate format
+train.data <- combined_data
+train.data$pert_iname <- NULL
+train.data$severity <- NULL
+colnames(train.data)[match("dilirank", colnames(train.data))] <- "cat"
+train.data <- train.data[train.data$cat != "Less-DILI-Concern",] # Remove Less-DILI records
+
+# Train the classifier
+train.list.wilcox.smiles.discrete.rf <- train.model(data=train.data, type_analysis = "discrete", ml.method = "rf")
+train.list.wilcox.smiles.discrete.gbm <- train.model(data=train.data, type_analysis = "discrete", ml.method = "gbm")
+```
+
+Test on an independent dataset:
+
+```{r wilcox_smiles_train_independent}
+# Combine independent datasets
+tanimoto_ind_df$pert_iname = rownames(tanimoto_ind_df)
+tanimoto_ind_df$vDILIConcern <- NULL
+tanimoto_ind_df$DILIConcern <- NULL
+tanimoto_ind_df$severity <- NULL
+combined_ind_data <- merge(x = expression_wilcox_ind_df, y = tanimoto_ind_df, by = "pert_iname")
+
+# Test independent dataset
+test.data <- combined_ind_data
+test.data$dilirank <- NULL
+test.data$severity <- NULL
+test.data$pert_iname <- NULL
+pred = predict(train.list.wilcox.smiles.discrete.rf$modFit, test.data)
+pred_df <- data.frame(combined_ind_data$pert_iname, pred)
+colnames(pred_df) <- c("Compound.Name","Predicted.Label")
+pred_df$Predicted.Label <- paste("v", pred_df$Predicted.Label, sep="")
+output_table = "/home/quim/PHD/Projects/camda/camda_data/independent_validation/JAguirre_predictions_wilsmi_discrete_rf.txt"
+write.table(pred_df, file = output_table,row.names=FALSE, na="-",col.names=TRUE, sep=",", quote=FALSE)
+```
+
+
+## Use Wilcoxon + Targets + SMILES information
+
+Let's prepare the target data:
+
+```{r wilcox_target_smiles_process}
+# Load target data
+targets_file <- "/home/quim/PHD/Projects/camda/additional_data/targets/targets_dgidb_hitpick_sea.tsv"
+targets_df <- read.csv(targets_file, header=TRUE, sep="\t")
+targets_df$DILI[targets_df$DILI == "No-DILI-concern"] <- "No-DILI-Concern" # Correct the 4 entries with lowercase concern
+targets_df <- targets_df[targets_df$drug %in% all_drugs_no_outliers,]
+targets_df <- targets_df[!is.na(targets_df$severity),] # Remove NA records
+
+# Read SMILES file
+tanimoto_file <- "/home/quim/PHD/Projects/camda/additional_data/tanimoto_smiles.tsv"
+tanimoto_df <- read.csv(tanimoto_file, header=TRUE, sep="\t")
+tanimoto_df$DILIConcern[tanimoto_df$DILIConcern == "No-DILI-concern"] <- "No-DILI-Concern" # Correct the 4 entries with lowercase concern
+tanimoto_df<-tanimoto_df[colnames(tanimoto_df) %in% all_drugs_no_outliers, rownames(tanimoto_df) %in% all_drugs_no_outliers]
+
+# Load wilcoxon data
+wilcox_file <- "/home/quim/PHD/Projects/camda/results/gene_test_landmark_phh_10_24.tsv"
+wilcox_df = read.csv(wilcox_file, header = TRUE, sep = "\t")
+selected_genes <- unique(wilcox_df$gene_id[wilcox_df$p.value<0.05 & wilcox_df$landmark==TRUE])
+
+# Subset the GCT object by cell ID PHH, 10 µM, 24 h
+expression_wilcox_df <- subset.expression(gct, selected_genes, all_drugs_no_outliers, cell_id="PHH", pert_idose="10 µM", pert_itime="24 h", merge_samples = TRUE)
+```
+
+
+Join both types of data and train the classifier (discrete):
+
+```{r wilcox_target_smiles_train_discrete}
+# Combine the datasets
+colnames(targets_df)[1] <- "pert_iname"
+targets_df$DILI <- NULL
+targets_df$severity <- NULL
+combined_data1 <- merge(x = expression_wilcox_df, y = targets_df, by = "pert_iname")
+
+# Combine wilcox and targets
+tanimoto_df$pert_iname = rownames(tanimoto_df)
+tanimoto_df$vDILIConcern <- NULL
+tanimoto_df$DILIConcern <- NULL
+tanimoto_df$severity <- NULL
+combined_data2 <- merge(x = combined_data1, y = tanimoto_df, by = "pert_iname")
+
+# Put the data in the appropriate format
+train.data <- combined_data2
+train.data$pert_iname <- NULL
+train.data$severity <- NULL
+colnames(train.data)[match("dilirank", colnames(train.data))] <- "cat"
+train.data <- train.data[train.data$cat != "Less-DILI-Concern",] # Remove Less-DILI records
+
+# Train the classifier
+train.list.wilcox.target.smiles.discrete.rf <- train.model(data=train.data, type_analysis = "discrete", ml.method = "rf")
+#train.list.wilcox.target.smiles.discrete.gbm <- train.model(data=train.data, type_analysis = "discrete", ml.method = "gbm")
+
+# Combine independent datasets
+colnames(targets_ind_df)[1] <- "pert_iname"
+targets_ind_df$DILI <- NULL
+targets_ind_df$severity <- NULL
+combined_ind_data1 <- merge(x = expression_wilcox_ind_df, y = targets_ind_df, by = "pert_iname")
+tanimoto_ind_df$pert_iname = rownames(tanimoto_ind_df)
+tanimoto_ind_df$vDILIConcern <- NULL
+tanimoto_ind_df$DILIConcern <- NULL
+tanimoto_ind_df$severity <- NULL
+combined_ind_data2 <- merge(x = combined_ind_data1, y = tanimoto_ind_df, by = "pert_iname")
+
+# Test independent dataset
+test.data <- combined_ind_data2
+test.data$dilirank <- NULL
+test.data$severity <- NULL
+test.data$pert_iname <- NULL
+pred = predict(train.list.wilcox.target.smiles.discrete.rf$modFit, test.data)
+pred_df <- data.frame(combined_ind_data2$pert_iname, pred)
+colnames(pred_df) <- c("Compound.Name","Predicted.Label")
+pred_df$Predicted.Label <- paste("v", pred_df$Predicted.Label, sep="")
+output_table = "/home/quim/PHD/Projects/camda/camda_data/independent_validation/JAguirre_predictions_no3_wiltarsmi_discrete_rf.txt"
+write.table(pred_df, file = output_table,row.names=FALSE, na="-",col.names=TRUE, sep=",", quote=FALSE)
+```
+
+
+
