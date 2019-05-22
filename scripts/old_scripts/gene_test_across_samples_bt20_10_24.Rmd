@@ -1,5 +1,5 @@
 ---
-title: "CMap Drug Safety Challenge: Gene test across samples of PHH, 10 µM and 24 h"
+title: "CMap Drug Safety Challenge: Gene test across samples of BT20, 10 µM and 24 h"
 author: "Joaquim Aguirre-Plans"
 date: "April 29, 2019"
 output: html_document
@@ -13,9 +13,11 @@ knitr::opts_chunk$set(echo = TRUE)
 ### Install packages ###
 # Install Bioconductor to install "rhdf5", a dependency of cmapR
 #install.packages("BiocManager")
-#BiocManager::install("rhdf5")
-# cmapR has been installed manually by downloading the package on github (https://github.com/cmap/cmapR) and running the following command:
-#install.packages("/home/quim/R/x86_64-pc-linux-gnu-library/3.6/cmapR_1.0.1.tar.gz", type="source", repos=NULL)
+#BiocManager::install("rhdf5", version = "3.8")
+# cmapR has been installed manually by downloading the package on github (https://github.com/cmap/cmapR) and running the following commands:
+# R CMD build cmapR
+# R CMD check cmapR_1.0.1.tar.gz
+#install.packages("/home/quim/R/x86_64-pc-linux-gnu-library/3.5/cmapR_1.0.1.tar.gz", type="source", repos=NULL)
 # Install GGPlot2 and its dependencies
 #install.packages('Rcpp', dependencies = TRUE)
 #install.packages('ggplot2', dependencies = TRUE)
@@ -27,6 +29,8 @@ knitr::opts_chunk$set(echo = TRUE)
 ### Load packages ###
 library(cmapR)
 library(ggplot2)
+library(ggbiplot)
+library(gplots) # For heatmap.2
 library(ComplexHeatmap) # For Heatmap()
 library(circlize) # For Heatmap()
 ```
@@ -73,7 +77,6 @@ drank.sel$vDILIConcern[drank.sel$vDILIConcern != "Ambiguous DILI-concern"] <- su
 dilirank_df <- drank.sel[drank.sel$vDILIConcern == drank.sel$DILIConcern,]
 most_concern_drugs <- dilirank_df$pert_iname[dilirank_df$DILIConcern == "Most-DILI-Concern"]
 less_concern_drugs <- dilirank_df$pert_iname[dilirank_df$DILIConcern == "Less-DILI-Concern"]
-most_less_concern_drugs <- union(most_concern_drugs, less_concern_drugs)
 no_concern_drugs <- dilirank_df$pert_iname[dilirank_df$DILIConcern == "No-DILI-Concern"]
 ```
 
@@ -83,19 +86,36 @@ We have `r length(dilirank_df$pert_iname)` compounds:
 * Less-DILI-Concern: `r length(less_concern_drugs)`
 * No-DILI-Concern: `r length(no_concern_drugs)`
 
+
+We are interested in the cell line BT20:
+
 ```{r}
-# Subset the GCT object by Most-DILI-Concern drugs
-id_most <- which(gct@cdesc$pert_iname %in% most_less_concern_drugs)
-gct_most <- subset.gct(gct, cid=id_most)
-# Subset the GCT object by No-DILI-Concern drugs
-id_no <- which(gct@cdesc$pert_iname %in% no_concern_drugs)
-gct_no <- subset.gct(gct, cid=id_no)
+# Subset the GCT object by BT20 cell id:
+id_bt20 <- which(gct@cdesc$cell_id == 'BT20')
+gct_bt20 <- subset.gct(gct, cid=id_bt20)
+```
+
+Let's check the conditions of the drugs in this cell line:
+```{r}
+table(gct_bt20@cdesc$pert_idose, gct_bt20@cdesc$pert_itime)
 ```
 
 The best conditions to analyse the expression of drugs are 10 µM and 24 h.
 We will check the number of samples per type of drug that we have in each cell line:
 
 ```{r}
+# Subset by Most-DILI-Concern drugs
+id_most_bt20 <- which(gct_bt20@cdesc$pert_iname %in% most_concern_drugs)
+gct_most_bt20 <- subset.gct(gct_bt20, cid=id_most_bt20)
+# Subset by No-DILI-Concern drugs
+id_no_bt20 <- which(gct_bt20@cdesc$pert_iname %in% no_concern_drugs)
+gct_no_bt20 <- subset.gct(gct_bt20, cid=id_no_bt20)
+
+# Subset by dose and time
+id_bt20_10_24 <- which(gct_bt20@cdesc$pert_idose == "10 µM" & gct_bt20@cdesc$pert_itime == "24 h")
+gct_bt20_10_24 <- subset.gct(gct_bt20, cid=id_bt20_10_24)
+
+
 id_most_10_24 <- which(gct_most@cdesc$pert_idose == "10 µM" & gct_most@cdesc$pert_itime == "24 h")
 gct_most_10_24 <- subset.gct(gct_most, cid=id_most_10_24)
 table(gct_most_10_24@cdesc$cell_id)
@@ -133,7 +153,7 @@ colnames(wilcox_df) <- cols
 
 # Calculate the wilcoxon for each gene and store the results
 #output_table <- "/home/quim/PHD/Projects/camda/results/gene_test_phh_10_24.tsv"
-output_table <- "/home/quim/PHD/Projects/camda/results/gene_test_landmark_phh_10_24_mixlessmost.tsv"
+output_table <- "/home/quim/PHD/Projects/camda/results/gene_test_landmark_phh_10_24.tsv"
 if(!file.exists(output_table)){
   #for (gene_id in gct_most_phh_10_24@rid) {
   for (gene_id in landmark_genes) {
@@ -199,7 +219,7 @@ for (drug in no_concern_drugs){
   heat_df[drug] <- medians
 }
 # Save the table
-output_table <- "/home/quim/PHD/Projects/camda/results/gene_test_heatmap_data_phh_10_24_mixlessmost.tsv"
+output_table <- "/home/quim/PHD/Projects/camda/results/gene_test_heatmap_data_phh_10_24.tsv"
 write.table(heat_df, file = output_table,row.names=TRUE, na="-",col.names=TRUE, sep="\t")
 
 # Draw the heatmap
@@ -212,7 +232,7 @@ write.table(heat_df, file = output_table,row.names=TRUE, na="-",col.names=TRUE, 
 
 type <- c(rep("Most-DILI-Concern", times=length(most_concern_drugs)), rep("No-DILI-Concern", times=length(no_concern_drugs)))
 annotation <- HeatmapAnnotation(df = data.frame(type = type))
-#Heatmap(heat_df, name = "expression", km = 0, col = colorRamp2(c(min(heat_df), 0, max(heat_df)), c("blue", "white", "red")), top_annotation = annotation, cluster_rows=FALSE, cluster_columns=FALSE)
+Heatmap(heat_df, name = "expression", km = 0, col = colorRamp2(c(min(heat_df), 0, max(heat_df)), c("blue", "white", "red")), top_annotation = annotation, cluster_rows=FALSE, cluster_columns=FALSE)
 
 # New heatmap using ComplexHeatmap
 heat_df_for_plot <- heat_df
@@ -241,7 +261,7 @@ colnames(wilcox_noout_df) <- cols
 
 # Calculate the wilcoxon for each gene and store the results
 #output_table <- "/home/quim/PHD/Projects/camda/results/gene_test_phh_10_24_noout.tsv"
-output_table <- "/home/quim/PHD/Projects/camda/results/gene_test_landmark_phh_10_24_noout_mixlessmost.tsv"
+output_table <- "/home/quim/PHD/Projects/camda/results/gene_test_landmark_phh_10_24_noout.tsv"
 if(!file.exists(output_table)){
   #for (gene_id in gct_most_phh_10_24@rid) {
   for (gene_id in landmark_genes) {
@@ -308,7 +328,7 @@ write.table(heat_noout_df, file = output_table,row.names=TRUE, na="-",col.names=
 # ComplexHeatmap
 type <- c(rep("Most-DILI-Concern", times=length(most_concern_drugs)), rep("No-DILI-Concern", times=length(no_concern_drugs_noout)))
 annotation <- HeatmapAnnotation(df = data.frame(type = type))
-Cairo::CairoPDF("/home/quim/PHD/Projects/camda/results/heatmap_phh_10_24_landmark_noout_mixlessmost.pdf", width = 10, height = 10) # Save in PDF
+Cairo::CairoPDF("/home/quim/PHD/Projects/camda/results/heatmap_phh_10_24_landmark_noout.pdf", width = 10, height = 10) # Save in PDF
 Heatmap(heat_noout_df, name = "expression", km = 0, col = colorRamp2(c(min(heat_noout_df), 0, max(heat_noout_df)), c("blue", "white", "red")), top_annotation = annotation, cluster_rows=TRUE, cluster_columns=FALSE,  row_names_gp = gpar(fontsize = 7)  ,column_names_gp =  gpar(fontsize = 7))
 dev.off()
 
@@ -317,8 +337,7 @@ heat_df_for_plot <- heat_noout_df
 heat_df_for_plot <- apply(heat_df_for_plot, c(1,2),  function(x) {ifelse(abs(x)>1.5, x, 0)})
 type <- c(rep("Most-DILI-Concern", times=length(most_concern_drugs)), rep("No-DILI-Concern", times=length(no_concern_drugs_noout)))
 annotation <- HeatmapAnnotation(df = data.frame(type = type))
-Cairo::CairoPDF("/home/quim/PHD/Projects/camda/results/heatmap_phh_mixlessmost_10_24_landmark_noout_above1_5_mixlessmost.pdf", width = 10, height = 10) # Save in PDF
-#Cairo::CairoPNG("/home/quim/PHD/Projects/camda/results/heatmap_phh_mixlessmost_10_24_landmark_noout_above1_5_mixlessmost.png", width = 500, height = 500) # Save in PNG
+Cairo::CairoPDF("/home/quim/PHD/Projects/camda/results/heatmap_phh_10_24_landmark_noout_above1_5.pdf", width = 10, height = 10) # Save in PDF
 Heatmap(heat_df_for_plot, name = "expression", km = 0, col = colorRamp2(c(min(heat_noout_df), 0, max(heat_noout_df)), c("blue", "white", "red")), top_annotation = annotation, cluster_rows=TRUE, cluster_columns=FALSE,  row_names_gp = gpar(fontsize = 7)  ,column_names_gp =  gpar(fontsize = 7)  )
 dev.off()
 ```
