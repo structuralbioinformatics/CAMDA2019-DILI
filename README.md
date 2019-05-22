@@ -17,6 +17,10 @@ caret
 
 ### Outline
 
-1. Analyze compounds
+1. Analyze the compounds
 2. Identify genes that separate better Most/Less vs. DILI drugs
 3. Classify drugs
+
+### 1. Analyze the compounds
+
+In the script `analysis_of_compounds.Rmd`, we first analyzed the different DILIRank categories for each compound, removing the ambiguous drugs. Then, we analyzed the number of gene expression samples for each compound depending on the conditions of cell line, dose and time. We written a summary of the analysis in the table `summary_compounds.tsv`.
