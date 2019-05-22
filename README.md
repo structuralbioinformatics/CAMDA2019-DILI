@@ -18,9 +18,16 @@ caret
 ### Outline
 
 1. Analyze the compounds
-2. Identify genes that separate better Most/Less vs. DILI drugs
+2. Identify gene signature to separate DILI and no-DILI drugs
 3. Classify drugs
 
 ### 1. Analyze the compounds
 
-In the script `analysis_of_compounds.Rmd`, we first analyzed the different DILIRank categories for each compound, removing the ambiguous drugs. Then, we analyzed the number of gene expression samples for each compound depending on the conditions of cell line, dose and time. We written a summary of the analysis in the table `summary_compounds.tsv`.
+Script: `analysis_of_compounds.Rmd`.
+We first analyzed the different DILIRank categories for each compound, removing the ambiguous drugs. Then, we analyzed the number of gene expression samples for each compound depending on the conditions of cell line, concentration and time. We written a summary of the analysis in the table `summary_compounds.tsv`.
+
+### 2. Identify gene signature to separate DILI and no-DILI drugs
+
+Script: `gene_test_across_samples_phh_10_24_mixlessmost.Rmd`.
+First, we retrieved the gene expression samples from cell line PHH (liver primary cell), dose concentration 10 µM and time 24 h. 
+Then, for each landmark gene, we calculated a Wilcoxon test between the gene expression values of the DILI and no-DILI drugs. We written a summary of the output values in the table `gene_test_landmark_phh_10_24_noout_mixlessmost.tsv` and a heatmap in `heatmap_phh_mixlessmost_10_24_landmark_noout_above1_5_mixlessmost.pdf`.
