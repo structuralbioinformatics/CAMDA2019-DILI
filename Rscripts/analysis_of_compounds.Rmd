@@ -1,0 +1,237 @@
+---
+title: "CMap Drug Safety Challenge: Analysis of compounds"
+author: "Joaquim Aguirre-Plans"
+date: "March 28, 2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r, include=FALSE}
+### Install packages ###
+# Install Bioconductor to install "rhdf5", a dependency of cmapR
+#install.packages("BiocManager")
+#BiocManager::install("rhdf5", version = "3.8")
+# cmapR has been installed manually by downloading the package on github (https://github.com/cmap/cmapR) and running the following commands:
+# R CMD build cmapR
+# R CMD check cmapR_1.0.1.tar.gz
+#install.packages("/home/quim/R/x86_64-pc-linux-gnu-library/3.5/cmapR_1.0.1.tar.gz", type="source", repos=NULL)
+# Install GGPlot2 and its dependencies
+#install.packages('Rcpp', dependencies = TRUE)
+#install.packages('ggplot2', dependencies = TRUE)
+#install.packages('data.table', dependencies = TRUE)
+# Install ggbiplot to plot the PCA
+#library(devtools)
+#install_github("vqv/ggbiplot")
+
+### Load packages ###
+library(cmapR)
+library(ggplot2)
+library(ggbiplot)
+```
+
+```{r, include=FALSE}
+### Define files ###
+#setwd("/sbi/users/interchange/emre/quim/camda")
+drugs_file <- "/home/quim/PHD/Projects/camda/camda_data/CAMDA_l1000_1314compounds-pert_iname.rda"
+drug_info_file <- "/sbi/users/interchange/emre/quim/camda/CAMDA_l1000_1314compounds-info.rda"
+dilirank_file <- "/home/quim/PHD/Projects/camda/camda_data/CAMDA_l1000_1314compounds-dilirank.v2.rda"
+expression_file <- "/sbi/users/interchange/emre/quim/camda/CAMDA_l1000_1314compounds-GSE92742_Level5_gct.rda"
+gene_info_file <- "/home/quim/PHD/Projects/camda/additional_data/GSE92742_Broad_LINCS_gene_info.txt"
+```
+
+
+## Load files
+
+First I load the R objects needed.
+
+```{r}
+load(drugs_file)
+load(drug_info_file)
+load(dilirank_file)
+load(expression_file) # Requires cmapR
+```
+
+We load the gene information file as well, containing the landmark genes [More info](https://clue.io/connectopedia/l1000_gene_space).
+
+```{r}
+gene_info_df <- read.csv(gene_info_file, header=TRUE, sep="\t")
+landmark_genes <- gene_info_df$pr_gene_id[gene_info_df$pr_is_lm==1]
+```
+
+There are compounds that are not consistently labelled in the DILIConcern and vDILIConcern columns:
+
+```{r}
+drank.sel$DILIConcern[drank.sel$DILIConcern == "No-DILI-concern"] <- "No-DILI-Concern" # Correct the 4 entries with lowercase concern
+table(drank.sel$vDILIConcern, drank.sel$DILIConcern)
+```
+
+Therefore, we will only consider those drugs labelled consistently:
+
+```{r}
+# We remove the first letter from vDILIConcern entries (except Ambiguous)
+drank.sel$vDILIConcern[drank.sel$vDILIConcern != "Ambiguous DILI-concern"] <- sub('.', '', drank.sel$vDILIConcern[drank.sel$vDILIConcern != "Ambiguous DILI-concern"])
+# We subset the table by those drugs that have the same value in vDILIConcern and DILIConcern columns
+dilirank_df <- drank.sel[drank.sel$vDILIConcern == drank.sel$DILIConcern,]
+table(dilirank_df$vDILIConcern, dilirank_df$DILIConcern)
+```
+
+We have `r length(dilirank_df$pert_iname)` compounds:
+
+* Most-DILI-Concern: `r length(dilirank_df$pert_iname[dilirank_df$DILIConcern == "Most-DILI-Concern"])`
+* Less-DILI-Concern: `r length(dilirank_df$pert_iname[dilirank_df$DILIConcern == "Less-DILI-Concern"])`
+* No-DILI-Concern: `r length(dilirank_df$pert_iname[dilirank_df$DILIConcern == "No-DILI-Concern"])`
+
+
+## Analyse the conditions of the compounds
+
+There are three relevant parameters if we want to subset the gene expression data of a given drug:
+
+* cell_id: The type of cell line.
+* pert_idose: The quantity of drug dose.
+* pert_itime: The duration of drug dose.
+
+We print the different conditions of our DILI-related compounds in a table:
+
+```{r}
+# Create new dataframe to store gene expression values for pca
+cols <- c("pert_iname", "cell_id", "DILIConcern", "num_doses", "min_dose", "max_dose", "num_times", "min_time", "max_time")
+compounds_df <- data.frame(matrix(ncol = length(cols), nrow=0))
+colnames(compounds_df) <- cols
+
+# Iterate over each drug and check the conditions
+drugs <- dilirank_df$pert_iname
+for (drug in drugs){
+  dili <- dilirank_df$DILIConcern[dilirank_df$pert_iname == drug]
+  idx <- which(gct@cdesc$pert_iname==drug)
+  x <- subset.gct(gct, cid=idx) # Subset by drug
+  cell_ids <- unique(x@cdesc$cell_id)
+  for (cell_id in cell_ids){
+    idx_c <- which(x@cdesc$cell_id==cell_id)
+    x_c <- subset.gct(x, cid=idx_c) # Subset by cell ID
+    doses <- as.numeric(unique(as.numeric(unique(x_c@cdesc$pert_dose[x_c@cdesc$pert_dose_unit == 'µM']))))
+    times <- as.numeric(unique(x_c@cdesc$pert_time[x_c@cdesc$pert_time_unit == 'h']))
+    num_doses <- length(doses)
+    min_dose <- min(doses)
+    max_dose <- max(doses)
+    num_times <- length(times)
+    min_time <- min(times)
+    max_time <- max(times)
+    doses_string <- paste(doses, collapse=',')
+    times_string <- paste(times, collapse=',')
+    if (length(doses)>=3 | any(doses>=10)){
+      compounds_df[nrow(compounds_df)+1,] <- c(drug, cell_id, dili, num_doses, min_dose, max_dose, num_times, min_time, max_time)
+    }
+  }
+}
+
+output_table <- "/home/quim/PHD/Projects/camda/camda_data/summary_compounds.tsv"
+write.table(compounds_df, file = output_table,row.names=FALSE, na="-",col.names=TRUE, sep="\t")
+head(compounds_df)
+```
+
+
+## Get compounds with more than three doses
+
+We will select the compounds that have more than three doses. We will print them in a new dataframe. We will also create another dataframe to store the expression values of the selected compounds.
+
+```{r}
+# Create new dataframe to store the results
+cols <- c("pert_iname", "DILIConcern", "num_doses", "min_dose", "max_dose", "num_times", "min_time", "max_time", "num_samples")
+morethan3_df <- data.frame(matrix(ncol = length(cols), nrow=0))
+colnames(morethan3_df) <- cols
+
+# Create new dataframe to store the gene expression values
+#morethan3matrix <- data.frame(matrix(ncol = 0, nrow=length(gct@rid)))
+#rownames(morethan3matrix) <- gct@rid
+morethan3matrix <- data.frame(1:length(gct@rid), gct@rid)
+colnames(morethan3matrix)<- c("id", "pr_gene_id")
+morethan3matrix <- merge(morethan3matrix, gene_info_df[,c("pr_gene_id", "pr_gene_symbol", "pr_is_lm")], by="pr_gene_id")
+
+# When merging, we lose the original order (needed to add faster the expression values). But we keep the order in the "id" column, so that we can recover it again
+morethan3matrix <- morethan3matrix[order(morethan3matrix$id), ]
+morethan3matrix$id <- NULL
+
+morethan3matrixHEPG2 <- morethan3matrix
+morethan3matrixPHH <- morethan3matrix
+
+# Iterate over each drug and check the conditions
+drugs <- sort(dilirank_df$pert_iname)
+cols <- colnames(morethan3matrix)
+colsHEPG2 <- colnames(morethan3matrix)
+colsPHH <- colnames(morethan3matrix)
+for (drug in drugs){
+  dili <- dilirank_df$DILIConcern[dilirank_df$pert_iname == drug]
+  idx <- which(gct@cdesc$pert_iname==drug)
+  x <- subset.gct(gct, cid=idx) # Subset by drug
+  doses <- as.numeric(unique(x@cdesc$pert_dose[x@cdesc$pert_dose_unit == 'µM']))
+  times <- as.numeric(unique(x@cdesc$pert_time[x@cdesc$pert_time_unit == 'h']))
+  num_doses <- length(doses)
+  min_dose <- min(doses)
+  max_dose <- max(doses)
+  num_times <- length(times)
+  min_time <- min(times)
+  max_time <- max(times)
+  num_samples <- length(x@cid)
+  if (length(doses)>=3 & any(doses>=10) & any(times>=24)){
+    morethan3_df[nrow(morethan3_df)+1,] <- c(drug, dili, num_doses, min_dose, max_dose, num_times, min_time, max_time, num_samples)
+    # Assign a new name to all the samples and keep the expression in the table morethan3matrix
+    prev_sample_id = ''
+    num <- 1
+    for (cid in x@cid){
+      cell_id <- x@cdesc$cell_id[x@cid==cid]
+      dose <- gsub(" ", "", x@cdesc$pert_idose[x@cid==cid], fixed = TRUE)
+      time <- gsub(" ", "", x@cdesc$pert_itime[x@cid==cid], fixed = TRUE)
+      #sample_id <- paste(drug, cell_id, dose, time, num, sep='_')
+      sample_id <- paste(drug, cell_id, dose, time, sep='_')
+      #if (prev_sample_id==sample_id){
+      #  num <- num+1
+      #  sample_id <- paste(drug, cell_id, dose, time, num, sep='_')
+      #}else{
+      #  num <- 1
+      #  sample_id <- paste(drug, cell_id, dose, time, num, sep='_')
+      #}
+      prev_sample_id <- sample_id
+      #print(sample_id)
+      expression <- x@mat[x@cid==cid]
+      morethan3matrix[,length(cols)+1] <- unlist(expression)
+      if (cell_id=="HEPG2"){
+        morethan3matrixHEPG2[,length(colsHEPG2)+1] <- unlist(expression)
+        colsHEPG2[length(colsHEPG2)+1] <- sample_id
+        print(sample_id)
+      } else if (cell_id=="PHH"){
+        morethan3matrixPHH[,length(colsPHH)+1] <- unlist(expression)
+        colsPHH[length(colsPHH)+1] <- sample_id
+        print(sample_id)
+      }
+      cols[length(cols)+1] <- sample_id
+    }
+  }
+}
+
+# This file will inform about the type of samples in each compound
+output_table <- "/home/quim/PHD/Projects/camda/camda_data/summary_compounds_morethan3.tsv"
+write.table(morethan3_df, file = output_table,row.names=FALSE, na="-",col.names=TRUE, sep="\t")
+head(morethan3_df)
+
+# This file contains the expression values for the samples of the compounds selected (with more than 3 doses) (requested by Giulia)
+output_table <- "/home/quim/PHD/Projects/camda/camda_data/matrix_compounds_morethan3_new.tsv"
+colnames(morethan3matrix)<- cols
+write.table(morethan3matrix, file = output_table,row.names=FALSE, na="-",col.names=TRUE, sep="\t")
+morethan3matrix <- read.csv(output_table, header=TRUE, sep="\t")# Read the matrix
+
+# This file contains the expression values for the samples of the compounds selected (with more than 3 doses) for HEPG2 (requested by Giulia)
+output_table <- "/home/quim/PHD/Projects/camda/camda_data/matrix_compounds_morethan3_HEPG2_new.tsv"
+colnames(morethan3matrixHEPG2)<- colsHEPG2
+write.table(morethan3matrixHEPG2, file = output_table,row.names=FALSE, na="-",col.names=TRUE, sep="\t")
+morethan3matrixHEPG2 <- read.csv(output_table, header=TRUE, sep="\t")# Read the matrix
+
+# This file contains the expression values for the samples of the compounds selected (with more than 3 doses) for PHH (requested by Giulia)
+output_table <- "/home/quim/PHD/Projects/camda/camda_data/matrix_compounds_morethan3_PHH_new.tsv"
+colnames(morethan3matrixPHH)<- colsPHH
+write.table(morethan3matrixPHH, file = output_table,row.names=FALSE, na="-",col.names=TRUE, sep="\t")
+morethan3matrixPHH <- read.csv(output_table, header=TRUE, sep="\t")# Read the matrix
+```
+
