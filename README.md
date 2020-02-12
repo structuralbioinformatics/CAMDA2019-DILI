@@ -3,7 +3,7 @@ An ensemble learning approach for modeling the systems biology of drug-induced i
 
 ## Getting Started
 
-These instructions will guide you through the code used to participate at the CAMDA CMap drug safety challenge. All the scripts are written in R and most of them are R Markdowns that improve the readability of the code.
+These instructions will guide you through the code used to participate at the CAMDA CMap drug safety challenge. All the scripts are written in R.
 
 ### Prerequisites
 
@@ -13,38 +13,90 @@ What packages you need to install. Some instructions are given at the R Markdown
 cmapR
 ComplexHeatmap
 caret
+RxnSim
 ```
 
 ### Outline
 
-1. Analyze the compounds
-2. Identify gene signature to separate DILI and no-DILI drugs
-3. Classify drugs using different features
+1. Gold standard analysis
+2. Data collection
+3. Identification of gene signatures to separate DILI and no-DILI drugs
+4. Machine learning classification
+5. Plots
 
-### 1. Analyze the compounds
+### 1. Gold standard analysis
 
 Script: `analysis_of_compounds.Rmd`.
 We first analyzed the different DILIRank categories for each compound, removing the ambiguous drugs. Then, we analyzed the number of gene expression samples for each compound depending on the conditions of cell line, concentration and time. We written a summary of the analysis in the table `summary_compounds.tsv`.
 
-### 2. Identify gene signature to separate DILI and no-DILI drugs
 
-Script: `gene_test_across_samples_phh_10_24_mixlessmost.Rmd`.
+### 2. Data collection
+
+#### 2.1. CMap gene expression
+
+We retrieved the gene expression data from the GCT object `CAMDA_l1000_1314compounds-GSE92742_Level5_gct.rda`, provided by CAMDA.
+
+#### 2.2. Drug chemical structure
+
+Script: `calculate_tanimoto.R`.
+We calculated the similarity between all compounds, creating a matrix of chemical similarity. We used the R package RxnSim to calculate the similarity matrix using the Tanimoto distance.
+The resulting table is called `tanimoto_smiles.tsv`.
+
+#### 2.3. Drug target
+
+The targets of the compounds (drugs) considered in the study were retrieved from three different databases: DGIdb, HitPick and SEA. 
+* **DGIdb**: The compound names were used to retrieve the targets from the web server.
+* **SEA and HitPick**: The SMILES of the compounds were used to get predictions in batch mode from the web servers.
+
+
+### 3. Identification of gene signatures to separate DILI and no-DILI drugs
+
+#### 3.1. DisGeNET phenotype-gene associations
+We compiled manually a list of 15 phenotypes related with DILI from DisGeNET.
+Using the web server of DisGeNET, we retrieved phenotype-gene associations from expertly curated repositories (UniProt, the Comparative Toxicogenomics Database (CTD), ORPHANET, the Clinical Genome Resource (CLINGEN), the Genomics England PanelApp, the Cancer Genome Interpreter (CGI) and PsyGeNET).
+We analyzed the genes of the phenotypes, checked which ones are redundant and put them in a table with the script `get_genes_from_disgenet_guildify.R`.
+The output table of phenotype-gene associations is: `disease2gene_disgenet_guildify.tsv`.
+The output table of redundant phenotypes is: `redundant_phenotypes.tsv`
+
+#### 3.2. GUILDify expansions of phenotype-gene associations
+We used the R package `guildifyR` to make the expansions of the genes associated to the 15 phenotypes.
+
+#### 3.3. Non-parametric test
+Script: `gene_signature.Rmd`.
 First, we retrieved the gene expression samples from cell line PHH (liver primary cell), dose concentration 10 µM and time 24 h. 
-Then, for each landmark gene, we calculated a Wilcoxon test between the gene expression values of the DILI and no-DILI drugs. We written a summary of the output values in the table `gene_test_landmark_phh_10_24_noout_mixlessmost.tsv` and a heatmap in `heatmap_phh_mixlessmost_10_24_landmark_noout_above1_5_mixlessmost.pdf`.
+Then, for each landmark gene, we calculated a Wilcoxon test between the gene expression values of the DILI and no-DILI drugs. We written a summary of the output values in the table `reverse_signature_phh_notcorrected_info.txt`.
 
-### 3. Classify drugs using different features
+
+### 4. Machine learning classification
 
 We used different scripts to classify the drugs depending on the feature:
 
-* **Gene signature**: `classify_drugs_mixlessmost_wilcox.Rmd`
-* **Hub genes**: `classify_drugs_mixlessmost_hub.Rmd`
-* **DisGeNET genes**: `classify_drugs_mixlessmost_disgenet.Rmd`
-* **SMILES**: `classify_drugs_mixlessmost_smiles.Rmd`
-* **Drug targets**: `classify_drugs_mixlessmost_targets.Rmd`
-* **Combining gene signature & SMILES**: `classify_drugs_mixlessmost_combined_wilcoxsmiles.Rmd`
-* **Combining gene signature & drug targets**: `classify_drugs_mixlessmost_combined_wilcoxtargets.Rmd`
-* **Combining gene signature & SMILES & drug targets**: `classify_drugs_mixlessmost_allcombined.Rmd`
+* **Landmark genes (CMap expression)**: `classify_by_landmark.R`
+* **DisGeNET genes (CMap expression)**: `classify_by_disgenet.R`
+* **GUILDify genes (CMap expression)**: `classify_by_guildify.R`
+* **DILI landmark signature (CMap expression)**: `classify_by_signature.Rmd`
+* **SMILES**: `classify_by_smiles.R`
+* **Drug targets**: `classify_by_targets.R`
+* **Combining DILI landmark signature & SMILES**: `classify_by_signature_smiles.Rmd`
+* **Combining DisGeNET signature & SMILES**: `classify_by_disgenet_smiles.Rmd`
+* **Combining GUILDify signature & SMILES**: `classify_by_guildify_smiles.Rmd`
 
-To create the SMILES data, we used the script `calculate_smiles.R`.
-To validate the predictions, we used the script `validate_drugs.Rmd`.
 The validations are in the folder `outputs/validations`.
+
+
+### 5. Plots
+
+* **Figure 1 & Supplementary Figure 8**: `check_means_results.R`
+* **Figure 2**: PowerPoint.
+* **Figure 3 & Supplementary Figures 4 & 9**: `check_means_by_phenotype.R`
+* **Figure 4**: `plot_heatmap_signature.R`
+* **Supplementary Figure 1**: PowerPoint.
+* **Supplementary Figure 2**: `plot_KM.R`
+* **Supplementary Figure 3**: `plot_heatmap_phenotypes.R`
+* **Supplementary Figure 5**: `plot_heatmap_smiles.R`
+* **Supplementary Figure 6**: `plot_targets_percentage.R`
+* **Supplementary Figure 7**: `check_means_results_correlated.R`
+
+
+
+
