@@ -133,4 +133,17 @@ ggplot(plot_reordered_df, aes(fill=type_drug, y=perc_drugs, x=target)) +
   scale_fill_discrete(name = "Number of drugs", labels = c("% DILI drugs", "% No-DILI drugs", "% independent drugs"))
 dev.off()
 
+Cairo::CairoPNG(output_plot_png, dpi=300, width = width_pdf, height = height_pdf) # Save in PDF
+theme_set(theme_bw())
+# Stacked barplot
+ggplot(plot_reordered_df, aes(fill=type_drug, y=perc_drugs, x=target)) + 
+  #geom_bar(position="stack", stat="identity") +
+  geom_bar(stat="identity", position=position_dodge()) +
+  #geom_text(aes(label=perc_drugs), size = 3, position = position_stack(vjust = 0.5))+
+  #labs(title="Number of drugs per target", x="Targets", y="Number of drugs") + 
+  labs(x="Targets", y="% of drugs") + 
+  theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5)) +
+  #scale_fill_discrete(name = "Number of drugs")
+  scale_fill_discrete(name = "Number of drugs", labels = c("% DILI drugs", "% No-DILI drugs", "% independent drugs"))
+dev.off()
 
