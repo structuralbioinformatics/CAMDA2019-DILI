@@ -24,6 +24,7 @@ RxnSim
 4. Machine learning classification
 5. Plots
 
+
 ### 1. Gold standard analysis
 
 Script: `analysis_of_compounds.Rmd`.
@@ -47,7 +48,7 @@ The resulting table is called `tanimoto_smiles.tsv`.
 The targets of the compounds (drugs) considered in the study were retrieved from three different databases: DGIdb, HitPick and SEA. 
 * **DGIdb**: The compound names were used to retrieve the targets from the web server.
 * **SEA and HitPick**: The SMILES of the compounds were used to get predictions in batch mode from the web servers.
-
+The summary table is called `targets_dgidb_hitpick_sea.tsv`.
 
 ### 3. Identification of gene signatures to separate DILI and no-DILI drugs
 
@@ -59,8 +60,8 @@ The output table of phenotype-gene associations is: `disease2gene_disgenet_guild
 The output table of redundant phenotypes is: `redundant_phenotypes.tsv`
 
 #### 3.2. GUILDify expansions of phenotype-gene associations
-We used the R package `guildifyR` to make the expansions of the genes associated to the 15 phenotypes.
-
+Script: `gene_sets_phenotypes.R`.
+We used the R package `guildifyR` to make the expansions of the genes associated to the 15 phenotypes. 
 #### 3.3. Non-parametric test
 Script: `gene_signature.Rmd`.
 First, we retrieved the gene expression samples from cell line PHH (liver primary cell), dose concentration 10 µM and time 24 h. 
