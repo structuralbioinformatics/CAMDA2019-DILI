@@ -1,0 +1,1030 @@
+Disease term	Disease ID (UMLS)	Gene symbol	Gene ID (Entrez)	DisGeNET	GUILDify
+Biliary cirrhosis	C0023892	CXCR5	643	1	1
+Biliary cirrhosis	C0023892	CD3D	915	1	1
+Biliary cirrhosis	C0023892	CD28	940	0	1
+Biliary cirrhosis	C0023892	CD80	941	1	1
+Biliary cirrhosis	C0023892	ENTPD2	954	1	1
+Biliary cirrhosis	C0023892	CDH5	1003	1	1
+Biliary cirrhosis	C0023892	CCR1	1230	0	1
+Biliary cirrhosis	C0023892	CCR3	1232	0	1
+Biliary cirrhosis	C0023892	CCR4	1233	0	1
+Biliary cirrhosis	C0023892	CCR5	1234	0	1
+Biliary cirrhosis	C0023892	CCR8	1237	0	1
+Biliary cirrhosis	C0023892	ABCC2	1244	1	1
+Biliary cirrhosis	C0023892	CTLA4	1493	0	1
+Biliary cirrhosis	C0023892	DPP4	1803	0	1
+Biliary cirrhosis	C0023892	CXCR3	2833	0	1
+Biliary cirrhosis	C0023892	CXCL2	2920	0	1
+Biliary cirrhosis	C0023892	GYS2	2998	0	1
+Biliary cirrhosis	C0023892	HIF1A	3091	1	1
+Biliary cirrhosis	C0023892	ICAM3	3385	1	1
+Biliary cirrhosis	C0023892	IGFBP1	3484	1	0
+Biliary cirrhosis	C0023892	IL7	3574	0	1
+Biliary cirrhosis	C0023892	IL7R	3575	1	1
+Biliary cirrhosis	C0023892	IL12A	3592	1	1
+Biliary cirrhosis	C0023892	IL12B	3593	1	0
+Biliary cirrhosis	C0023892	IL12RB1	3594	0	1
+Biliary cirrhosis	C0023892	IL12RB2	3595	0	1
+Biliary cirrhosis	C0023892	CXCL10	3627	1	1
+Biliary cirrhosis	C0023892	KRT7	3855	1	1
+Biliary cirrhosis	C0023892	LOX	4015	1	1
+Biliary cirrhosis	C0023892	LOXL2	4017	1	1
+Biliary cirrhosis	C0023892	LTA	4049	0	1
+Biliary cirrhosis	C0023892	CXCL9	4283	1	1
+Biliary cirrhosis	C0023892	NFKB1	4790	1	1
+Biliary cirrhosis	C0023892	PDCD1	5133	0	1
+Biliary cirrhosis	C0023892	ABCB4	5244	1	1
+Biliary cirrhosis	C0023892	CCL1	6346	0	1
+Biliary cirrhosis	C0023892	CCL2	6347	0	1
+Biliary cirrhosis	C0023892	CCL4	6351	0	1
+Biliary cirrhosis	C0023892	CCL5	6352	1	1
+Biliary cirrhosis	C0023892	CCL7	6354	0	1
+Biliary cirrhosis	C0023892	CCL8	6355	0	1
+Biliary cirrhosis	C0023892	CCL11	6356	0	1
+Biliary cirrhosis	C0023892	CCL13	6357	0	1
+Biliary cirrhosis	C0023892	CCL16	6360	0	1
+Biliary cirrhosis	C0023892	CCL17	6361	0	1
+Biliary cirrhosis	C0023892	CCL19	6363	0	1
+Biliary cirrhosis	C0023892	CCL22	6367	0	1
+Biliary cirrhosis	C0023892	CCL25	6370	0	1
+Biliary cirrhosis	C0023892	CXCL11	6373	0	1
+Biliary cirrhosis	C0023892	CXCL12	6387	0	1
+Biliary cirrhosis	C0023892	SFTPC	6440	0	1
+Biliary cirrhosis	C0023892	SLC4A2	6522	1	1
+Biliary cirrhosis	C0023892	SLC17A1	6568	0	1
+Biliary cirrhosis	C0023892	SPIB	6689	1	1
+Biliary cirrhosis	C0023892	STAT4	6775	1	1
+Biliary cirrhosis	C0023892	TESK1	7016	0	1
+Biliary cirrhosis	C0023892	TNF	7124	0	1
+Biliary cirrhosis	C0023892	TNFRSF1A	7132	1	1
+Biliary cirrhosis	C0023892	TUB	7275	0	1
+Biliary cirrhosis	C0023892	TYK2	7297	1	1
+Biliary cirrhosis	C0023892	PAX8	7849	0	1
+Biliary cirrhosis	C0023892	NSMAF	8439	0	1
+Biliary cirrhosis	C0023892	TNFRSF25	8718	0	1
+Biliary cirrhosis	C0023892	ABCG2	9429	1	1
+Biliary cirrhosis	C0023892	NSA2	10412	1	1
+Biliary cirrhosis	C0023892	CLEC16A	23274	1	0
+Biliary cirrhosis	C0023892	CLIP3	25999	0	1
+Biliary cirrhosis	C0023892	ACKR4	51554	0	1
+Biliary cirrhosis	C0023892	ERAP1	51752	0	1
+Biliary cirrhosis	C0023892	SLC30A10	55532	0	1
+Biliary cirrhosis	C0023892	SLC26A6	65010	0	1
+Biliary cirrhosis	C0023892	DHDDS	79947	0	1
+Biliary cirrhosis	C0023892	DENND1B	163486	1	0
+Biliary cirrhosis	C0023892	CCR2	729230	0	1
+Fatty Liver, Alcoholic	C0015696	CYP2E1	1571	1	1
+Fatty Liver, Alcoholic	C0015696	PPARA	5465	1	1
+Fatty Liver, Alcoholic	C0015696	SOD1	6647	1	1
+Fatty Liver, Alcoholic	C0015696	ABCA5	23461	0	1
+Hepatitis, Drug-Induced	C1262760	NAT2	10	1	1
+Hepatitis, Drug-Induced	C1262760	ACYP2	98	0	1
+Hepatitis, Drug-Induced	C1262760	ADAM8	101	1	1
+Hepatitis, Drug-Induced	C1262760	ADCYAP1	116	0	1
+Hepatitis, Drug-Induced	C1262760	ADCYAP1R1	117	0	1
+Hepatitis, Drug-Induced	C1262760	AHR	196	1	1
+Hepatitis, Drug-Induced	C1262760	ALB	213	1	1
+Hepatitis, Drug-Induced	C1262760	ALDOB	229	1	1
+Hepatitis, Drug-Induced	C1262760	AMBP	259	1	1
+Hepatitis, Drug-Induced	C1262760	ANXA2	302	1	1
+Hepatitis, Drug-Induced	C1262760	APOF	319	0	1
+Hepatitis, Drug-Induced	C1262760	APOA1	335	1	1
+Hepatitis, Drug-Induced	C1262760	APOC1	341	0	1
+Hepatitis, Drug-Induced	C1262760	APOE	348	1	1
+Hepatitis, Drug-Induced	C1262760	APOH	350	1	1
+Hepatitis, Drug-Induced	C1262760	ARG1	383	1	1
+Hepatitis, Drug-Induced	C1262760	ARNT	405	1	1
+Hepatitis, Drug-Induced	C1262760	BAX	581	1	1
+Hepatitis, Drug-Induced	C1262760	BDH1	622	1	0
+Hepatitis, Drug-Induced	C1262760	CXCR5	643	0	1
+Hepatitis, Drug-Induced	C1262760	BST1	683	0	1
+Hepatitis, Drug-Induced	C1262760	BTD	686	1	0
+Hepatitis, Drug-Induced	C1262760	SERPING1	710	1	1
+Hepatitis, Drug-Induced	C1262760	C1R	715	0	1
+Hepatitis, Drug-Induced	C1262760	C3	718	1	1
+Hepatitis, Drug-Induced	C1262760	CASP1	834	0	1
+Hepatitis, Drug-Induced	C1262760	CASP4	837	0	1
+Hepatitis, Drug-Induced	C1262760	CAT	847	1	1
+Hepatitis, Drug-Induced	C1262760	SERPINA6	866	1	0
+Hepatitis, Drug-Induced	C1262760	CDC25B	994	1	1
+Hepatitis, Drug-Induced	C1262760	CDS1	1040	1	1
+Hepatitis, Drug-Induced	C1262760	CHRM3	1131	1	0
+Hepatitis, Drug-Induced	C1262760	CLU	1191	1	1
+Hepatitis, Drug-Induced	C1262760	CMA1	1215	0	1
+Hepatitis, Drug-Induced	C1262760	CCR1	1230	0	1
+Hepatitis, Drug-Induced	C1262760	CCR4	1233	0	1
+Hepatitis, Drug-Induced	C1262760	CCR8	1237	0	1
+Hepatitis, Drug-Induced	C1262760	ABCC2	1244	1	1
+Hepatitis, Drug-Induced	C1262760	COL3A1	1281	1	1
+Hepatitis, Drug-Induced	C1262760	CP	1356	1	1
+Hepatitis, Drug-Induced	C1262760	CPB2	1361	0	1
+Hepatitis, Drug-Induced	C1262760	CPN1	1369	0	1
+Hepatitis, Drug-Induced	C1262760	CSF3	1440	1	0
+Hepatitis, Drug-Induced	C1262760	CTNNB1	1499	1	1
+Hepatitis, Drug-Induced	C1262760	CTSE	1510	1	1
+Hepatitis, Drug-Induced	C1262760	CYP1A2	1544	1	0
+Hepatitis, Drug-Induced	C1262760	CYP2A6	1548	1	0
+Hepatitis, Drug-Induced	C1262760	CYP2B6	1555	1	0
+Hepatitis, Drug-Induced	C1262760	CYP2C19	1557	1	0
+Hepatitis, Drug-Induced	C1262760	CYP2C9	1559	1	1
+Hepatitis, Drug-Induced	C1262760	CYP2E1	1571	1	1
+Hepatitis, Drug-Induced	C1262760	CYP3A4	1576	1	1
+Hepatitis, Drug-Induced	C1262760	CYP3A5	1577	0	1
+Hepatitis, Drug-Induced	C1262760	GADD45A	1647	1	1
+Hepatitis, Drug-Induced	C1262760	DHFR	1719	1	1
+Hepatitis, Drug-Induced	C1262760	DSC2	1824	1	1
+Hepatitis, Drug-Induced	C1262760	ENO1	2023	1	1
+Hepatitis, Drug-Induced	C1262760	EPHX1	2052	1	1
+Hepatitis, Drug-Induced	C1262760	FASN	2194	1	1
+Hepatitis, Drug-Induced	C1262760	FCGRT	2217	0	1
+Hepatitis, Drug-Induced	C1262760	FGA	2243	1	1
+Hepatitis, Drug-Induced	C1262760	FLT1	2321	1	1
+Hepatitis, Drug-Induced	C1262760	FMO3	2328	1	1
+Hepatitis, Drug-Induced	C1262760	GAST	2520	0	1
+Hepatitis, Drug-Induced	C1262760	GABRA4	2557	0	1
+Hepatitis, Drug-Induced	C1262760	GC	2638	1	1
+Hepatitis, Drug-Induced	C1262760	GCLC	2729	1	1
+Hepatitis, Drug-Induced	C1262760	GOT1	2805	1	1
+Hepatitis, Drug-Induced	C1262760	GPT	2875	1	1
+Hepatitis, Drug-Induced	C1262760	CXCL1	2919	1	1
+Hepatitis, Drug-Induced	C1262760	GSN	2934	1	1
+Hepatitis, Drug-Induced	C1262760	GSR	2936	1	1
+Hepatitis, Drug-Induced	C1262760	GSTM1	2944	1	1
+Hepatitis, Drug-Induced	C1262760	GSTM2	2946	1	1
+Hepatitis, Drug-Induced	C1262760	GSTM3	2947	1	1
+Hepatitis, Drug-Induced	C1262760	GSTM4	2948	1	1
+Hepatitis, Drug-Induced	C1262760	GSTM5	2949	0	1
+Hepatitis, Drug-Induced	C1262760	GSTP1	2950	1	1
+Hepatitis, Drug-Induced	C1262760	GSTT1	2952	1	1
+Hepatitis, Drug-Induced	C1262760	HADHA	3030	1	1
+Hepatitis, Drug-Induced	C1262760	HLA-A	3105	1	1
+Hepatitis, Drug-Induced	C1262760	HLA-B	3106	1	1
+Hepatitis, Drug-Induced	C1262760	HLA-DQB1	3119	1	0
+Hepatitis, Drug-Induced	C1262760	HLA-DRB1	3123	1	1
+Hepatitis, Drug-Induced	C1262760	HMGB1	3146	1	1
+Hepatitis, Drug-Induced	C1262760	HMOX1	3162	1	1
+Hepatitis, Drug-Induced	C1262760	HPD	3242	1	1
+Hepatitis, Drug-Induced	C1262760	HPX	3263	1	1
+Hepatitis, Drug-Induced	C1262760	HRH2	3274	1	0
+Hepatitis, Drug-Induced	C1262760	CFI	3426	0	1
+Hepatitis, Drug-Induced	C1262760	IFNA1	3439	0	1
+Hepatitis, Drug-Induced	C1262760	IFNA2	3440	1	1
+Hepatitis, Drug-Induced	C1262760	IFNA5	3442	0	1
+Hepatitis, Drug-Induced	C1262760	IFNA8	3445	0	1
+Hepatitis, Drug-Induced	C1262760	IFNAR2	3455	0	1
+Hepatitis, Drug-Induced	C1262760	IFNB1	3456	0	1
+Hepatitis, Drug-Induced	C1262760	IFNG	3458	1	0
+Hepatitis, Drug-Induced	C1262760	IGF1	3479	1	1
+Hepatitis, Drug-Induced	C1262760	IGFBP2	3485	0	1
+Hepatitis, Drug-Induced	C1262760	IL1A	3552	1	1
+Hepatitis, Drug-Induced	C1262760	IL1B	3553	1	1
+Hepatitis, Drug-Induced	C1262760	IL4	3565	1	1
+Hepatitis, Drug-Induced	C1262760	IL6	3569	1	1
+Hepatitis, Drug-Induced	C1262760	IL6R	3570	0	1
+Hepatitis, Drug-Induced	C1262760	IL11	3589	1	1
+Hepatitis, Drug-Induced	C1262760	IL17A	3605	1	1
+Hepatitis, Drug-Induced	C1262760	IL18	3606	1	1
+Hepatitis, Drug-Induced	C1262760	CXCL10	3627	1	1
+Hepatitis, Drug-Induced	C1262760	ITPR1	3708	1	1
+Hepatitis, Drug-Induced	C1262760	KNG1	3827	1	1
+Hepatitis, Drug-Induced	C1262760	KRT18	3875	1	1
+Hepatitis, Drug-Induced	C1262760	LBP	3929	1	1
+Hepatitis, Drug-Induced	C1262760	LCAT	3931	0	1
+Hepatitis, Drug-Induced	C1262760	LCN2	3934	1	0
+Hepatitis, Drug-Induced	C1262760	LGALS3	3958	1	1
+Hepatitis, Drug-Induced	C1262760	FADS1	3992	1	1
+Hepatitis, Drug-Induced	C1262760	PRICKLE3	4007	0	1
+Hepatitis, Drug-Induced	C1262760	LTF	4057	1	1
+Hepatitis, Drug-Induced	C1262760	DNAJB9	4189	1	1
+Hepatitis, Drug-Induced	C1262760	MDH1	4190	1	1
+Hepatitis, Drug-Induced	C1262760	MAP3K5	4217	1	1
+Hepatitis, Drug-Induced	C1262760	MMP2	4313	1	1
+Hepatitis, Drug-Induced	C1262760	MMP10	4319	0	1
+Hepatitis, Drug-Induced	C1262760	MMP13	4322	0	1
+Hepatitis, Drug-Induced	C1262760	ABCC1	4363	1	1
+Hepatitis, Drug-Induced	C1262760	MST1R	4486	1	1
+Hepatitis, Drug-Induced	C1262760	MTHFR	4524	1	1
+Hepatitis, Drug-Induced	C1262760	NFE2L2	4780	1	1
+Hepatitis, Drug-Induced	C1262760	PNP	4860	1	1
+Hepatitis, Drug-Induced	C1262760	OSM	5008	0	1
+Hepatitis, Drug-Induced	C1262760	PCOLCE	5118	1	1
+Hepatitis, Drug-Induced	C1262760	PCYT1A	5130	1	1
+Hepatitis, Drug-Induced	C1262760	PDE1A	5136	0	1
+Hepatitis, Drug-Induced	C1262760	PDK4	5166	1	1
+Hepatitis, Drug-Induced	C1262760	ABCB1	5243	1	1
+Hepatitis, Drug-Induced	C1262760	SERPINI1	5274	0	1
+Hepatitis, Drug-Induced	C1262760	PLAT	5327	1	1
+Hepatitis, Drug-Induced	C1262760	PLG	5340	1	1
+Hepatitis, Drug-Induced	C1262760	PLTP	5360	0	1
+Hepatitis, Drug-Induced	C1262760	POLG	5428	1	0
+Hepatitis, Drug-Induced	C1262760	PON1	5444	1	0
+Hepatitis, Drug-Induced	C1262760	PPARA	5465	1	1
+Hepatitis, Drug-Induced	C1262760	MED1	5469	1	1
+Hepatitis, Drug-Induced	C1262760	PPP3R1	5534	0	1
+Hepatitis, Drug-Induced	C1262760	PRKDC	5591	1	1
+Hepatitis, Drug-Induced	C1262760	PSKH1	5681	0	1
+Hepatitis, Drug-Induced	C1262760	PYY	5697	0	1
+Hepatitis, Drug-Induced	C1262760	PTGS2	5743	1	1
+Hepatitis, Drug-Induced	C1262760	PZP	5858	1	0
+Hepatitis, Drug-Induced	C1262760	RBP1	5947	1	1
+Hepatitis, Drug-Induced	C1262760	S100A11	6282	1	1
+Hepatitis, Drug-Induced	C1262760	CCL1	6346	0	1
+Hepatitis, Drug-Induced	C1262760	CCL2	6347	1	1
+Hepatitis, Drug-Induced	C1262760	CCL4	6351	0	1
+Hepatitis, Drug-Induced	C1262760	CCL7	6354	0	1
+Hepatitis, Drug-Induced	C1262760	CCL8	6355	0	1
+Hepatitis, Drug-Induced	C1262760	CCL13	6357	0	1
+Hepatitis, Drug-Induced	C1262760	CCL16	6360	0	1
+Hepatitis, Drug-Induced	C1262760	CCL17	6361	0	1
+Hepatitis, Drug-Induced	C1262760	CCL19	6363	0	1
+Hepatitis, Drug-Induced	C1262760	CCL20	6364	0	1
+Hepatitis, Drug-Induced	C1262760	CCL22	6367	0	1
+Hepatitis, Drug-Induced	C1262760	CCL25	6370	0	1
+Hepatitis, Drug-Induced	C1262760	CXCL6	6372	0	1
+Hepatitis, Drug-Induced	C1262760	SECTM1	6398	0	1
+Hepatitis, Drug-Induced	C1262760	SIM1	6492	0	1
+Hepatitis, Drug-Induced	C1262760	SIM2	6493	0	1
+Hepatitis, Drug-Induced	C1262760	SLPI	6590	1	1
+Hepatitis, Drug-Induced	C1262760	SOD1	6647	1	1
+Hepatitis, Drug-Induced	C1262760	SOD2	6648	1	1
+Hepatitis, Drug-Induced	C1262760	SOD3	6649	1	1
+Hepatitis, Drug-Induced	C1262760	SORD	6652	1	1
+Hepatitis, Drug-Induced	C1262760	SORL1	6653	1	1
+Hepatitis, Drug-Induced	C1262760	SPP1	6696	1	1
+Hepatitis, Drug-Induced	C1262760	SRP72	6731	1	1
+Hepatitis, Drug-Induced	C1262760	SULT1E1	6783	1	1
+Hepatitis, Drug-Induced	C1262760	SULT2B1	6820	1	1
+Hepatitis, Drug-Induced	C1262760	TALDO1	6888	1	1
+Hepatitis, Drug-Induced	C1262760	TBXA2R	6915	1	1
+Hepatitis, Drug-Induced	C1262760	TF	7018	1	1
+Hepatitis, Drug-Induced	C1262760	TGFB3	7043	0	1
+Hepatitis, Drug-Induced	C1262760	TGFBR1	7046	1	1
+Hepatitis, Drug-Induced	C1262760	THBS2	7058	0	1
+Hepatitis, Drug-Induced	C1262760	TIMP2	7077	0	1
+Hepatitis, Drug-Induced	C1262760	TNF	7124	1	1
+Hepatitis, Drug-Induced	C1262760	TRPC4	7223	0	1
+Hepatitis, Drug-Induced	C1262760	TTR	7276	1	1
+Hepatitis, Drug-Induced	C1262760	COL14A1	7373	1	1
+Hepatitis, Drug-Induced	C1262760	VIM	7431	1	1
+Hepatitis, Drug-Induced	C1262760	VWF	7450	1	1
+Hepatitis, Drug-Induced	C1262760	IL1R2	7850	1	0
+Hepatitis, Drug-Induced	C1262760	REEP5	7905	1	1
+Hepatitis, Drug-Induced	C1262760	TAGLN2	8407	1	1
+Hepatitis, Drug-Induced	C1262760	DGAT1	8694	0	1
+Hepatitis, Drug-Induced	C1262760	PEX11A	8800	1	1
+Hepatitis, Drug-Induced	C1262760	IL18RAP	8807	0	1
+Hepatitis, Drug-Induced	C1262760	IL18R1	8809	0	1
+Hepatitis, Drug-Induced	C1262760	GGH	8836	1	1
+Hepatitis, Drug-Induced	C1262760	NR1I2	8856	1	1
+Hepatitis, Drug-Induced	C1262760	CHRNA6	8973	0	1
+Hepatitis, Drug-Induced	C1262760	WASL	8976	1	1
+Hepatitis, Drug-Induced	C1262760	SELENBP1	8991	1	1
+Hepatitis, Drug-Induced	C1262760	F2RL3	9002	1	0
+Hepatitis, Drug-Induced	C1262760	RGN	9104	1	1
+Hepatitis, Drug-Induced	C1262760	AIFM1	9131	1	1
+Hepatitis, Drug-Induced	C1262760	FCMR	9214	1	1
+Hepatitis, Drug-Induced	C1262760	LRAT	9227	1	0
+Hepatitis, Drug-Induced	C1262760	NREP	9315	1	1
+Hepatitis, Drug-Induced	C1262760	ADIPOQ	9370	1	1
+Hepatitis, Drug-Induced	C1262760	SLC22A8	9376	1	0
+Hepatitis, Drug-Induced	C1262760	FADS2	9415	1	1
+Hepatitis, Drug-Induced	C1262760	ATG5	9474	1	1
+Hepatitis, Drug-Induced	C1262760	EDEM1	9695	1	1
+Hepatitis, Drug-Induced	C1262760	PAN2	9924	1	1
+Hepatitis, Drug-Induced	C1262760	NR1I3	9970	1	1
+Hepatitis, Drug-Induced	C1262760	NR1H4	9971	1	1
+Hepatitis, Drug-Induced	C1262760	NR1H3	10062	1	1
+Hepatitis, Drug-Induced	C1262760	RAMP2	10266	0	1
+Hepatitis, Drug-Induced	C1262760	PEMT	10400	0	1
+Hepatitis, Drug-Induced	C1262760	COLEC10	10584	0	1
+Hepatitis, Drug-Induced	C1262760	ABCA5	23461	0	1
+Hepatitis, Drug-Induced	C1262760	IL17RA	23765	0	1
+Hepatitis, Drug-Induced	C1262760	SLC13A4	26266	1	0
+Hepatitis, Drug-Induced	C1262760	HAVCR1	26762	1	1
+Hepatitis, Drug-Induced	C1262760	CACNG4	27092	0	1
+Hepatitis, Drug-Induced	C1262760	EIF2AK1	27102	1	1
+Hepatitis, Drug-Induced	C1262760	IL37	27178	0	1
+Hepatitis, Drug-Induced	C1262760	SULT1B1	27284	0	1
+Hepatitis, Drug-Induced	C1262760	KCNIP2	30819	0	1
+Hepatitis, Drug-Induced	C1262760	KCNIP1	30820	0	1
+Hepatitis, Drug-Induced	C1262760	NOX4	50507	1	1
+Hepatitis, Drug-Induced	C1262760	IL22	50616	1	0
+Hepatitis, Drug-Induced	C1262760	TMED7	51014	1	1
+Hepatitis, Drug-Induced	C1262760	HAO2	51179	1	0
+Hepatitis, Drug-Induced	C1262760	C1RL	51279	0	1
+Hepatitis, Drug-Induced	C1262760	ATP6V1D	51382	1	1
+Hepatitis, Drug-Induced	C1262760	ACKR4	51554	0	1
+Hepatitis, Drug-Induced	C1262760	DHRS7	51635	1	1
+Hepatitis, Drug-Induced	C1262760	SPIN2A	54466	1	0
+Hepatitis, Drug-Induced	C1262760	TMEM260	54916	0	1
+Hepatitis, Drug-Induced	C1262760	TMEM38B	55151	1	1
+Hepatitis, Drug-Induced	C1262760	ABHD10	55347	0	1
+Hepatitis, Drug-Induced	C1262760	ECHDC1	55862	1	1
+Hepatitis, Drug-Induced	C1262760	PDGFC	56034	0	1
+Hepatitis, Drug-Induced	C1262760	DNAJC12	56521	1	1
+Hepatitis, Drug-Induced	C1262760	BDH2	56898	0	1
+Hepatitis, Drug-Induced	C1262760	EPPIN	57119	0	1
+Hepatitis, Drug-Induced	C1262760	BCAN	63827	0	1
+Hepatitis, Drug-Induced	C1262760	ERAP2	64167	0	1
+Hepatitis, Drug-Induced	C1262760	TMEM168	64418	0	1
+Hepatitis, Drug-Induced	C1262760	UPF3A	65110	0	1
+Hepatitis, Drug-Induced	C1262760	CYP4F12	66002	0	1
+Hepatitis, Drug-Induced	C1262760	TTC13	79573	0	1
+Hepatitis, Drug-Induced	C1262760	TCTN1	79600	1	1
+Hepatitis, Drug-Induced	C1262760	UBA5	79876	1	1
+Hepatitis, Drug-Induced	C1262760	UNC93B1	81622	1	1
+Hepatitis, Drug-Induced	C1262760	MAP1LC3B	81631	1	1
+Hepatitis, Drug-Induced	C1262760	TMEM164	84187	1	0
+Hepatitis, Drug-Induced	C1262760	LLPH	84298	0	1
+Hepatitis, Drug-Induced	C1262760	CADPS2	93664	1	1
+Hepatitis, Drug-Induced	C1262760	SGF29	112869	1	1
+Hepatitis, Drug-Induced	C1262760	CCR2	729230	1	1
+Hyperammonemia	C0220994	ACACB	32	0	1
+Hyperammonemia	C0220994	ACADL	33	1	0
+Hyperammonemia	C0220994	ACADM	34	1	1
+Hyperammonemia	C0220994	ACADS	35	1	1
+Hyperammonemia	C0220994	ACADVL	37	1	1
+Hyperammonemia	C0220994	AGA	175	1	0
+Hyperammonemia	C0220994	AGL	178	1	1
+Hyperammonemia	C0220994	ARG1	383	1	1
+Hyperammonemia	C0220994	ARSA	410	1	1
+Hyperammonemia	C0220994	ARSB	411	1	0
+Hyperammonemia	C0220994	ASGR2	433	0	1
+Hyperammonemia	C0220994	ASL	435	1	1
+Hyperammonemia	C0220994	ASS1	445	1	1
+Hyperammonemia	C0220994	AUH	549	1	1
+Hyperammonemia	C0220994	BCKDHA	593	1	0
+Hyperammonemia	C0220994	BCKDHB	594	1	0
+Hyperammonemia	C0220994	CA5A	763	1	0
+Hyperammonemia	C0220994	CACNA1S	779	0	1
+Hyperammonemia	C0220994	SLC25A20	788	1	1
+Hyperammonemia	C0220994	CCKBR	887	0	1
+Hyperammonemia	C0220994	CD9	928	0	1
+Hyperammonemia	C0220994	TPP1	1200	1	1
+Hyperammonemia	C0220994	CLN3	1201	1	1
+Hyperammonemia	C0220994	CLN5	1203	1	0
+Hyperammonemia	C0220994	COL2A1	1280	0	1
+Hyperammonemia	C0220994	COL4A6	1288	0	1
+Hyperammonemia	C0220994	CPS1	1373	1	1
+Hyperammonemia	C0220994	CPT1A	1374	1	1
+Hyperammonemia	C0220994	CPT2	1376	1	1
+Hyperammonemia	C0220994	CYP3A5	1577	0	1
+Hyperammonemia	C0220994	CYP27A1	1593	1	1
+Hyperammonemia	C0220994	DBT	1629	1	1
+Hyperammonemia	C0220994	DLD	1738	1	1
+Hyperammonemia	C0220994	ENO3	2027	1	1
+Hyperammonemia	C0220994	EPHB3	2049	0	1
+Hyperammonemia	C0220994	CLN8	2055	1	1
+Hyperammonemia	C0220994	ETFA	2108	1	1
+Hyperammonemia	C0220994	ETFB	2109	1	1
+Hyperammonemia	C0220994	ETFDH	2110	1	1
+Hyperammonemia	C0220994	SLC37A4	2542	1	1
+Hyperammonemia	C0220994	GAA	2548	1	1
+Hyperammonemia	C0220994	GALC	2581	1	0
+Hyperammonemia	C0220994	GALNS	2588	1	1
+Hyperammonemia	C0220994	GBE1	2632	1	1
+Hyperammonemia	C0220994	GCK	2645	0	1
+Hyperammonemia	C0220994	GGT1	2678	0	1
+Hyperammonemia	C0220994	GLA	2717	1	1
+Hyperammonemia	C0220994	GLB1	2720	1	1
+Hyperammonemia	C0220994	GCLC	2729	0	1
+Hyperammonemia	C0220994	GLUD1	2746	1	1
+Hyperammonemia	C0220994	GM2A	2760	1	1
+Hyperammonemia	C0220994	GPM6B	2824	0	1
+Hyperammonemia	C0220994	GUCY2C	2984	0	1
+Hyperammonemia	C0220994	GYG1	2992	0	1
+Hyperammonemia	C0220994	GYS1	2997	1	1
+Hyperammonemia	C0220994	GYS2	2998	1	1
+Hyperammonemia	C0220994	HADHA	3030	1	1
+Hyperammonemia	C0220994	HADHB	3032	1	1
+Hyperammonemia	C0220994	HCCS	3052	0	1
+Hyperammonemia	C0220994	HLCS	3141	1	1
+Hyperammonemia	C0220994	HMGCL	3155	1	1
+Hyperammonemia	C0220994	HMGCS2	3158	1	1
+Hyperammonemia	C0220994	HYAL1	3373	1	1
+Hyperammonemia	C0220994	IDS	3423	1	0
+Hyperammonemia	C0220994	IDUA	3425	1	1
+Hyperammonemia	C0220994	IVD	3712	1	1
+Hyperammonemia	C0220994	KHK	3795	0	1
+Hyperammonemia	C0220994	LIPA	3988	1	0
+Hyperammonemia	C0220994	LSAMP	4045	0	1
+Hyperammonemia	C0220994	MAN2B1	4125	1	1
+Hyperammonemia	C0220994	MANBA	4126	1	0
+Hyperammonemia	C0220994	MTR	4548	1	1
+Hyperammonemia	C0220994	MTRR	4552	1	1
+Hyperammonemia	C0220994	NAGA	4668	1	1
+Hyperammonemia	C0220994	NAGLU	4669	1	1
+Hyperammonemia	C0220994	NDUFB2	4708	0	1
+Hyperammonemia	C0220994	NEU1	4758	1	1
+Hyperammonemia	C0220994	NPC1	4864	1	1
+Hyperammonemia	C0220994	OAT	4942	1	1
+Hyperammonemia	C0220994	OTC	5009	1	0
+Hyperammonemia	C0220994	OVGP1	5016	0	1
+Hyperammonemia	C0220994	PCCA	5095	1	1
+Hyperammonemia	C0220994	PCCB	5096	1	1
+Hyperammonemia	C0220994	PFKM	5213	1	1
+Hyperammonemia	C0220994	POLG	5428	1	0
+Hyperammonemia	C0220994	PPT1	5538	1	1
+Hyperammonemia	C0220994	PSKH1	5681	0	1
+Hyperammonemia	C0220994	ALDH18A1	5832	1	1
+Hyperammonemia	C0220994	PYGL	5836	1	1
+Hyperammonemia	C0220994	PYGM	5837	1	1
+Hyperammonemia	C0220994	SGSH	6448	1	1
+Hyperammonemia	C0220994	SLC15A1	6564	0	1
+Hyperammonemia	C0220994	SLC15A2	6565	0	1
+Hyperammonemia	C0220994	SLCO1A2	6579	0	1
+Hyperammonemia	C0220994	SLC22A3	6581	0	1
+Hyperammonemia	C0220994	SLC22A4	6583	0	1
+Hyperammonemia	C0220994	SLC22A5	6584	1	1
+Hyperammonemia	C0220994	SMPD1	6609	1	1
+Hyperammonemia	C0220994	TAZ	6901	1	1
+Hyperammonemia	C0220994	TYMS	7298	1	1
+Hyperammonemia	C0220994	SUCLG1	8802	1	1
+Hyperammonemia	C0220994	GYG2	8908	0	1
+Hyperammonemia	C0220994	SLC7A7	9056	1	1
+Hyperammonemia	C0220994	AASS	10157	0	1
+Hyperammonemia	C0220994	SLC25A13	10165	1	1
+Hyperammonemia	C0220994	SLC25A15	10166	1	0
+Hyperammonemia	C0220994	TMEM147	10430	0	1
+Hyperammonemia	C0220994	NPC2	10577	1	1
+Hyperammonemia	C0220994	LPIN1	23175	1	1
+Hyperammonemia	C0220994	MLYCD	23417	1	0
+Hyperammonemia	C0220994	MMACHC	25974	1	1
+Hyperammonemia	C0220994	DNM3	26052	0	1
+Hyperammonemia	C0220994	SLC17A5	26503	1	0
+Hyperammonemia	C0220994	ST6GALNAC4	27090	0	1
+Hyperammonemia	C0220994	MMADHC	27249	0	1
+Hyperammonemia	C0220994	RBMXL2	27288	0	1
+Hyperammonemia	C0220994	SLCO3A1	28232	0	1
+Hyperammonemia	C0220994	SCCPDH	51097	0	1
+Hyperammonemia	C0220994	CD320	51293	1	1
+Hyperammonemia	C0220994	SLCO1C1	53919	0	1
+Hyperammonemia	C0220994	TMEM70	54968	1	1
+Hyperammonemia	C0220994	CLN6	54982	1	1
+Hyperammonemia	C0220994	TMEM39B	55116	0	1
+Hyperammonemia	C0220994	TMEM206	55248	0	1
+Hyperammonemia	C0220994	NUDT15	55270	0	1
+Hyperammonemia	C0220994	LMBRD1	55788	1	1
+Hyperammonemia	C0220994	MCCC1	56922	1	1
+Hyperammonemia	C0220994	APMAP	57136	0	1
+Hyperammonemia	C0220994	MCOLN1	57192	1	1
+Hyperammonemia	C0220994	MCCC2	64087	1	1
+Hyperammonemia	C0220994	SPATA20	64847	0	1
+Hyperammonemia	C0220994	GNPTAB	79158	1	1
+Hyperammonemia	C0220994	SRD5A3	79644	0	1
+Hyperammonemia	C0220994	PDZD3	79849	0	1
+Hyperammonemia	C0220994	SLC35E1	79939	0	1
+Hyperammonemia	C0220994	DHDDS	79947	0	1
+Hyperammonemia	C0220994	TMEM134	80194	0	1
+Hyperammonemia	C0220994	OPA3	80207	1	1
+Hyperammonemia	C0220994	LOXL3	84695	0	1
+Hyperammonemia	C0220994	ATPAF2	91647	1	1
+Hyperammonemia	C0220994	ERMAP	114625	0	1
+Hyperammonemia	C0220994	HGSNAT	138050	1	0
+Hyperammonemia	C0220994	YIPF6	286451	0	1
+Hypoalbuminemia	C0239981	ALB	213	1	1
+Hypoalbuminemia	C0239981	IL6	3569	1	1
+Hypoalbuminemia	C0239981	IL6R	3570	0	1
+Hypoalbuminemia	C0239981	OSM	5008	0	1
+Hypoalbuminemia	C0239981	TNFRSF1B	7133	1	1
+Liver Cirrhosis	C0023890	A2M	2	1	1
+Liver Cirrhosis	C0023890	ACTA2	59	1	1
+Liver Cirrhosis	C0023890	ADRA1A	148	1	1
+Liver Cirrhosis	C0023890	ACAN	176	0	1
+Liver Cirrhosis	C0023890	AGT	183	1	1
+Liver Cirrhosis	C0023890	ALAD	210	1	1
+Liver Cirrhosis	C0023890	ALB	213	1	1
+Liver Cirrhosis	C0023890	ARNT	405	1	1
+Liver Cirrhosis	C0023890	ARRB1	408	1	1
+Liver Cirrhosis	C0023890	ATP7B	540	1	1
+Liver Cirrhosis	C0023890	SERPING1	710	1	1
+Liver Cirrhosis	C0023890	C1QB	713	1	1
+Liver Cirrhosis	C0023890	SERPINA6	866	1	0
+Liver Cirrhosis	C0023890	SERPINH1	871	1	1
+Liver Cirrhosis	C0023890	CD9	928	1	1
+Liver Cirrhosis	C0023890	CD14	929	1	1
+Liver Cirrhosis	C0023890	CHRM3	1131	1	0
+Liver Cirrhosis	C0023890	CCR8	1237	0	1
+Liver Cirrhosis	C0023890	CNR1	1268	1	0
+Liver Cirrhosis	C0023890	CNR2	1269	1	0
+Liver Cirrhosis	C0023890	COL1A1	1277	1	1
+Liver Cirrhosis	C0023890	COL1A2	1278	1	1
+Liver Cirrhosis	C0023890	COL3A1	1281	1	1
+Liver Cirrhosis	C0023890	COL5A2	1290	1	1
+Liver Cirrhosis	C0023890	CP	1356	1	1
+Liver Cirrhosis	C0023890	CTGF	1490	1	1
+Liver Cirrhosis	C0023890	CTNNB1	1499	1	1
+Liver Cirrhosis	C0023890	CYBA	1535	1	1
+Liver Cirrhosis	C0023890	CYP1A2	1544	1	0
+Liver Cirrhosis	C0023890	CYP27A1	1593	1	1
+Liver Cirrhosis	C0023890	DHCR7	1717	1	1
+Liver Cirrhosis	C0023890	F2	2147	1	1
+Liver Cirrhosis	C0023890	F2R	2149	1	1
+Liver Cirrhosis	C0023890	F3	2152	1	1
+Liver Cirrhosis	C0023890	F5	2153	1	1
+Liver Cirrhosis	C0023890	FBN1	2200	1	1
+Liver Cirrhosis	C0023890	FCN1	2219	0	1
+Liver Cirrhosis	C0023890	FGF2	2247	1	1
+Liver Cirrhosis	C0023890	FGF6	2251	0	1
+Liver Cirrhosis	C0023890	FGF7	2252	1	1
+Liver Cirrhosis	C0023890	FGF9	2254	0	1
+Liver Cirrhosis	C0023890	FGFR2	2263	1	1
+Liver Cirrhosis	C0023890	FLT1	2321	1	1
+Liver Cirrhosis	C0023890	GC	2638	1	1
+Liver Cirrhosis	C0023890	HDAC2	3066	1	1
+Liver Cirrhosis	C0023890	HGF	3082	1	1
+Liver Cirrhosis	C0023890	HSD11B2	3291	1	1
+Liver Cirrhosis	C0023890	IFNA1	3439	1	1
+Liver Cirrhosis	C0023890	IFNA5	3442	0	1
+Liver Cirrhosis	C0023890	IFNAR2	3455	0	1
+Liver Cirrhosis	C0023890	IGFBP1	3484	1	0
+Liver Cirrhosis	C0023890	IGFBP2	3485	1	1
+Liver Cirrhosis	C0023890	IL6	3569	1	1
+Liver Cirrhosis	C0023890	IL6R	3570	0	1
+Liver Cirrhosis	C0023890	JUND	3727	1	1
+Liver Cirrhosis	C0023890	KCNC4	3749	0	1
+Liver Cirrhosis	C0023890	KRT8	3856	1	1
+Liver Cirrhosis	C0023890	KRT18	3875	1	1
+Liver Cirrhosis	C0023890	LAMB3	3914	0	1
+Liver Cirrhosis	C0023890	LAMC2	3918	1	1
+Liver Cirrhosis	C0023890	LGALS1	3956	1	1
+Liver Cirrhosis	C0023890	LGALS3BP	3959	1	1
+Liver Cirrhosis	C0023890	LOX	4015	1	1
+Liver Cirrhosis	C0023890	LUM	4060	1	1
+Liver Cirrhosis	C0023890	SMAD3	4088	1	1
+Liver Cirrhosis	C0023890	MME	4311	0	1
+Liver Cirrhosis	C0023890	MMP2	4313	1	1
+Liver Cirrhosis	C0023890	MMP3	4314	0	1
+Liver Cirrhosis	C0023890	MMP7	4316	0	1
+Liver Cirrhosis	C0023890	MMP9	4318	0	1
+Liver Cirrhosis	C0023890	MMP10	4319	0	1
+Liver Cirrhosis	C0023890	MMP13	4322	0	1
+Liver Cirrhosis	C0023890	MMP15	4324	0	1
+Liver Cirrhosis	C0023890	NFE2L2	4780	1	1
+Liver Cirrhosis	C0023890	NPC1	4864	1	1
+Liver Cirrhosis	C0023890	NPPA	4878	1	1
+Liver Cirrhosis	C0023890	OSM	5008	0	1
+Liver Cirrhosis	C0023890	PCOLCE	5118	1	1
+Liver Cirrhosis	C0023890	PGF	5228	0	1
+Liver Cirrhosis	C0023890	ABCB4	5244	1	1
+Liver Cirrhosis	C0023890	SERPINA1	5265	1	1
+Liver Cirrhosis	C0023890	SERPINI1	5274	0	1
+Liver Cirrhosis	C0023890	PLAU	5328	1	1
+Liver Cirrhosis	C0023890	PLOD2	5352	1	1
+Liver Cirrhosis	C0023890	PRTN3	5657	0	1
+Liver Cirrhosis	C0023890	PYY	5697	0	1
+Liver Cirrhosis	C0023890	PTHLH	5744	0	1
+Liver Cirrhosis	C0023890	REN	5972	1	1
+Liver Cirrhosis	C0023890	SCNN1D	6339	0	1
+Liver Cirrhosis	C0023890	CCL1	6346	0	1
+Liver Cirrhosis	C0023890	CCL2	6347	1	1
+Liver Cirrhosis	C0023890	CCL16	6360	0	1
+Liver Cirrhosis	C0023890	CCL19	6363	0	1
+Liver Cirrhosis	C0023890	CCL20	6364	0	1
+Liver Cirrhosis	C0023890	CCL25	6370	0	1
+Liver Cirrhosis	C0023890	CXCL6	6372	0	1
+Liver Cirrhosis	C0023890	SIM1	6492	0	1
+Liver Cirrhosis	C0023890	SPARC	6678	1	1
+Liver Cirrhosis	C0023890	SPP1	6696	1	1
+Liver Cirrhosis	C0023890	STAT1	6772	1	1
+Liver Cirrhosis	C0023890	TGFB1	7040	1	1
+Liver Cirrhosis	C0023890	TGFB2	7042	0	1
+Liver Cirrhosis	C0023890	TGFB3	7043	0	1
+Liver Cirrhosis	C0023890	TGFBR1	7046	1	1
+Liver Cirrhosis	C0023890	TGFBR3	7049	0	1
+Liver Cirrhosis	C0023890	THBS1	7057	1	1
+Liver Cirrhosis	C0023890	THBS2	7058	0	1
+Liver Cirrhosis	C0023890	TIMP2	7077	0	1
+Liver Cirrhosis	C0023890	TNFRSF1B	7133	1	1
+Liver Cirrhosis	C0023890	VEGFA	7422	1	1
+Liver Cirrhosis	C0023890	VIM	7431	1	1
+Liver Cirrhosis	C0023890	VTN	7448	1	1
+Liver Cirrhosis	C0023890	SLC30A4	7782	0	1
+Liver Cirrhosis	C0023890	TAGLN2	8407	1	1
+Liver Cirrhosis	C0023890	NRP2	8828	0	1
+Liver Cirrhosis	C0023890	NRP1	8829	0	1
+Liver Cirrhosis	C0023890	RGN	9104	1	1
+Liver Cirrhosis	C0023890	SLC22A8	9376	1	0
+Liver Cirrhosis	C0023890	ADAMTS1	9510	0	1
+Liver Cirrhosis	C0023890	SLC17A2	10246	1	0
+Liver Cirrhosis	C0023890	PEMT	10400	0	1
+Liver Cirrhosis	C0023890	CBX7	23492	0	1
+Liver Cirrhosis	C0023890	SLC13A4	26266	1	0
+Liver Cirrhosis	C0023890	CACNG4	27092	0	1
+Liver Cirrhosis	C0023890	DESI1	27351	0	1
+Liver Cirrhosis	C0023890	KCNIP2	30819	0	1
+Liver Cirrhosis	C0023890	KCNIP1	30820	0	1
+Liver Cirrhosis	C0023890	C1RL	51279	0	1
+Liver Cirrhosis	C0023890	SLC30A10	55532	1	1
+Liver Cirrhosis	C0023890	GSDMB	55876	0	1
+Liver Cirrhosis	C0023890	BAHCC1	57597	0	1
+Liver Cirrhosis	C0023890	EDA2R	60401	0	1
+Liver Cirrhosis	C0023890	BCAN	63827	0	1
+Liver Cirrhosis	C0023890	UNC93B1	81622	1	1
+Liver Cirrhosis	C0023890	CYP2R1	120227	1	0
+Liver Cirrhosis	C0023890	CCR2	729230	0	1
+Liver Cirrhosis, Alcoholic	C0023891	BCL2	596	1	1
+Liver Cirrhosis, Alcoholic	C0023891	CAT	847	1	1
+Liver Cirrhosis, Alcoholic	C0023891	COL2A1	1280	0	1
+Liver Cirrhosis, Alcoholic	C0023891	COL3A1	1281	1	1
+Liver Cirrhosis, Alcoholic	C0023891	CYP2E1	1571	1	1
+Liver Cirrhosis, Alcoholic	C0023891	HYAL1	3373	0	1
+Liver Cirrhosis, Alcoholic	C0023891	IL6	3569	1	1
+Liver Cirrhosis, Alcoholic	C0023891	IL6R	3570	0	1
+Liver Cirrhosis, Alcoholic	C0023891	SMAD3	4088	1	1
+Liver Cirrhosis, Alcoholic	C0023891	MMP2	4313	1	1
+Liver Cirrhosis, Alcoholic	C0023891	MMP9	4318	0	1
+Liver Cirrhosis, Alcoholic	C0023891	MMP10	4319	0	1
+Liver Cirrhosis, Alcoholic	C0023891	MMP13	4322	0	1
+Liver Cirrhosis, Alcoholic	C0023891	MPO	4353	1	0
+Liver Cirrhosis, Alcoholic	C0023891	OSM	5008	0	1
+Liver Cirrhosis, Alcoholic	C0023891	RELA	5970	1	1
+Liver Cirrhosis, Alcoholic	C0023891	CXCL6	6372	0	1
+Liver Cirrhosis, Alcoholic	C0023891	SOD2	6648	1	1
+Liver Cirrhosis, Alcoholic	C0023891	TGFB1	7040	1	1
+Liver Cirrhosis, Alcoholic	C0023891	THBS2	7058	0	1
+Liver Cirrhosis, Alcoholic	C0023891	TIMP1	7076	1	1
+Liver Cirrhosis, Alcoholic	C0023891	TIMP2	7077	0	1
+Liver Cirrhosis, Alcoholic	C0023891	TNF	7124	1	1
+Liver Cirrhosis, Alcoholic	C0023891	BCAN	63827	0	1
+Liver Cirrhosis, Alcoholic	C0023891	MBOAT7	79143	1	1
+Liver Cirrhosis, Alcoholic	C0023891	PNPLA3	80339	1	1
+Liver Dysfunction	C0086565	ACTA2	59	1	0
+Liver Dysfunction	C0086565	AFP	174	1	0
+Liver Dysfunction	C0086565	AHR	196	1	0
+Liver Dysfunction	C0086565	ALAD	210	1	0
+Liver Dysfunction	C0086565	ALOX5AP	241	1	0
+Liver Dysfunction	C0086565	ALPL	249	1	0
+Liver Dysfunction	C0086565	ATP7B	540	1	0
+Liver Dysfunction	C0086565	BCL2L1	598	1	0
+Liver Dysfunction	C0086565	CCK	885	1	0
+Liver Dysfunction	C0086565	CD3D	915	1	0
+Liver Dysfunction	C0086565	CD86	942	1	0
+Liver Dysfunction	C0086565	CD79B	974	1	0
+Liver Dysfunction	C0086565	CCR1	1230	1	0
+Liver Dysfunction	C0086565	LTB4R	1241	1	0
+Liver Dysfunction	C0086565	COL3A1	1281	1	0
+Liver Dysfunction	C0086565	CSF3	1440	1	0
+Liver Dysfunction	C0086565	CYP1A2	1544	1	0
+Liver Dysfunction	C0086565	NQO1	1728	1	0
+Liver Dysfunction	C0086565	ENO3	2027	1	0
+Liver Dysfunction	C0086565	GABRR2	2570	1	0
+Liver Dysfunction	C0086565	GGT1	2678	1	0
+Liver Dysfunction	C0086565	GRK5	2869	1	0
+Liver Dysfunction	C0086565	GPT	2875	1	0
+Liver Dysfunction	C0086565	HK3	3101	1	0
+Liver Dysfunction	C0086565	HMOX1	3162	1	0
+Liver Dysfunction	C0086565	HSPA1A	3303	1	0
+Liver Dysfunction	C0086565	IL1RAP	3556	1	0
+Liver Dysfunction	C0086565	IL9R	3581	1	0
+Liver Dysfunction	C0086565	IL11	3589	1	0
+Liver Dysfunction	C0086565	ITGB6	3694	1	0
+Liver Dysfunction	C0086565	JUP	3728	1	0
+Liver Dysfunction	C0086565	MMP9	4318	1	0
+Liver Dysfunction	C0086565	MTHFR	4524	1	0
+Liver Dysfunction	C0086565	NFKB1	4790	1	0
+Liver Dysfunction	C0086565	NOS2	4843	1	0
+Liver Dysfunction	C0086565	NPC1	4864	1	0
+Liver Dysfunction	C0086565	SERPINA1	5265	1	0
+Liver Dysfunction	C0086565	RAC1	5879	1	0
+Liver Dysfunction	C0086565	RNASE6	6039	1	0
+Liver Dysfunction	C0086565	SC5D	6309	1	0
+Liver Dysfunction	C0086565	CCL2	6347	1	0
+Liver Dysfunction	C0086565	SRSF5	6430	1	0
+Liver Dysfunction	C0086565	ST8SIA1	6489	1	0
+Liver Dysfunction	C0086565	SOD1	6647	1	0
+Liver Dysfunction	C0086565	SULT1E1	6783	1	0
+Liver Dysfunction	C0086565	TGM1	7051	1	0
+Liver Dysfunction	C0086565	TIMP3	7078	1	0
+Liver Dysfunction	C0086565	TM4SF4	7104	1	0
+Liver Dysfunction	C0086565	TNF	7124	1	0
+Liver Dysfunction	C0086565	TXN	7295	1	0
+Liver Dysfunction	C0086565	TYROBP	7305	1	0
+Liver Dysfunction	C0086565	IL1R2	7850	1	0
+Liver Dysfunction	C0086565	SOCS1	8651	1	0
+Liver Dysfunction	C0086565	NRP1	8829	1	0
+Liver Dysfunction	C0086565	SOCS3	9021	1	0
+Liver Dysfunction	C0086565	CYP7B1	9420	1	0
+Liver Dysfunction	C0086565	NR1H4	9971	1	0
+Liver Dysfunction	C0086565	DDAH1	23576	1	0
+Liver Dysfunction	C0086565	AMACR	23600	1	0
+Liver Dysfunction	C0086565	HPGDS	27306	1	0
+Liver Dysfunction	C0086565	TREM1	54210	1	0
+Liver Dysfunction	C0086565	CRISPLD2	83716	1	0
+Liver Dysfunction	C0086565	CCR2	729230	1	0
+Liver Failure	C0085605	ACADM	34	1	1
+Liver Failure	C0085605	F2	2147	1	1
+Liver Failure	C0085605	ORM1	5004	1	1
+Liver Failure	C0085605	PGF	5228	0	1
+Liver Failure	C0085605	VEGFA	7422	1	1
+Liver Failure	C0085605	NRP2	8828	0	1
+Liver Failure	C0085605	NRP1	8829	0	1
+Liver Failure	C0085605	ADAMTS1	9510	0	1
+Liver Failure, Acute	C0162557	ALB	213	1	1
+Liver Failure, Acute	C0162557	ANG	283	0	1
+Liver Failure, Acute	C0162557	APLP2	334	0	1
+Liver Failure, Acute	C0162557	FAS	355	1	1
+Liver Failure, Acute	C0162557	FASLG	356	1	1
+Liver Failure, Acute	C0162557	SERPINC1	462	1	1
+Liver Failure, Acute	C0162557	ATOX1	475	0	1
+Liver Failure, Acute	C0162557	ATP6V0B	533	0	1
+Liver Failure, Acute	C0162557	ATP7B	540	1	1
+Liver Failure, Acute	C0162557	BCL7A	605	0	1
+Liver Failure, Acute	C0162557	BID	637	0	1
+Liver Failure, Acute	C0162557	BMPR2	659	0	1
+Liver Failure, Acute	C0162557	CALCA	796	0	1
+Liver Failure, Acute	C0162557	CAMP	820	0	1
+Liver Failure, Acute	C0162557	CAST	831	1	1
+Liver Failure, Acute	C0162557	CASP10	843	0	1
+Liver Failure, Acute	C0162557	CASQ1	844	0	1
+Liver Failure, Acute	C0162557	CD74	972	1	1
+Liver Failure, Acute	C0162557	CD151	977	0	1
+Liver Failure, Acute	C0162557	CDX1	1044	0	1
+Liver Failure, Acute	C0162557	CEBPA	1050	0	1
+Liver Failure, Acute	C0162557	CR2	1380	0	1
+Liver Failure, Acute	C0162557	CSF3	1440	1	0
+Liver Failure, Acute	C0162557	DMWD	1762	0	1
+Liver Failure, Acute	C0162557	DSG1	1828	0	1
+Liver Failure, Acute	C0162557	DSG3	1830	0	1
+Liver Failure, Acute	C0162557	DUSP8	1850	0	1
+Liver Failure, Acute	C0162557	ELK4	2005	0	1
+Liver Failure, Acute	C0162557	FCGRT	2217	0	1
+Liver Failure, Acute	C0162557	GC	2638	1	1
+Liver Failure, Acute	C0162557	GFER	2671	1	1
+Liver Failure, Acute	C0162557	GFRA1	2674	0	1
+Liver Failure, Acute	C0162557	GHR	2690	0	1
+Liver Failure, Acute	C0162557	GUCY1A3	2982	0	1
+Liver Failure, Acute	C0162557	GUCY1B3	2983	0	1
+Liver Failure, Acute	C0162557	GYS2	2998	0	1
+Liver Failure, Acute	C0162557	HGF	3082	1	1
+Liver Failure, Acute	C0162557	HSD17B1	3292	0	1
+Liver Failure, Acute	C0162557	HYAL1	3373	0	1
+Liver Failure, Acute	C0162557	IL1RN	3557	1	1
+Liver Failure, Acute	C0162557	INHBA	3624	1	0
+Liver Failure, Acute	C0162557	INS	3630	1	1
+Liver Failure, Acute	C0162557	JUND	3727	0	1
+Liver Failure, Acute	C0162557	KRT8	3856	1	1
+Liver Failure, Acute	C0162557	KRT18	3875	1	1
+Liver Failure, Acute	C0162557	KRT34	3885	0	1
+Liver Failure, Acute	C0162557	LTA	4049	0	1
+Liver Failure, Acute	C0162557	MMP1	4312	0	1
+Liver Failure, Acute	C0162557	MMP3	4314	0	1
+Liver Failure, Acute	C0162557	MMP7	4316	0	1
+Liver Failure, Acute	C0162557	MMP8	4317	0	1
+Liver Failure, Acute	C0162557	MMP10	4319	0	1
+Liver Failure, Acute	C0162557	MMP13	4322	0	1
+Liver Failure, Acute	C0162557	NUDT1	4521	0	1
+Liver Failure, Acute	C0162557	NFATC3	4775	0	1
+Liver Failure, Acute	C0162557	NFATC4	4776	0	1
+Liver Failure, Acute	C0162557	NFKBIL1	4795	0	1
+Liver Failure, Acute	C0162557	POMC	5443	1	0
+Liver Failure, Acute	C0162557	MAPK8	5599	1	1
+Liver Failure, Acute	C0162557	ST3GAL4	6484	0	1
+Liver Failure, Acute	C0162557	SPI1	6688	0	1
+Liver Failure, Acute	C0162557	SPIB	6689	0	1
+Liver Failure, Acute	C0162557	TNF	7124	1	1
+Liver Failure, Acute	C0162557	TNFRSF1A	7132	0	1
+Liver Failure, Acute	C0162557	TNFRSF1B	7133	0	1
+Liver Failure, Acute	C0162557	UBA7	7318	0	1
+Liver Failure, Acute	C0162557	PPFIA4	8497	0	1
+Liver Failure, Acute	C0162557	PPFIA2	8499	0	1
+Liver Failure, Acute	C0162557	PPFIA3	8541	0	1
+Liver Failure, Acute	C0162557	KCNK5	8645	0	1
+Liver Failure, Acute	C0162557	KRT37	8688	0	1
+Liver Failure, Acute	C0162557	TRADD	8717	0	1
+Liver Failure, Acute	C0162557	TNFRSF25	8718	0	1
+Liver Failure, Acute	C0162557	FADD	8772	0	1
+Liver Failure, Acute	C0162557	TNFRSF10B	8795	0	1
+Liver Failure, Acute	C0162557	PKMYT1	9088	0	1
+Liver Failure, Acute	C0162557	SH3BP5	9467	0	1
+Liver Failure, Acute	C0162557	MAPK8IP1	9479	0	1
+Liver Failure, Acute	C0162557	KIAA0319	9856	0	1
+Liver Failure, Acute	C0162557	BCL2L10	10017	0	1
+Liver Failure, Acute	C0162557	BCL2L11	10018	0	1
+Liver Failure, Acute	C0162557	FRAT1	10023	0	1
+Liver Failure, Acute	C0162557	FEM1B	10116	0	1
+Liver Failure, Acute	C0162557	CALCRL	10203	0	1
+Liver Failure, Acute	C0162557	RAMP2	10266	0	1
+Liver Failure, Acute	C0162557	GPNMB	10457	1	1
+Liver Failure, Acute	C0162557	FST	10468	1	1
+Liver Failure, Acute	C0162557	PKP3	11187	0	1
+Liver Failure, Acute	C0162557	MAPK8IP3	23162	0	1
+Liver Failure, Acute	C0162557	PSD4	23550	0	1
+Liver Failure, Acute	C0162557	SH2B1	25970	0	1
+Liver Failure, Acute	C0162557	BBC3	27113	0	1
+Liver Failure, Acute	C0162557	IL37	27178	0	1
+Liver Failure, Acute	C0162557	SCAND1	51282	0	1
+Liver Failure, Acute	C0162557	ERAP1	51752	0	1
+Liver Failure, Acute	C0162557	LRP1B	53353	0	1
+Liver Failure, Acute	C0162557	GRAMD1C	54762	0	1
+Liver Failure, Acute	C0162557	BBS7	55212	0	1
+Liver Failure, Acute	C0162557	RHBG	57127	0	1
+Liver Failure, Acute	C0162557	BCAN	63827	0	1
+Liver Failure, Acute	C0162557	SOX17	64321	0	1
+Liver Failure, Acute	C0162557	NLRX1	79671	0	1
+Liver Failure, Acute	C0162557	ADGRV1	84059	0	1
+Liver Failure, Acute	C0162557	MEX3D	399664	0	1
+Liver Failure, Acute	C0162557	CCDC88C	440193	0	1
+Nonalcoholic Steatohepatitis	C3241937	FAS	355	1	1
+Nonalcoholic Steatohepatitis	C3241937	CD14	929	1	1
+Nonalcoholic Steatohepatitis	C3241937	SCARB1	949	1	1
+Nonalcoholic Steatohepatitis	C3241937	CDH7	1005	0	1
+Nonalcoholic Steatohepatitis	C3241937	CDO1	1036	0	1
+Nonalcoholic Steatohepatitis	C3241937	CSF2	1437	1	1
+Nonalcoholic Steatohepatitis	C3241937	CSF2RB	1439	0	1
+Nonalcoholic Steatohepatitis	C3241937	CSF3R	1441	0	1
+Nonalcoholic Steatohepatitis	C3241937	CYP1A2	1544	1	0
+Nonalcoholic Steatohepatitis	C3241937	CYP2E1	1571	1	1
+Nonalcoholic Steatohepatitis	C3241937	CYP17A1	1586	1	1
+Nonalcoholic Steatohepatitis	C3241937	ACE	1636	1	1
+Nonalcoholic Steatohepatitis	C3241937	F2	2147	1	1
+Nonalcoholic Steatohepatitis	C3241937	FCN1	2219	0	1
+Nonalcoholic Steatohepatitis	C3241937	GRK4	2868	0	1
+Nonalcoholic Steatohepatitis	C3241937	GSTA1	2938	1	1
+Nonalcoholic Steatohepatitis	C3241937	GSTM1	2944	1	1
+Nonalcoholic Steatohepatitis	C3241937	GSTP1	2950	1	1
+Nonalcoholic Steatohepatitis	C3241937	GSTT1	2952	1	1
+Nonalcoholic Steatohepatitis	C3241937	IL1A	3552	1	1
+Nonalcoholic Steatohepatitis	C3241937	IL3	3562	1	1
+Nonalcoholic Steatohepatitis	C3241937	IL4	3565	1	1
+Nonalcoholic Steatohepatitis	C3241937	IL5	3567	0	1
+Nonalcoholic Steatohepatitis	C3241937	JAK2	3717	1	1
+Nonalcoholic Steatohepatitis	C3241937	LDLR	3949	1	1
+Nonalcoholic Steatohepatitis	C3241937	LEP	3952	1	1
+Nonalcoholic Steatohepatitis	C3241937	LIF	3976	1	1
+Nonalcoholic Steatohepatitis	C3241937	LIFR	3977	0	1
+Nonalcoholic Steatohepatitis	C3241937	ADAM11	4185	0	1
+Nonalcoholic Steatohepatitis	C3241937	MMP1	4312	1	1
+Nonalcoholic Steatohepatitis	C3241937	MMP9	4318	0	1
+Nonalcoholic Steatohepatitis	C3241937	MMP10	4319	0	1
+Nonalcoholic Steatohepatitis	C3241937	MMP13	4322	0	1
+Nonalcoholic Steatohepatitis	C3241937	MYL5	4636	0	1
+Nonalcoholic Steatohepatitis	C3241937	NFE2L2	4780	1	1
+Nonalcoholic Steatohepatitis	C3241937	NTS	4922	0	1
+Nonalcoholic Steatohepatitis	C3241937	SERPINB2	5055	1	1
+Nonalcoholic Steatohepatitis	C3241937	ABCB4	5244	1	1
+Nonalcoholic Steatohepatitis	C3241937	PPARA	5465	1	1
+Nonalcoholic Steatohepatitis	C3241937	PPARD	5467	1	1
+Nonalcoholic Steatohepatitis	C3241937	PRF1	5551	1	1
+Nonalcoholic Steatohepatitis	C3241937	RAG2	5897	1	1
+Nonalcoholic Steatohepatitis	C3241937	RBP1	5947	0	1
+Nonalcoholic Steatohepatitis	C3241937	CXCL6	6372	0	1
+Nonalcoholic Steatohepatitis	C3241937	ST3GAL1	6482	0	1
+Nonalcoholic Steatohepatitis	C3241937	SREBF1	6720	1	1
+Nonalcoholic Steatohepatitis	C3241937	TGFB1	7040	1	1
+Nonalcoholic Steatohepatitis	C3241937	THBS2	7058	0	1
+Nonalcoholic Steatohepatitis	C3241937	TIMP2	7077	0	1
+Nonalcoholic Steatohepatitis	C3241937	TNFRSF1B	7133	1	1
+Nonalcoholic Steatohepatitis	C3241937	XBP1	7494	1	1
+Nonalcoholic Steatohepatitis	C3241937	IKBKG	8517	1	1
+Nonalcoholic Steatohepatitis	C3241937	STC2	8614	1	1
+Nonalcoholic Steatohepatitis	C3241937	ADIPOQ	9370	1	1
+Nonalcoholic Steatohepatitis	C3241937	NR1H4	9971	1	1
+Nonalcoholic Steatohepatitis	C3241937	SIRT1	23411	1	1
+Nonalcoholic Steatohepatitis	C3241937	FGF21	26291	1	1
+Nonalcoholic Steatohepatitis	C3241937	B3GAT1	27087	1	1
+Nonalcoholic Steatohepatitis	C3241937	PNMAL1	55228	0	1
+Nonalcoholic Steatohepatitis	C3241937	BCAN	63827	0	1
+Nonalcoholic Steatohepatitis	C3241937	PNPLA3	80339	1	1
+Nonalcoholic Steatohepatitis	C3241937	OSBPL10	114884	0	1
+Nonalcoholic Steatohepatitis	C3241937	LAMA1	284217	1	1
+Steatohepatitis	C2711227	PLIN2	123	1	1
+Steatohepatitis	C2711227	AMT	275	0	1
+Steatohepatitis	C2711227	BIRC3	330	1	1
+Steatohepatitis	C2711227	APOB	338	1	1
+Steatohepatitis	C2711227	ARG1	383	0	1
+Steatohepatitis	C2711227	STS	412	1	0
+Steatohepatitis	C2711227	ATF4	468	1	1
+Steatohepatitis	C2711227	ATP7B	540	1	1
+Steatohepatitis	C2711227	CALCR	799	0	1
+Steatohepatitis	C2711227	CAT	847	1	1
+Steatohepatitis	C2711227	SERPINA6	866	1	0
+Steatohepatitis	C2711227	CD34	947	0	1
+Steatohepatitis	C2711227	CDH7	1005	0	1
+Steatohepatitis	C2711227	CEBPB	1051	1	1
+Steatohepatitis	C2711227	CEBPG	1054	0	1
+Steatohepatitis	C2711227	CMA1	1215	0	1
+Steatohepatitis	C2711227	COL3A1	1281	1	1
+Steatohepatitis	C2711227	CLDN4	1364	0	1
+Steatohepatitis	C2711227	CYP1B1	1545	1	1
+Steatohepatitis	C2711227	CYP2E1	1571	1	1
+Steatohepatitis	C2711227	CYP19A1	1588	1	0
+Steatohepatitis	C2711227	DBP	1628	0	1
+Steatohepatitis	C2711227	DDIT3	1649	1	1
+Steatohepatitis	C2711227	CFD	1675	0	1
+Steatohepatitis	C2711227	EMX2	2018	0	1
+Steatohepatitis	C2711227	F2	2147	1	1
+Steatohepatitis	C2711227	F2R	2149	1	1
+Steatohepatitis	C2711227	GAST	2520	0	1
+Steatohepatitis	C2711227	FUT7	2529	0	1
+Steatohepatitis	C2711227	ACKR1	2532	0	1
+Steatohepatitis	C2711227	GABBR1	2550	0	1
+Steatohepatitis	C2711227	GATM	2628	0	1
+Steatohepatitis	C2711227	GP1BA	2811	0	1
+Steatohepatitis	C2711227	GPT	2875	1	1
+Steatohepatitis	C2711227	GPX1	2876	1	1
+Steatohepatitis	C2711227	GPX4	2879	1	1
+Steatohepatitis	C2711227	CXCL3	2921	0	1
+Steatohepatitis	C2711227	HADHB	3032	1	1
+Steatohepatitis	C2711227	HHEX	3087	1	1
+Steatohepatitis	C2711227	HK3	3101	0	1
+Steatohepatitis	C2711227	HLF	3131	0	1
+Steatohepatitis	C2711227	FOXA1	3169	1	1
+Steatohepatitis	C2711227	HOXA5	3202	0	1
+Steatohepatitis	C2711227	IFNA1	3439	0	1
+Steatohepatitis	C2711227	IFNA2	3440	1	1
+Steatohepatitis	C2711227	IFNA5	3442	0	1
+Steatohepatitis	C2711227	IFNA8	3445	0	1
+Steatohepatitis	C2711227	IFNAR1	3454	0	1
+Steatohepatitis	C2711227	IFNAR2	3455	0	1
+Steatohepatitis	C2711227	IFNB1	3456	0	1
+Steatohepatitis	C2711227	CXCL8	3576	1	1
+Steatohepatitis	C2711227	CXCR1	3577	0	1
+Steatohepatitis	C2711227	CXCR2	3579	0	1
+Steatohepatitis	C2711227	INS	3630	1	1
+Steatohepatitis	C2711227	LDLR	3949	1	1
+Steatohepatitis	C2711227	LEP	3952	1	1
+Steatohepatitis	C2711227	LEPR	3953	1	1
+Steatohepatitis	C2711227	MAFG	4097	0	1
+Steatohepatitis	C2711227	MAT1A	4143	1	1
+Steatohepatitis	C2711227	MTTP	4547	1	1
+Steatohepatitis	C2711227	MYC	4609	1	1
+Steatohepatitis	C2711227	NFE2L2	4780	1	1
+Steatohepatitis	C2711227	TONSL	4796	0	1
+Steatohepatitis	C2711227	SERPINE1	5054	1	1
+Steatohepatitis	C2711227	PLAU	5328	0	1
+Steatohepatitis	C2711227	PLXNB3	5365	0	1
+Steatohepatitis	C2711227	POMC	5443	1	0
+Steatohepatitis	C2711227	PON1	5444	1	0
+Steatohepatitis	C2711227	PPARA	5465	1	1
+Steatohepatitis	C2711227	PPARD	5467	1	1
+Steatohepatitis	C2711227	PRKCH	5583	0	1
+Steatohepatitis	C2711227	PSMA5	5686	1	1
+Steatohepatitis	C2711227	PYY	5697	0	1
+Steatohepatitis	C2711227	PTEN	5728	1	1
+Steatohepatitis	C2711227	PTMA	5757	1	1
+Steatohepatitis	C2711227	SECTM1	6398	0	1
+Steatohepatitis	C2711227	SLC2A2	6514	1	1
+Steatohepatitis	C2711227	SOD1	6647	1	1
+Steatohepatitis	C2711227	SOD2	6648	1	1
+Steatohepatitis	C2711227	SREBF1	6720	1	1
+Steatohepatitis	C2711227	TF	7018	1	1
+Steatohepatitis	C2711227	TLR4	7099	1	1
+Steatohepatitis	C2711227	TNF	7124	1	1
+Steatohepatitis	C2711227	UCP2	7351	1	1
+Steatohepatitis	C2711227	XBP1	7494	1	1
+Steatohepatitis	C2711227	MAFK	7975	0	1
+Steatohepatitis	C2711227	NR0B2	8431	1	1
+Steatohepatitis	C2711227	DCHS1	8642	0	1
+Steatohepatitis	C2711227	TNFSF12	8742	0	1
+Steatohepatitis	C2711227	NR1I2	8856	1	1
+Steatohepatitis	C2711227	GPR37L1	9283	0	1
+Steatohepatitis	C2711227	NREP	9315	1	1
+Steatohepatitis	C2711227	SLC22A8	9376	1	0
+Steatohepatitis	C2711227	CYP7B1	9420	1	0
+Steatohepatitis	C2711227	GABBR2	9568	0	1
+Steatohepatitis	C2711227	SPOCK2	9806	0	1
+Steatohepatitis	C2711227	MAGI2	9863	0	1
+Steatohepatitis	C2711227	NR1H4	9971	1	1
+Steatohepatitis	C2711227	DGCR2	9993	0	1
+Steatohepatitis	C2711227	NR1H3	10062	1	1
+Steatohepatitis	C2711227	MPZL2	10205	0	1
+Steatohepatitis	C2711227	TRIB1	10221	0	1
+Steatohepatitis	C2711227	COLEC10	10584	0	1
+Steatohepatitis	C2711227	TREX2	11219	0	1
+Steatohepatitis	C2711227	FBXO21	23014	0	1
+Steatohepatitis	C2711227	MAST3	23031	0	1
+Steatohepatitis	C2711227	GPD1L	23171	1	1
+Steatohepatitis	C2711227	PACS2	23241	0	1
+Steatohepatitis	C2711227	SIRT1	23411	1	1
+Steatohepatitis	C2711227	ABCA5	23461	0	1
+Steatohepatitis	C2711227	DDAH1	23576	0	1
+Steatohepatitis	C2711227	LY96	23643	0	1
+Steatohepatitis	C2711227	FGF21	26291	1	1
+Steatohepatitis	C2711227	SEZ6L2	26470	0	1
+Steatohepatitis	C2711227	LAMP3	27074	0	1
+Steatohepatitis	C2711227	HPGDS	27306	0	1
+Steatohepatitis	C2711227	NOX4	50507	0	1
+Steatohepatitis	C2711227	FAHD2A	51011	0	1
+Steatohepatitis	C2711227	TMED7	51014	0	1
+Steatohepatitis	C2711227	ABHD5	51099	0	1
+Steatohepatitis	C2711227	ANGPTL4	51129	1	1
+Steatohepatitis	C2711227	SIRT7	51547	1	1
+Steatohepatitis	C2711227	DHRS7	51635	1	1
+Steatohepatitis	C2711227	LRP1B	53353	0	1
+Steatohepatitis	C2711227	CYCS	54205	1	1
+Steatohepatitis	C2711227	RNF216	54476	0	1
+Steatohepatitis	C2711227	TMEM161A	54929	0	1
+Steatohepatitis	C2711227	NUDT15	55270	0	1
+Steatohepatitis	C2711227	BATF3	55509	0	1
+Steatohepatitis	C2711227	POMGNT1	55624	0	1
+Steatohepatitis	C2711227	CNDP2	55748	1	1
+Steatohepatitis	C2711227	BDH2	56898	0	1
+Steatohepatitis	C2711227	ACE2	59272	0	1
+Steatohepatitis	C2711227	ZSCAN31	64288	0	1
+Steatohepatitis	C2711227	CYP4F12	66002	0	1
+Steatohepatitis	C2711227	SRD5A3	79644	0	1
+Steatohepatitis	C2711227	NEIL1	79661	1	1
+Steatohepatitis	C2711227	NEK11	79858	0	1
+Steatohepatitis	C2711227	PNPLA3	80339	1	1
+Steatohepatitis	C2711227	ZBTB7C	201501	0	1

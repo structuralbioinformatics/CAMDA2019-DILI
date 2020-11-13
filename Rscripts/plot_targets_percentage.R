@@ -6,7 +6,7 @@ library(caret)
 
 ### Define variables ###
 place = "home" #home or work
-remove.outliers = TRUE
+remove.outliers = FALSE
 outliers = c('daunorubicin', 'vorinostat')
 number.cv = 10
 number.repetitions = 10
@@ -30,8 +30,8 @@ if (place=="work"){
   main_directory = "/home/quim/PHD/Projects/camda"
   bigmem_directory = "/sbi/users/interchange/emre/quim/camda"
 } else {
-  main_directory = "/Users/quim/Dropbox/UPF/PhD/Projects/camda"
-  bigmem_directory = "/Users/quim/Documents/Projects/camda"
+  main_directory = "/Users/quim/Dropbox/UPF/PHD/Projects/camda"
+  bigmem_directory = "/Users/quim/Documents/DATA/camda"
 }
 
 ### Define files ###
@@ -127,10 +127,10 @@ ggplot(plot_reordered_df, aes(fill=type_drug, y=perc_drugs, x=target)) +
   geom_bar(stat="identity", position=position_dodge()) +
   #geom_text(aes(label=perc_drugs), size = 3, position = position_stack(vjust = 0.5))+
   #labs(title="Number of drugs per target", x="Targets", y="Number of drugs") + 
-  labs(x="Targets", y="% of drugs") + 
+  labs(x="Targets", y="% of drugs in each category") + 
   theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5)) +
   #scale_fill_discrete(name = "Number of drugs")
-  scale_fill_discrete(name = "% of drugs", labels = c("% DILI-Concern", "% No-DILI-Concern", "% Ambiguous-DILI-Concern"))
+  scale_fill_discrete(name = "% of drugs in each category", labels = c("% DILI-Concern", "% No-DILI-Concern", "% Ambiguous-DILI-Concern"))
 dev.off()
 
 Cairo::CairoPNG(output_plot_png, dpi=300, width = width_pdf, height = height_pdf, units="in") # Save in PDF
@@ -140,9 +140,9 @@ ggplot(plot_reordered_df, aes(fill=type_drug, y=perc_drugs, x=target)) +
   geom_bar(stat="identity", position=position_dodge()) +
   #geom_text(aes(label=perc_drugs), size = 3, position = position_stack(vjust = 0.5))+
   #labs(title="Number of drugs per target", x="Targets", y="Number of drugs") + 
-  labs(x="Targets", y="% of drugs") + 
+  labs(x="Targets", y="% of drugs in each category") + 
   theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5)) +
   #scale_fill_discrete(name = "Number of drugs")
-  scale_fill_discrete(name = "% of drugs", labels = c("% DILI-Concern", "% No-DILI-Concern", "% Ambiguous-DILI-Concern"))
+  scale_fill_discrete(name = "% of drugs in each category", labels = c("% DILI-Concern", "% No-DILI-Concern", "% Ambiguous-DILI-Concern"))
 dev.off()
 

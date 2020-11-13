@@ -1,0 +1,18 @@
+Dataset	Num. genes	Num. shared genes with Peng dataset
+Landmark	978	21
+DILI Landmark	66	4
+Biliary cirrhosis (DisGeNET)	33	5
+Biliary cirrhosis (GUILDify)	86	9
+Hepatitis, Drug-Induced (DisGeNET)	315	27
+Hyperammonemia (DisGeNET)	104	2
+Hyperammonemia (GUILDify)	148	3
+Liver Cirrhosis (DisGeNET)	97	25
+Liver Cirrhosis (GUILDify)	145	25
+Liver Cirrhosis, Alcoholic (DisGeNET)	30	7
+Liver Dysfunction (DisGeNET)	67	9
+Liver Failure, Acute (DisGeNET)	22	4
+Liver Failure, Acute (GUILDify)	118	10
+Nonalcoholic Steatohepatitis (DisGeNET)	42	13
+Nonalcoholic Steatohepatitis (GUILDify)	67	14
+Steatohepatitis (DisGeNET)	86	14
+Steatohepatitis (GUILDify)	167	13

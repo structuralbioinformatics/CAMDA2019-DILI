@@ -1,0 +1,231 @@
+Drug name	SMILES	DILIConcern
+alaproclate	CC(C(=O)OC(C)(C)CC1=CC=C(C=C1)Cl)N	Most-DILI-Concern
+acitretin	CC1=CC(=C(C(=C1/C=C/C(=C/C=C/C(=C\C(=O)O)/C)/C)C)C)OC	Most-DILI-Concern
+amiodarone	CCCCC1=C(C2=CC=CC=C2O1)C(=O)C3=CC(=C(C(=C3)I)OCCN(CC)CC)I	Most-DILI-Concern
+danazol	C[C@]12CC[C@H]3[C@H]([C@@H]1CC[C@]2(C#C)O)CCC4=CC5=C(C[C@]34C)C=NO5	Most-DILI-Concern
+dantrolene	C1C(=O)NC(=O)N1N=CC2=CC=C(O2)C3=CC=C(C=C3)[N+](=O)[O-]	Most-DILI-Concern
+felbamate	C1=CC=C(C=C1)C(COC(=O)N)COC(=O)N	Most-DILI-Concern
+lapatinib	CS(=O)(=O)CCNCC1=CC=C(O1)C2=CC3=C(C=C2)N=CN=C3NC4=CC(=C(C=C4)OCC5=CC(=CC=C5)F)Cl	Most-DILI-Concern
+leflunomide	CC1=C(C=NO1)C(=O)NC2=CC=C(C=C2)C(F)(F)F	Most-DILI-Concern
+mexiletine	CC1=C(C(=CC=C1)C)OCC(C)N	Most-DILI-Concern
+pazopanib	CC1=C(C=C(C=C1)NC2=NC=CC(=N2)N(C)C3=CC4=NN(C(=C4C=C3)C)C)S(=O)(=O)N	Most-DILI-Concern
+sunitinib	CCN(CC)CCNC(=O)C1=C(NC(=C1C)/C=C\2/C3=C(C=CC(=C3)F)NC2=O)C	Most-DILI-Concern
+acarbose	C[C@@H]1[C@H]([C@@H]([C@H]([C@H](O1)O[C@@H]2[C@H](O[C@@H]([C@@H]([C@H]2O)O)O[C@@H]3[C@H](O[C@H]([C@@H]([C@H]3O)O)O)CO)CO)O)O)N[C@H]4C=C([C@@H]([C@@H]([C@H]4O)O)O)CO	Most-DILI-Concern
+albendazole	CCCSC1=CC2=C(C=C1)N=C(N2)NC(=O)OC	Most-DILI-Concern
+bicalutamide	C[C@](CS(=O)(=O)C1=CC=C(C=C1)F)(C(=O)NC2=CC(=C(C=C2)C#N)C(F)(F)F)O	Most-DILI-Concern
+carbamazepine	C1=CC=C2C(=C1)C=CC3=CC=CC=C3N2C(=O)N	Most-DILI-Concern
+clomipramine	CN(C)CCCN1C2=CC=CC=C2CCC3=C1C=C(C=C3)Cl	Most-DILI-Concern
+clozapine	CN1CCN(CC1)C2=C3C=CC=CC3=NC4=C(N2)C=C(C=C4)Cl	Most-DILI-Concern
+diclofenac	C1=CC=C(C(=C1)CC(=O)O)NC2=C(C=CC=C2Cl)Cl	Most-DILI-Concern
+diflunisal	C1=CC(=C(C=C1C2=C(C=C(C=C2)F)F)C(=O)O)O	Most-DILI-Concern
+diltiazem	CC(=O)O[C@@H]1[C@@H](SC2=CC=CC=C2N(C1=O)CCN(C)C)C3=CC=C(C=C3)OC	Most-DILI-Concern
+duloxetine	CNCC[C@@H](C1=CC=CS1)OC2=CC=CC3=CC=CC=C32	Most-DILI-Concern
+erlotinib	COCCOC1=C(C=C2C(=C1)C(=NC=N2)NC3=CC=CC(=C3)C#C)OCCOC	Most-DILI-Concern
+erythromycin	CC[C@@H]1[C@@]([C@@H]([C@H](C(=O)[C@@H](C[C@@]([C@@H]([C@H]([C@@H]([C@H](C(=O)O1)C)O[C@H]2C[C@@]([C@H]([C@@H](O2)C)O)(C)OC)C)O[C@H]3[C@@H]([C@H](C[C@H](O3)C)N(C)C)O)(C)O)C)C)O)(C)O	Most-DILI-Concern
+etodolac	CCC1=CC=CC2=C1NC3=C2CCOC3(CC)CC(=O)O	Most-DILI-Concern
+exemestane	C[C@]12CC[C@H]3[C@H]([C@@H]1CCC2=O)CC(=C)C4=CC(=O)C=C[C@]34C	Most-DILI-Concern
+febuxostat	CC1=C(SC(=N1)C2=CC(=C(C=C2)OCC(C)C)C#N)C(=O)O	Most-DILI-Concern
+fluconazole	C1=CC(=C(C=C1F)F)C(CN2C=NC=N2)(CN3C=NC=N3)O	Most-DILI-Concern
+gefitinib	COC1=C(C=C2C(=C1)N=CN=C2NC3=CC(=C(C=C3)F)Cl)OCCCN4CCOCC4	Most-DILI-Concern
+isotretinoin	CC1=C(C(CCC1)(C)C)/C=C/C(=C/C=C/C(=C\C(=O)O)/C)/C	Most-DILI-Concern
+labetalol	CC(CCC1=CC=CC=C1)NCC(C2=CC(=C(C=C2)O)C(=O)N)O	Most-DILI-Concern
+nilutamide	CC1(C(=O)N(C(=O)N1)C2=CC(=C(C=C2)[N+](=O)[O-])C(F)(F)F)C	Most-DILI-Concern
+nortriptyline	CNCCC=C1C2=CC=CC=C2CCC3=CC=CC=C31	Most-DILI-Concern
+papaverine	COC1=C(C=C(C=C1)CC2=NC=CC3=CC(=C(C=C32)OC)OC)OC	Most-DILI-Concern
+tamoxifen	CC/C(=C(\C1=CC=CC=C1)/C2=CC=C(C=C2)OCCN(C)C)/C3=CC=CC=C3	Most-DILI-Concern
+testosterone	C[C@]12CC[C@H]3[C@H]([C@@H]1CC[C@@H]2O)CCC4=CC(=O)CC[C@]34C	Most-DILI-Concern
+ticlopidine	C1CN(CC2=C1SC=C2)CC3=CC=CC=C3Cl	Most-DILI-Concern
+voriconazole	C[C@@H](C1=NC=NC=C1F)[C@](CN2C=NC=N2)(C3=C(C=C(C=C3)F)F)O	Most-DILI-Concern
+bromocriptine	CC(C)C[C@H]1C(=O)N2CCC[C@H]2[C@]3(N1C(=O)[C@](O3)(C(C)C)NC(=O)[C@H]4CN([C@@H]5CC6=C(NC7=CC=CC(=C67)C5=C4)Br)C)O	Less-DILI-Concern
+celecoxib	CC1=CC=C(C=C1)C2=CC(=NN2C3=CC=C(C=C3)S(=O)(=O)N)C(F)(F)F	Less-DILI-Concern
+chlorambucil	C1=CC(=CC=C1CCCC(=O)O)N(CCCl)CCCl	Less-DILI-Concern
+clofibrate	CCOC(=O)C(C)(C)OC1=CC=C(C=C1)Cl	Less-DILI-Concern
+ezetimibe	C1=CC(=CC=C1[C@@H]2[C@H](C(=O)N2C3=CC=C(C=C3)F)CC[C@@H](C4=CC=C(C=C4)F)O)O	Less-DILI-Concern
+fenofibrate	CC(C)OC(=O)C(C)(C)OC1=CC=C(C=C1)C(=O)C2=CC=C(C=C2)Cl	Less-DILI-Concern
+fluvastatin	CC(C)N1C2=CC=CC=C2C(=C1/C=C/[C@@H](C[C@@H](CC(=O)O)O)O)C3=CC=C(C=C3)F	Less-DILI-Concern
+ketoprofen	CC(C1=CC=CC(=C1)C(=O)C2=CC=CC=C2)C(=O)O	Less-DILI-Concern
+ketorolac	C1CN2C(=CC=C2C(=O)C3=CC=CC=C3)C1C(=O)O	Less-DILI-Concern
+lovastatin	CC[C@H](C)C(=O)O[C@H]1C[C@H](C=C2[C@H]1[C@H]([C@H](C=C2)C)CC[C@@H]3C[C@H](CC(=O)O3)O)C	Less-DILI-Concern
+mebendazole	COC(=O)NC1=NC2=C(N1)C=C(C=C2)C(=O)C3=CC=CC=C3	Less-DILI-Concern
+meloxicam	CC1=CN=C(S1)NC(=O)C2=C(C3=CC=CC=C3S(=O)(=O)N2C)O	Less-DILI-Concern
+modafinil	C1=CC=C(C=C1)C(C2=CC=CC=C2)S(=O)CC(=O)N	Less-DILI-Concern
+naproxen	CC(C1=CC2=C(C=C1)C=C(C=C2)OC)C(=O)O	Less-DILI-Concern
+nifedipine	CC1=C(C(C(=C(N1)C)C(=O)OC)C2=CC=CC=C2[N+](=O)[O-])C(=O)OC	Less-DILI-Concern
+oxaprozin	C1=CC=C(C=C1)C2=C(OC(=N2)CCC(=O)O)C3=CC=CC=C3	Less-DILI-Concern
+perphenazine	C1CN(CCN1CCCN2C3=CC=CC=C3SC4=C2C=C(C=C4)Cl)CCO	Less-DILI-Concern
+pioglitazone	CCC1=CN=C(C=C1)CCOC2=CC=C(C=C2)CC3C(=O)NC(=O)S3	Less-DILI-Concern
+piroxicam	CN1/C(=C(\NC2=CC=CC=N2)/O)/C(=O)C3=CC=CC=C3S1(=O)=O	Less-DILI-Concern
+pravastatin	CC[C@H](C)C(=O)O[C@H]1C[C@@H](C=C2[C@H]1[C@H]([C@H](C=C2)C)CC[C@H](C[C@H](CC(=O)O)O)O)O	Less-DILI-Concern
+procarbazine	CC(C)NC(=O)C1=CC=C(C=C1)CNNC	Less-DILI-Concern
+pyrimethamine	CCC1=C(C(=NC(=N1)N)N)C2=CC=C(C=C2)Cl	Less-DILI-Concern
+quetiapine	C1CN(CCN1CCOCCO)C2=NC3=CC=CC=C3SC4=CC=CC=C42	Less-DILI-Concern
+rosiglitazone	CN(CCOC1=CC=C(C=C1)CC2C(=O)NC(=O)S2)C3=CC=CC=N3	Less-DILI-Concern
+rosuvastatin	CC(C)C1=NC(=NC(=C1/C=C/[C@@H](C[C@H](CC(=O)O)O)O)C2=CC=C(C=C2)F)N(C)S(=O)(=O)C	Less-DILI-Concern
+saquinavir	CC(C)(C)NC(=O)[C@@H]1CC2CCCCC2CN1C[C@H]([C@H](CC3=CC=CC=C3)NC(=O)[C@H](CC(=O)N)NC(=O)C4=NC5=CC=CC=C5C=C4)O	Less-DILI-Concern
+simvastatin	CCC(C)(C)C(=O)O[C@H]1C[C@H](C=C2[C@H]1[C@H]([C@H](C=C2)C)CC[C@@H]3C[C@H](CC(=O)O3)O)C	Less-DILI-Concern
+tenofovir	C[C@H](CN1C=NC2=C1N=CN=C2N)OCP(=O)(O)O	Less-DILI-Concern
+thiotepa	C1CN1P(=S)(N2CC2)N3CC3	Less-DILI-Concern
+verapamil	CC(C)C(CCCN(C)CCC1=CC(=C(C=C1)OC)OC)(C#N)C2=CC(=C(C=C2)OC)OC	Less-DILI-Concern
+alfuzosin	CN(CCCNC(=O)C1CCCO1)C2=NC3=CC(=C(C=C3C(=N2)N)OC)OC	Less-DILI-Concern
+amiloride	C1(=C(N=C(C(=N1)Cl)N)N)C(=O)N=C(N)N	Less-DILI-Concern
+amitriptyline	CN(C)CCC=C1C2=CC=CC=C2CCC3=CC=CC=C31	Less-DILI-Concern
+amlodipine	CCOC(=O)C1=C(NC(=C(C1C2=CC=CC=C2Cl)C(=O)OC)C)COCCN	Less-DILI-Concern
+benazepril	CCOC(=O)[C@H](CCC1=CC=CC=C1)N[C@H]2CCC3=CC=CC=C3N(C2=O)CC(=O)O	Less-DILI-Concern
+bupropion	CC(C(=O)C1=CC(=CC=C1)Cl)NC(C)(C)C	Less-DILI-Concern
+carvedilol	COC1=CC=CC=C1OCCNCC(COC2=CC=CC3=C2C4=CC=CC=C4N3)O	Less-DILI-Concern
+cetirizine	C1CN(CCN1CCOCC(=O)O)C(C2=CC=CC=C2)C3=CC=C(C=C3)Cl	Less-DILI-Concern
+chloroquine	CCN(CC)CCCC(C)NC1=C2C=CC(=CC2=NC=C1)Cl	Less-DILI-Concern
+chlorpromazine	CN(C)CCCN1C2=CC=CC=C2SC3=C1C=C(C=C3)Cl	Less-DILI-Concern
+cimetidine	CC1=C(N=CN1)CSCCNC(=NC)NC#N	Less-DILI-Concern
+disopyramide	CC(C)N(CCC(C1=CC=CC=C1)(C2=CC=CC=N2)C(=O)N)C(C)C	Less-DILI-Concern
+donepezil	COC1=C(C=C2C(=C1)CC(C2=O)CC3CCN(CC3)CC4=CC=CC=C4)OC	Less-DILI-Concern
+doxepin	CN(C)CC/C=C/1\C2=CC=CC=C2COC3=CC=CC=C31	Less-DILI-Concern
+enalapril	CCOC(=O)[C@@H](CCC1=CC=CC=C1)N[C@@H](C)C(=O)N2CCC[C@H]2C(=O)O	Less-DILI-Concern
+escitalopram	CN(C)CCC[C@@]1(C2=C(CO1)C=C(C=C2)C#N)C3=CC=C(C=C3)F	Less-DILI-Concern
+estradiol	C[C@]12CC[C@H]3[C@H]([C@@H]1CC[C@@H]2O)CCC4=C3C=CC(=C4)O	Less-DILI-Concern
+felodipine	CCOC(=O)C1=C(NC(=C(C1C2=C(C(=CC=C2)Cl)Cl)C(=O)OC)C)C	Less-DILI-Concern
+flecainide	C1CCNC(C1)CNC(=O)C2=C(C=CC(=C2)OCC(F)(F)F)OCC(F)(F)F	Less-DILI-Concern
+glimepiride	CCC1=C(CN(C1=O)C(=O)NCCC2=CC=C(C=C2)S(=O)(=O)NC(=O)NC3CCC(CC3)C)C	Less-DILI-Concern
+glipizide	CC1=NC=C(N=C1)C(=O)NCCC2=CC=C(C=C2)S(=O)(=O)NC(=O)NC3CCCCC3	Less-DILI-Concern
+irbesartan	CCCCC1=NC2(CCCC2)C(=O)N1CC3=CC=C(C=C3)C4=CC=CC=C4C5=NNN=N5	Less-DILI-Concern
+losartan	CCCCC1=NC(=C(N1CC2=CC=C(C=C2)C3=CC=CC=C3C4=NNN=N4)CO)Cl	Less-DILI-Concern
+metaxalone	CC1=CC(=CC(=C1)OCC2CNC(=O)O2)C	Less-DILI-Concern
+metoclopramide	CCN(CC)CCNC(=O)C1=CC(=C(C=C1OC)N)Cl	Less-DILI-Concern
+metoprolol	CC(C)NCC(COC1=CC=C(C=C1)CCOC)O	Less-DILI-Concern
+moxifloxacin	COC1=C2C(=CC(=C1N3C[C@@H]4CCCN[C@@H]4C3)F)C(=O)C(=CN2C5CC5)C(=O)O	Less-DILI-Concern
+nelfinavir	CC1=C(C=CC=C1O)C(=O)N[C@@H](CSC2=CC=CC=C2)[C@@H](CN3C[C@H]4CCCC[C@H]4C[C@H]3C(=O)NC(C)(C)C)O	Less-DILI-Concern
+nizatidine	CN/C(=C\[N+](=O)[O-])/NCCSCC1=CSC(=N1)CN(C)C	Less-DILI-Concern
+omeprazole	CC1=CN=C(C(=C1OC)C)CS(=O)C2=NC3=C(N2)C=C(C=C3)OC	Less-DILI-Concern
+paclitaxel	CC1=C2[C@H](C(=O)[C@@]3([C@H](C[C@@H]4[C@]([C@H]3[C@@H]([C@@](C2(C)C)(C[C@@H]1OC(=O)[C@@H]([C@H](C5=CC=CC=C5)NC(=O)C6=CC=CC=C6)O)O)OC(=O)C7=CC=CC=C7)(CO4)OC(=O)C)O)C)OC(=O)C	Less-DILI-Concern
+pantoprazole	COC1=C(C(=NC=C1)CS(=O)C2=NC3=C(N2)C=C(C=C3)OC(F)F)OC	Less-DILI-Concern
+paroxetine	C1CNC[C@H]([C@@H]1C2=CC=C(C=C2)F)COC3=CC4=C(C=C3)OCO4	Less-DILI-Concern
+prednisolone	C[C@]12C[C@@H]([C@H]3[C@H]([C@@H]1CC[C@@]2(C(=O)CO)O)CCC4=CC(=O)C=C[C@]34C)O	Less-DILI-Concern
+prednisone	C[C@]12CC(=O)[C@H]3[C@H]([C@@H]1CC[C@@]2(C(=O)CO)O)CCC4=CC(=O)C=C[C@]34C	Less-DILI-Concern
+procainamide	CCN(CC)CCNC(=O)C1=CC=C(C=C1)N	Less-DILI-Concern
+prochlorperazine	CN1CCN(CC1)CCCN2C3=CC=CC=C3SC4=C2C=C(C=C4)Cl	Less-DILI-Concern
+propafenone	CCCNCC(COC1=CC=CC=C1C(=O)CCC2=CC=CC=C2)O	Less-DILI-Concern
+propofol	CC(C)C1=C(C(=CC=C1)C(C)C)O	Less-DILI-Concern
+quinidine	COC1=CC2=C(C=CN=C2C=C1)[C@@H]([C@H]3C[C@@H]4CCN3C[C@@H]4C=C)O	Less-DILI-Concern
+ranitidine	CN/C(=C\[N+](=O)[O-])/NCCSCC1=CC=C(O1)CN(C)C	Less-DILI-Concern
+rifabutin	C[C@H]1/C=C/C=C(\C(=O)NC2=C3C(=NC4(N3)CCN(CC4)CC(C)C)C5=C6C(=C(C(=C5C2=O)O)C)O[C@@](C6=O)(O/C=C/[C@@H]([C@H]([C@H]([C@@H]([C@@H]([C@@H]([C@H]1O)C)O)C)OC(=O)C)C)OC)C)/C	Less-DILI-Concern
+risperidone	CC1=C(C(=O)N2CCCCC2=N1)CCN3CCC(CC3)C4=NOC5=C4C=CC(=C5)F	Less-DILI-Concern
+ropinirole	CCCN(CCC)CCC1=C2CC(=O)NC2=CC=C1	Less-DILI-Concern
+sertraline	CN[C@H]1CC[C@H](C2=CC=CC=C12)C3=CC(=C(C=C3)Cl)Cl	Less-DILI-Concern
+sildenafil	CCCC1=NN(C2=C1NC(=NC2=O)C3=C(C=CC(=C3)S(=O)(=O)N4CCN(CC4)C)OCC)C	Less-DILI-Concern
+sirolimus	C[C@@H]1CC[C@H]2C[C@@H](/C(=C/C=C/C=C/[C@H](C[C@H](C(=O)[C@@H]([C@@H](/C(=C/[C@H](C(=O)C[C@H](OC(=O)[C@@H]3CCCCN3C(=O)C(=O)[C@@]1(O2)O)[C@H](C)CC4CC[C@H]([C@@H](C4)OC)O)C)/C)O)OC)C)C)/C)OC	Less-DILI-Concern
+tacrolimus	C[C@@H]1C[C@@H]([C@@H]2[C@H](C[C@H]([C@@](O2)(C(=O)C(=O)N3CCCC[C@H]3C(=O)O[C@@H]([C@@H]([C@H](CC(=O)[C@@H](C=C(C1)C)CC=C)O)C)C(=C[C@@H]4CC[C@H]([C@@H](C4)OC)O)C)O)C)OC)OC	Less-DILI-Concern
+thalidomide	C1CC(=O)NC(=O)C1N2C(=O)C3=CC=CC=C3C2=O	Less-DILI-Concern
+tolazamide	CC1=CC=C(C=C1)S(=O)(=O)NC(=O)NN2CCCCCC2	Less-DILI-Concern
+tolmetin	CC1=CC=C(C=C1)C(=O)C2=CC=C(N2C)CC(=O)O	Less-DILI-Concern
+triamterene	C1=CC=C(C=C1)C2=NC3=C(N=C2N)N=C(N=C3N)N	Less-DILI-Concern
+valsartan	CCCCC(=O)N(CC1=CC=C(C=C1)C2=CC=CC=C2C3=NNN=N3)[C@@H](C(C)C)C(=O)O	Less-DILI-Concern
+venlafaxine	CN(C)CC(C1=CC=C(C=C1)OC)C2(CCCCC2)O	Less-DILI-Concern
+vincristine	CC[C@@]1(C[C@@H]2C[C@@](C3=C(CCN(C2)C1)C4=CC=CC=C4N3)(C5=C(C=C6C(=C5)[C@]78CCN9[C@H]7[C@@](C=CC9)([C@H]([C@@]([C@@H]8N6C=O)(C(=O)OC)O)OC(=O)C)CC)OC)C(=O)OC)O	Less-DILI-Concern
+warfarin	CC(=O)CC(C1=CC=CC=C1)C2=C(OC3=CC=CC=C3C2=O)O	Less-DILI-Concern
+ziprasidone	C1CN(CCN1CCC2=C(C=C3C(=C2)CC(=O)N3)Cl)C4=NSC5=CC=CC=C54	Less-DILI-Concern
+biperiden	C1CCN(CC1)CCC(C2CC3CC2C=C3)(C4=CC=CC=C4)O	No-DILI-Concern
+bisacodyl	CC(=O)OC1=CC=C(C=C1)C(C2=CC=C(C=C2)OC(=O)C)C3=CC=CC=N3	No-DILI-Concern
+brompheniramine	CN(C)CCC(C1=CC=C(C=C1)Br)C2=CC=CC=N2	No-DILI-Concern
+cabergoline	CCNC(=O)N(CCCN(C)C)C(=O)[C@@H]1C[C@H]2[C@@H](CC3=CNC4=CC=CC2=C34)N(C1)CC=C	No-DILI-Concern
+caffeine	CN1C=NC2=C1C(=O)N(C(=O)N2C)C	No-DILI-Concern
+calcitriol	C[C@H](CCCC(C)(C)O)[C@H]1CC[C@@H]2[C@@]1(CCCC2=CC=C3C[C@H](C[C@@H](C3=C)O)O)C	No-DILI-Concern
+carbinoxamine	CN(C)CCOC(C1=CC=C(C=C1)Cl)C2=CC=CC=N2	No-DILI-Concern
+cinacalcet	C[C@H](C1=CC=CC2=CC=CC=C21)NCCCC3=CC(=CC=C3)C(F)(F)F	No-DILI-Concern
+clemastine	C[C@@](C1=CC=CC=C1)(C2=CC=C(C=C2)Cl)OCC[C@H]3CCCN3C	No-DILI-Concern
+daunorubicin	C[C@H]1[C@H]([C@H](C[C@@H](O1)O[C@H]2C[C@@](CC3=C(C4=C(C(=C23)O)C(=O)C5=C(C4=O)C=CC=C5OC)O)(C(=O)C)O)N)O	No-DILI-Concern
+dextromethorphan	CN1CC[C@@]23CCCC[C@@H]2[C@@H]1CC4=C3C=C(C=C4)OC	No-DILI-Concern
+digoxin	C[C@@H]1[C@H]([C@H](C[C@@H](O1)O[C@@H]2[C@H](O[C@H](C[C@@H]2O)O[C@@H]3[C@H](O[C@H](C[C@@H]3O)O[C@H]4CC[C@]5([C@@H](C4)CC[C@@H]6[C@@H]5C[C@H]([C@]7([C@@]6(CCC7C8=CC(=O)OC8)O)C)O)C)C)C)O)O	No-DILI-Concern
+dihydroergotamine	C[C@@]1(C(=O)N2[C@H](C(=O)N3CCC[C@H]3[C@@]2(O1)O)CC4=CC=CC=C4)NC(=O)[C@@H]5C[C@H]6[C@@H](CC7=CNC8=CC=CC6=C78)N(C5)C	No-DILI-Concern
+dobutamine	CC(CCC1=CC=C(C=C1)O)NCCC2=CC(=C(C=C2)O)O	No-DILI-Concern
+dopamine	C1=CC(=C(C=C1CCN)O)O	No-DILI-Concern
+doxylamine	CC(C1=CC=CC=C1)(C2=CC=CC=N2)OCCN(C)C	No-DILI-Concern
+etomidate	CCOC(=O)C1=CN=CN1C(C)C2=CC=CC=C2	No-DILI-Concern
+fenoldopam	C1CNCC(C2=CC(=C(C(=C21)Cl)O)O)C3=CC=C(C=C3)O	No-DILI-Concern
+fexofenadine	CC(C)(C1=CC=C(C=C1)C(CCCN2CCC(CC2)C(C3=CC=CC=C3)(C4=CC=CC=C4)O)O)C(=O)O	No-DILI-Concern
+flavoxate	CC1=C(OC2=C(C1=O)C=CC=C2C(=O)OCCN3CCCCC3)C4=CC=CC=C4	No-DILI-Concern
+fludarabine	C1=NC2=C(N1[C@H]3[C@H]([C@@H]([C@H](O3)COP(=O)(O)O)O)O)N=C(N=C2N)F	No-DILI-Concern
+flumazenil	CCOC(=O)C1=C2CN(C(=O)C3=C(N2C=N1)C=CC(=C3)F)C	No-DILI-Concern
+hydrocortisone	C[C@]12CCC(=O)C=C1CC[C@@H]3[C@@H]2[C@H](C[C@]4([C@H]3CC[C@@]4(C(=O)CO)O)C)O	No-DILI-Concern
+isoxsuprine	CC(COC1=CC=CC=C1)NC(C)C(C2=CC=C(C=C2)O)O	No-DILI-Concern
+lidocaine	CCN(CC)CC(=O)NC1=C(C=CC=C1C)C	No-DILI-Concern
+loperamide	CN(C)C(=O)C(CCN1CCC(CC1)(C2=CC=C(C=C2)Cl)O)(C3=CC=CC=C3)C4=CC=CC=C4	No-DILI-Concern
+meclizine	CC1=CC(=CC=C1)CN2CCN(CC2)C(C3=CC=CC=C3)C4=CC=C(C=C4)Cl	No-DILI-Concern
+methysergide	CC[C@@H](CO)NC(=O)[C@H]1CN([C@@H]2CC3=CN(C4=CC=CC(=C34)C2=C1)C)C	No-DILI-Concern
+midodrine	COC1=CC(=C(C=C1)OC)C(CNC(=O)CN)O	No-DILI-Concern
+mifepristone	CC#C[C@@]1(CC[C@@H]2[C@@]1(C[C@@H](C3=C4CCC(=O)C=C4CC[C@@H]23)C5=CC=C(C=C5)N(C)C)C)O	No-DILI-Concern
+minoxidil	C1CCN(CC1)C2=NC(=N)N(C(=C2)N)O	No-DILI-Concern
+mitotane	C1=CC=C(C(=C1)C(C2=CC=C(C=C2)Cl)C(Cl)Cl)Cl	No-DILI-Concern
+nalbuphine	C1CC(C1)CN2CC[C@]34C5[C@H](CC[C@]3([C@H]2CC6=C4C(=C(C=C6)O)O5)O)O	No-DILI-Concern
+naloxone	C=CCN1CC[C@]23[C@@H]4C(=O)CC[C@]2([C@H]1CC5=C3C(=C(C=C5)O)O4)O	No-DILI-Concern
+orphenadrine	CC1=CC=CC=C1C(C2=CC=CC=C2)OCCN(C)C	No-DILI-Concern
+phenoxybenzamine	CC(COC1=CC=CC=C1)N(CCCl)CC2=CC=CC=C2	No-DILI-Concern
+phentolamine	CC1=CC=C(C=C1)N(CC2=NCCN2)C3=CC(=CC=C3)O	No-DILI-Concern
+physostigmine	C[C@@]12CCN([C@@H]1N(C3=C2C=C(C=C3)OC(=O)NC)C)C	No-DILI-Concern
+pimozide	C1CN(CCC1N2C3=CC=CC=C3NC2=O)CCCC(C4=CC=C(C=C4)F)C5=CC=C(C=C5)F	No-DILI-Concern
+pindolol	CC(C)NCC(COC1=CC=CC2=C1C=CN2)O	No-DILI-Concern
+primaquine	CC(CCCN)NC1=C2C(=CC(=C1)OC)C=CC=N2	No-DILI-Concern
+primidone	CCC1(C(=O)NCNC1=O)C2=CC=CC=C2	No-DILI-Concern
+protriptyline	CNCCCC1C2=CC=CC=C2C=CC3=CC=CC=C13	No-DILI-Concern
+raloxifene	C1CCN(CC1)CCOC2=CC=C(C=C2)C(=O)C3=C(SC4=C3C=CC(=C4)O)C5=CC=C(C=C5)O	No-DILI-Concern
+ranolazine	CC1=C(C(=CC=C1)C)NC(=O)CN2CCN(CC2)CC(COC3=CC=CC=C3OC)O	No-DILI-Concern
+reserpine	CO[C@H]1[C@@H](C[C@@H]2CN3CCC4=C([C@H]3C[C@@H]2[C@@H]1C(=O)OC)NC5=C4C=CC(=C5)OC)OC(=O)C6=CC(=C(C(=C6)OC)OC)OC	No-DILI-Concern
+rizatriptan	CN(C)CCC1=CNC2=C1C=C(C=C2)CN3C=NC=N3	No-DILI-Concern
+scopolamine	CN1C2CC(CC1C3C2O3)OC(=O)C(CO)C4=CC=CC=C4	No-DILI-Concern
+vecuronium	CC(=O)O[C@H]1C[C@@H]2CC[C@@H]3[C@@H]([C@]2(C[C@@H]1N4CCCCC4)C)CC[C@]5([C@H]3C[C@@H]([C@@H]5OC(=O)C)[N+]6(CCCCC6)C)C.[Br-]	No-DILI-Concern
+vinblastine	CC[C@@]1(C[C@H]2C[C@@](C3=C(CCN(C2)C1)C4=CC=CC=C4N3)(C5=C(C=C6C(=C5)[C@]78CCN9[C@H]7[C@@](C=CC9)([C@H]([C@@]([C@@H]8N6C)(C(=O)OC)O)OC(=O)C)CC)OC)C(=O)OC)O	No-DILI-Concern
+vorinostat	C1=CC=C(C=C1)NC(=O)CCCCCCC(=O)NO	No-DILI-Concern
+amantadine	C1C2CC3CC1CC(C2)(C3)N	Ambiguous DILI-concern
+anagrelide	C1C2=C(C=CC(=C2Cl)Cl)NC3=NC(=O)CN31	Ambiguous DILI-concern
+bumetanide	CCCCNC1=C(C(=CC(=C1)C(=O)O)S(=O)(=O)N)OC2=CC=CC=C2	Ambiguous DILI-concern
+diazoxide	CC1=NS(=O)(=O)C2=C(N1)C=CC(=C2)Cl	Ambiguous DILI-concern
+dipyridamole	C1CCN(CC1)C2=NC(=NC3=C2N=C(N=C3N4CCCCC4)N(CCO)CCO)N(CCO)CCO	Ambiguous DILI-concern
+entecavir	C=C1[C@H](C[C@@H]([C@H]1CO)O)N2C=NC3=C2NC(=NC3=O)N	Ambiguous DILI-concern
+epirubicin	C[C@H]1[C@@H]([C@H](C[C@@H](O1)O[C@H]2C[C@@](CC3=C(C4=C(C(=C23)O)C(=O)C5=C(C4=O)C=CC=C5OC)O)(C(=O)CO)O)N)O	Ambiguous DILI-concern
+estrone	C[C@]12CC[C@H]3[C@H]([C@@H]1CCC2=O)CCC4=C3C=CC(=C4)O	Ambiguous DILI-concern
+fluphenazine	C1CN(CCN1CCCN2C3=CC=CC=C3SC4=C2C=C(C=C4)C(F)(F)F)CCO	Ambiguous DILI-concern
+naltrexone	C1CC1CN2CC[C@]34[C@@H]5C(=O)CC[C@]3([C@H]2CC6=C4C(=C(C=C6)O)O5)O	Ambiguous DILI-concern
+nilotinib	CC1=C(C=C(C=C1)C(=O)NC2=CC(=CC(=C2)N3C=C(N=C3)C)C(F)(F)F)NC4=NC=CC(=N4)C5=CN=CC=C5	Ambiguous DILI-concern
+praziquantel	C1CCC(CC1)C(=O)N2CC3C4=CC=CC=C4CCN3C(=O)C2	Ambiguous DILI-concern
+thiothixene	CN1CCN(CC1)CC/C=C\2/C3=CC=CC=C3SC4=C2C=C(C=C4)S(=O)(=O)N(C)C	Ambiguous DILI-concern
+toremifene	CN(C)CCOC1=CC=C(C=C1)/C(=C(/CCCl)\C2=CC=CC=C2)/C3=CC=CC=C3	Ambiguous DILI-concern
+tretinoin	CC1=C(C(CCC1)(C)C)/C=C/C(=C/C=C/C(=C/C(=O)O)/C)/C	Ambiguous DILI-concern
+amoxapine	C1CN(CCN1)C2=NC3=CC=CC=C3OC4=C2C=C(C=C4)Cl	Ambiguous DILI-concern
+aprepitant	C[C@H](C1=CC(=CC(=C1)C(F)(F)F)C(F)(F)F)O[C@H]2[C@H](N(CCO2)CC3=NC(=O)NN3)C4=CC=C(C=C4)F	Ambiguous DILI-concern
+betaxolol	CC(C)NCC(COC1=CC=C(C=C1)CCOCC2CC2)O	Ambiguous DILI-concern
+bisoprolol	CC(C)NCC(COC1=CC=C(C=C1)COCCOC(C)C)O	Ambiguous DILI-concern
+chlorthalidone	C1=CC=C2C(=C1)C(=O)NC2(C3=CC(=C(C=C3)Cl)S(=O)(=O)N)O	Ambiguous DILI-concern
+cilostazol	C1CCC(CC1)N2C(=NN=N2)CCCCOC3=CC4=C(C=C3)NC(=O)CC4	Ambiguous DILI-concern
+clonidine	C1CN=C(N1)NC2=C(C=CC=C2Cl)Cl	Ambiguous DILI-concern
+desipramine	CNCCCN1C2=CC=CC=C2CCC3=CC=CC=C31	Ambiguous DILI-concern
+dexamethasone	C[C@@H]1C[C@H]2[C@@H]3CCC4=CC(=O)C=C[C@@]4([C@]3([C@H](C[C@@]2([C@]1(C(=O)CO)O)C)O)F)C	Ambiguous DILI-concern
+dexrazoxane	C[C@@H](CN1CC(=O)NC(=O)C1)N2CC(=O)NC(=O)C2	Ambiguous DILI-concern
+eplerenone	C[C@]12CCC(=O)C=C1C[C@H](C3[C@]24C(O4)C[C@]5([C@H]3CC[C@@]56CCC(=O)O6)C)C(=O)OC	Ambiguous DILI-concern
+estropipate	C[C@]12CC[C@H]3[C@H]([C@@H]1CCC2=O)CCC4=C3C=CC(=C4)OS(=O)(=O)O.C1CNCCN1	Ambiguous DILI-concern
+everolimus	C[C@@H]1CC[C@H]2C[C@@H](/C(=C/C=C/C=C/[C@H](C[C@H](C(=O)[C@@H]([C@@H](/C(=C/[C@H](C(=O)C[C@H](OC(=O)[C@@H]3CCCCN3C(=O)C(=O)[C@@]1(O2)O)[C@H](C)C[C@@H]4CC[C@H]([C@@H](C4)OC)OCCO)C)/C)O)OC)C)C)/C)OC	Ambiguous DILI-concern
+famciclovir	CC(=O)OCC(CCN1C=NC2=CN=C(N=C21)N)COC(=O)C	Ambiguous DILI-concern
+fulvestrant	C[C@]12CC[C@H]3[C@H]([C@@H]1CC[C@@H]2O)[C@@H](CC4=C3C=CC(=C4)O)CCCCCCCCCS(=O)CCCC(C(F)(F)F)(F)F	Ambiguous DILI-concern
+guanfacine	C1=CC(=C(C(=C1)Cl)CC(=O)N=C(N)N)Cl	Ambiguous DILI-concern
+iloperidone	CC(=O)C1=CC(=C(C=C1)OCCCN2CCC(CC2)C3=NOC4=C3C=CC(=C4)F)OC	Ambiguous DILI-concern
+maprotiline	CNCCCC12CCC(C3=CC=CC=C31)C4=CC=CC=C24	Ambiguous DILI-concern
+mesoridazine	CN1CCCCC1CCN2C3=CC=CC=C3SC4=C2C=C(C=C4)S(=O)C	Ambiguous DILI-concern
+methocarbamol	COC1=CC=CC=C1OCC(COC(=O)N)O	Ambiguous DILI-concern
+metolazone	CC1NC2=CC(=C(C=C2C(=O)N1C3=CC=CC=C3C)S(=O)(=O)N)Cl	Ambiguous DILI-concern
+milrinone	CC1=C(C=C(C(=O)N1)C#N)C2=CC=NC=C2	Ambiguous DILI-concern
+moexipril	CCOC(=O)[C@H](CCC1=CC=CC=C1)N[C@@H](C)C(=O)N2CC3=CC(=C(C=C3C[C@H]2C(=O)O)OC)OC	Ambiguous DILI-concern
+nadolol	CC(C)(C)NCC(COC1=CC=CC2=C1C[C@@H]([C@@H](C2)O)O)O	Ambiguous DILI-concern
+nateglinide	CC(C)C1CCC(CC1)C(=O)N[C@@H](CC2=CC=CC=C2)C(=O)O	Ambiguous DILI-concern
+nimodipine	CC1=C(C(C(=C(N1)C)C(=O)OC(C)C)C2=CC(=CC=C2)[N+](=O)[O-])C(=O)OCCOC	Ambiguous DILI-concern
+pentoxifylline	CC(=O)CCCCN1C(=O)C2=C(N=CN2C)N(C1=O)C	Ambiguous DILI-concern
+pergolide	CCCN1C[C@@H](C[C@H]2[C@H]1CC3=CNC4=CC=CC2=C34)CSC	Ambiguous DILI-concern
+perindopril	CCC[C@@H](C(=O)OCC)N[C@@H](C)C(=O)N1[C@H]2CCCC[C@H]2C[C@H]1C(=O)O	Ambiguous DILI-concern
+prazosin	COC1=C(C=C2C(=C1)C(=NC(=N2)N3CCN(CC3)C(=O)C4=CC=CO4)N)OC	Ambiguous DILI-concern
+probenecid	CCCN(CCC)S(=O)(=O)C1=CC=C(C=C1)C(=O)O	Ambiguous DILI-concern
+tadalafil	CN1CC(=O)N2[C@@H](C1=O)CC3=C([C@H]2C4=CC5=C(C=C4)OCO5)NC6=CC=CC=C36	Ambiguous DILI-concern
+timolol	CC(C)(C)NC[C@@H](COC1=NSN=C1N2CCOCC2)O	Ambiguous DILI-concern
+tolbutamide	CCCCNC(=O)NS(=O)(=O)C1=CC=C(C=C1)C	Ambiguous DILI-concern
+tramadol	CN(C)C[C@H]1CCCC[C@@]1(C2=CC(=CC=C2)OC)O	Ambiguous DILI-concern
+trimethobenzamide	CN(C)CCOC1=CC=C(C=C1)CNC(=O)C2=CC(=C(C(=C2)OC)OC)OC	Ambiguous DILI-concern
+vardenafil	CCCC1=NC(=C2N1NC(=NC2=O)C3=C(C=CC(=C3)S(=O)(=O)N4CCN(CC4)CC)OCC)C	Ambiguous DILI-concern
+verteporfin	CC1=C(C2=CC3=NC(=CC4=C(C(=C(N4)C=C5[C@@]6([C@@H](C(=CC=C6C(=N5)C=C1N2)C(=O)OC)C(=O)OC)C)C)CCC(=O)OC)C(=C3C)CCC(=O)O)C=C	Ambiguous DILI-concern
+vinorelbine	CCC1=CC2C[C@@](C3=C(CN(C2)C1)C4=CC=CC=C4N3)(C5=C(C=C6C(=C5)[C@]78CCN9[C@H]7[C@@](C=CC9)([C@H]([C@@]([C@@H]8N6C)(C(=O)OC)O)OC(=O)C)CC)OC)C(=O)OC	Ambiguous DILI-concern
+zolmitriptan	CN(C)CCC1=CNC2=C1C=C(C=C2)C[C@@H]3COC(=O)N3	Ambiguous DILI-concern

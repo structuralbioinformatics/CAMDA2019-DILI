@@ -6,7 +6,7 @@ library(caret)
 
 ### Define variables ###
 place = "home" #home or work
-remove.outliers = TRUE
+remove.outliers = FALSE
 outliers = c('daunorubicin', 'vorinostat')
 number.cv = 10
 number.repetitions = 10
@@ -17,7 +17,7 @@ if (place=="work"){
   bigmem_directory = "/sbi/users/interchange/emre/quim/camda"
 } else {
   main_directory = "/Users/quim/Dropbox/UPF/PhD/Projects/camda"
-  bigmem_directory = "/Users/quim/Documents/Projects/camda"
+  bigmem_directory = "/Users/quim/Documents/DATA/camda"
 }
 
 
@@ -77,13 +77,14 @@ expression_wilcox_ind_df <- subset.expression(gct, selected_genes, drug.dataset$
 
 
 ### Prepare balanced machine learning datasets ###
+set.seed(21)
 datasets.list <- prepare.balanced.datasets(expression_wilcox_df, number.repetitions, drug.dataset$most_concern_drugs, drug.dataset$less_concern_drugs, drug.dataset$no_concern_drugs, type_analysis = "discrete", fraction_train=fraction_train)
 
 
 ### Train the machine learning classifiers ###
 # Train models by RF
 signature.rf.results <- train.combine.classifiers(datasets.list, ml.method="rf", type_analysis="discrete", number.cv=number.cv, number.repetitions=number.repetitions)
-write.machine.learning.results(signature.rf.results, output.cv.rf)
+#write.machine.learning.results(signature.rf.results, output.cv.rf)
 # Test RF model on independent dataset
 signature.ind.rf <- validate.classifier(expression_wilcox_ind_df, 
                                         output.ind.rf, 
@@ -92,7 +93,7 @@ signature.ind.rf <- validate.classifier(expression_wilcox_ind_df,
                                         type_analysis="discrete")
 # Train models by GBM
 signature.gbm.results <- train.combine.classifiers(datasets.list, ml.method="gbm", type_analysis="discrete", number.cv=number.cv, number.repetitions=number.repetitions)
-write.machine.learning.results(signature.gbm.results, output.cv.gbm)
+#write.machine.learning.results(signature.gbm.results, output.cv.gbm)
 # Test GBM model on independent dataset
 signature.ind.gbm <- validate.classifier(expression_wilcox_ind_df, 
                                          output.ind.gbm, 
@@ -101,7 +102,7 @@ signature.ind.gbm <- validate.classifier(expression_wilcox_ind_df,
                                          type_analysis="discrete")
 # Train models by GLM
 signature.glm.results <- train.combine.classifiers(datasets.list, ml.method="glm", type_analysis="discrete", number.cv=number.cv, number.repetitions=number.repetitions)
-write.machine.learning.results(signature.glm.results, output.cv.glm)
+#write.machine.learning.results(signature.glm.results, output.cv.glm)
 # Test GLM model on independent dataset
 signature.ind.glm <- validate.classifier(expression_wilcox_ind_df, 
                                          output.ind.glm, 

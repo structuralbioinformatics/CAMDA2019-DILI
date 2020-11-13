@@ -20,8 +20,8 @@ if (place=="work"){
   main_directory = "/home/quim/PHD/Projects/camda"
   bigmem_directory = "/sbi/users/interchange/emre/quim/camda"
 } else {
-  main_directory = "/Users/quim/Dropbox/UPF/PhD/Projects/camda"
-  bigmem_directory = "/Users/quim/Documents/Projects/camda"
+  main_directory = "/Users/quim/Dropbox/UPF/PHD/Projects/camda"
+  bigmem_directory = "/Users/quim/Documents/DATA/camda"
 }
 
 
@@ -34,8 +34,10 @@ dilirank_file <- paste(main_directory, "camda_data/CAMDA_l1000_1314compounds-dil
 wilcox_file <- paste(main_directory, "results/reverse_engineering/reverse_signature_phh_notcorrected.txt", sep="/")
 #wilcox_file <- paste(main_directory, "results/reverse_engineering/reverse_signature_phh_noout_notcorrected.txt", sep="/")
 output_table <- paste(main_directory, "results/reverse_engineering/gene_test_phh_noout.tsv", sep="/")
-output_plot_pdf <- paste(main_directory, "results/plots/heatmap_gene_signature.pdf", sep="/")
-output_plot_png <- paste(main_directory, "results/plots/heatmap_gene_signature.png", sep="/")
+#output_plot_pdf <- paste(main_directory, "results/plots/heatmap_gene_signature.pdf", sep="/")
+#output_plot_png <- paste(main_directory, "results/plots/heatmap_gene_signature.png", sep="/")
+output_plot_pdf <- paste(main_directory, "results/plots/heatmap_gene_signature_v2.pdf", sep="/")
+output_plot_png <- paste(main_directory, "results/plots/heatmap_gene_signature_v2.png", sep="/")
 
 
 ### Load files ###
@@ -85,7 +87,8 @@ genes_df$id <- NULL
 
 
 ### Create new dataframe to store the matrix of expression ###
-cols <- c(drug.dataset$most_concern_drugs, drug.dataset$less_concern_drugs, drug.dataset$no_concern_drugs)
+#cols <- c(drug.dataset$most_concern_drugs, drug.dataset$less_concern_drugs, drug.dataset$no_concern_drugs)
+cols <- c(drug.dataset$most_concern_drugs, drug.dataset$no_concern_drugs)
 rows <- genes_df$pr_gene_symbol
 heat_df <- data.frame(matrix(ncol = length(cols), nrow=length(rows)))
 colnames(heat_df) <- cols
@@ -103,14 +106,14 @@ for (drug in drug.dataset$most_concern_drugs){
   medians <- apply(gct_drug@mat, 1, median) 
   heat_df[drug] <- medians
 }
-for (drug in drug.dataset$less_concern_drugs){
-  id_drug <- which(gct_subset_dili@cdesc$pert_iname == drug)
-  id_genes <- which(gct_subset_dili@rid %in% gene_ids)
-  gct_drug <- subset.gct(gct_subset_dili, cid=id_drug, rid=id_genes)
-  #means<- rowMeans(gct_drug@mat)
-  medians <- apply(gct_drug@mat, 1, median) 
-  heat_df[drug] <- medians
-}
+# for (drug in drug.dataset$less_concern_drugs){
+#   id_drug <- which(gct_subset_dili@cdesc$pert_iname == drug)
+#   id_genes <- which(gct_subset_dili@rid %in% gene_ids)
+#   gct_drug <- subset.gct(gct_subset_dili, cid=id_drug, rid=id_genes)
+#   #means<- rowMeans(gct_drug@mat)
+#   medians <- apply(gct_drug@mat, 1, median) 
+#   heat_df[drug] <- medians
+# }
 ##### Then the No-DILI drugs
 for (drug in drug.dataset$no_concern_drugs){
   id_drug <- which(gct_subset_nodili@cdesc$pert_iname == drug)
@@ -124,16 +127,20 @@ for (drug in drug.dataset$no_concern_drugs){
 
 ### ComplexHeatmap removing expression lower than abs(1.5) ###
 heat_df_for_plot <- apply(heat_df, c(1,2),  function(x) {ifelse(abs(x)>1.5, x, 0)})
-type <- c(rep("Most-DILI-Concern", length(drug.dataset$most_concern_drugs)), rep("Less-DILI-Concern", times=length(drug.dataset$less_concern_drugs)), rep("No-DILI-Concern", times=length(drug.dataset$no_concern_drugs)))
+#type <- c(rep("Most-DILI-Concern", length(drug.dataset$most_concern_drugs)), rep("Less-DILI-Concern", times=length(drug.dataset$less_concern_drugs)), rep("No-DILI-Concern", times=length(drug.dataset$no_concern_drugs)))
+type <- c(rep("Most-DILI-Concern", length(drug.dataset$most_concern_drugs)), rep("No-DILI-Concern", times=length(drug.dataset$no_concern_drugs)))
 #annotation <- HeatmapAnnotation(df = data.frame(type = type))
 ##### Plot PDF
-Cairo::CairoPDF(output_plot_pdf, width = 12, height = 8) # Save in PDF
+#Cairo::CairoPDF(output_plot_pdf, width = 12, height = 8) # Save in PDF
+Cairo::CairoPDF(output_plot_pdf, width = 14, height = 10) # Save in PDF
 Heatmap(heat_df_for_plot, name = "MODZscore", km = 0, 
         col = colorRamp2(c(min(heat_df), 0, max(heat_df)), c("blue", "white", "red")), 
         #top_annotation = annotation, 
         cluster_rows=TRUE, cluster_columns=FALSE, 
-        row_names_gp = gpar(fontsize = 7), column_names_gp = gpar(fontsize = 4),  
-        column_split = c(rep("Most-DILI-Concern", length(drug.dataset$most_concern_drugs)), rep("Less-DILI-Concern", length(drug.dataset$less_concern_drugs)), rep("No-DILI-Concern", length(drug.dataset$no_concern_drugs))),
+        #row_names_gp = gpar(fontsize = 7), column_names_gp = gpar(fontsize = 4),  
+        row_names_gp = gpar(fontsize = 9), column_names_gp = gpar(fontsize = 9),  
+        #column_split = c(rep("Most-DILI-Concern", length(drug.dataset$most_concern_drugs)), rep("Less-DILI-Concern", length(drug.dataset$less_concern_drugs)), rep("No-DILI-Concern", length(drug.dataset$no_concern_drugs))),
+        column_split = c(rep("Most-DILI-Concern", length(drug.dataset$most_concern_drugs)), rep("No-DILI-Concern", length(drug.dataset$no_concern_drugs))),
         #column_title_gp = gpar(fontsize = 12),
         column_title_gp = gpar(fill = c("#FFB448", "#FF6C65", "#99EE99"), fontsize = 12),
         column_gap = unit(5, "mm"),
@@ -141,13 +148,16 @@ Heatmap(heat_df_for_plot, name = "MODZscore", km = 0,
 )
 dev.off()
 ##### Plot PNG
-Cairo::CairoPNG(output_plot_png, dpi=300, width = 10, height = 8, units = "in") # Resolution taken from: https://www.andrewheiss.com/blog/2017/09/27/working-with-r-cairo-graphics-custom-fonts-and-ggplot/
+#Cairo::CairoPNG(output_plot_png, dpi=300, width = 10, height = 8, units = "in") # Resolution taken from: https://www.andrewheiss.com/blog/2017/09/27/working-with-r-cairo-graphics-custom-fonts-and-ggplot/
+Cairo::CairoPNG(output_plot_png, dpi=300, width = 14, height = 11, units = "in") # Resolution taken from: https://www.andrewheiss.com/blog/2017/09/27/working-with-r-cairo-graphics-custom-fonts-and-ggplot/
 Heatmap(heat_df_for_plot, name = "MODZscore", km = 0, 
         col = colorRamp2(c(min(heat_df), 0, max(heat_df)), c("blue", "white", "red")), 
         #top_annotation = annotation, 
         cluster_rows=TRUE, cluster_columns=FALSE, 
-        row_names_gp = gpar(fontsize = 7), column_names_gp = gpar(fontsize = 4),  
-        column_split = c(rep("Most-DILI-Concern", length(drug.dataset$most_concern_drugs)), rep("Less-DILI-Concern", length(drug.dataset$less_concern_drugs)), rep("No-DILI-Concern", length(drug.dataset$no_concern_drugs))),
+        #row_names_gp = gpar(fontsize = 7), column_names_gp = gpar(fontsize = 4),  
+        row_names_gp = gpar(fontsize = 10), column_names_gp = gpar(fontsize = 10),  
+        #column_split = c(rep("Most-DILI-Concern", length(drug.dataset$most_concern_drugs)), rep("Less-DILI-Concern", length(drug.dataset$less_concern_drugs)), rep("No-DILI-Concern", length(drug.dataset$no_concern_drugs))),
+        column_split = c(rep("Most-DILI-Concern", length(drug.dataset$most_concern_drugs)), rep("No-DILI-Concern", length(drug.dataset$no_concern_drugs))),
         #column_title_gp = gpar(fontsize = 12),
         column_title_gp = gpar(fill = c("#FFB448", "#FF6C65", "#99EE99"), fontsize = 12),
         column_gap = unit(5, "mm"),

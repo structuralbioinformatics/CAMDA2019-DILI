@@ -5,46 +5,44 @@ library(caret)
 
 
 ### Define variables ###
-place = "home" #home or work
 remove.outliers = TRUE
 outliers = c('daunorubicin', 'vorinostat')
 number.cv = 10
 number.repetitions = 10
 fraction_train = 0.7
+database = 'guildify' # disgenet or guildify
+type_genes = 'curated' # curated or all
+num_top <- 2
+corr_threshold <- 0.5
+minimum_genes <- 10
 
-if (place=="work"){
-  main_directory = "/home/quim/PHD/Projects/camda"
-  bigmem_directory = "/sbi/users/interchange/emre/quim/camda"
-} else {
-  main_directory = "/Users/quim/Dropbox/UPF/PhD/Projects/camda"
-  bigmem_directory = "/Users/quim/Documents/DATA/camda"
-}
 
 
 ### Define files ###
 # Data files
-drugs_file <- paste(main_directory, "camda_data/CAMDA_l1000_1314compounds-pert_iname.rda", sep="/")
-drug_info_file <- paste(main_directory, "camda_data/CAMDA_l1000_1314compounds-info.rda", sep="/")
-dilirank_file <- paste(main_directory, "camda_data/CAMDA_l1000_1314compounds-dilirank.v2.rda", sep="/")
-expression_file <- paste(bigmem_directory, "CAMDA_l1000_1314compounds-GSE92742_Level5_gct.rda", sep="/")
-landmark_genes_file <- paste(main_directory, "additional_data/GSE92742_Broad_LINCS_gene_info_delta_landmark.txt", sep="/")
-gene_info_file <- paste(main_directory, "additional_data/GSE92742_Broad_LINCS_gene_info.txt", sep="/")
-cell_info_file <- paste(main_directory, "additional_data/GSE92742_Broad_LINCS_cell_info.txt", sep="/")
-functions_file <- paste(main_directory, "Rscripts/camda_functions.R", sep="/")
+drugs_file <- "/home/quim/PHD/Projects/camda/camda_data/CAMDA_l1000_1314compounds-pert_iname.rda"
+drug_info_file <- "/sbi/users/interchange/emre/quim/camda/CAMDA_l1000_1314compounds-info.rda"
+dilirank_file <- "/home/quim/PHD/Projects/camda/camda_data/CAMDA_l1000_1314compounds-dilirank.v2.rda"
+expression_file <- "/sbi/users/interchange/emre/quim/camda/CAMDA_l1000_1314compounds-GSE92742_Level5_gct.rda"
+landmark_genes_file <- "/home/quim/PHD/Projects/camda/additional_data/GSE92742_Broad_LINCS_gene_info_delta_landmark.txt"
+gene_info_file <- "/home/quim/PHD/Projects/camda/additional_data/GSE92742_Broad_LINCS_gene_info.txt"
+cell_info_file <- "/home/quim/PHD/Projects/camda/additional_data/GSE92742_Broad_LINCS_cell_info.txt"
+functions_file <- "/home/quim/PHD/Projects/camda/Rscripts/camda_functions.R"
 # Specific data files
-phenotype2gene_file <- paste(main_directory, "guildify_data/phenotype2gene.tsv", sep="/")
-guildify_dir <- paste(main_directory, "guildify_data/guildify_results/", sep="/")
+phenotype2gene_file <- "/home/quim/PHD/Projects/camda/guildify_data/phenotype2gene.tsv"
+disease2gene_file <- "/home/quim/PHD/Projects/camda/guildify_data/disease2gene_disgenet_guildify.tsv"
+redundantphenotypes_file <- "/home/quim/PHD/Projects/camda/guildify_data/redundant_phenotypes.tsv"
 # Output files
-output.cv.rf <- paste(main_directory, "results/crossvalidation/guildify/cv_guildify_rf", sep="/")
-output.cv.gbm <- paste(main_directory, "results/crossvalidation/guildify/cv_guildify_gbm", sep="/")
-output.ind.rf = paste(main_directory, "camda_data/independent_validation/guildify/JAguirre_predictions_guildify_rf", sep="/")
-output.ind.gbm = paste(main_directory, "camda_data/independent_validation/guildify/JAguirre_predictions_guildify_gbm", sep="/")
-output.cv.comb.rf <- paste(main_directory, "results/crossvalidation/cv_guildify_comb_rf.txt", sep="/")
-output.cv.comb.gbm <- paste(main_directory, "results/crossvalidation/cv_guildify_comb_gbm.txt", sep="/")
-output.single.ind.rf = paste(main_directory, "camda_data/independent_validation/JAguirre_predictions_guildify_single_rf.txt", sep="/")
-output.single.ind.gbm = paste(main_directory, "camda_data/independent_validation/JAguirre_predictions_guildify_single_gbm.txt", sep="/")
-output.comb.ind.rf = paste(main_directory, "camda_data/independent_validation/JAguirre_predictions_guildify_comb_rf.txt", sep="/")
-output.comb.ind.gbm = paste(main_directory, "camda_data/independent_validation/JAguirre_predictions_guildify_comb_gbm.txt", sep="/")
+output.cv.rf <- sprintf("/home/quim/PHD/Projects/camda/results/crossvalidation/correlated_samples/cv_%s_%s_top%s_%s_correlated_rf", database, type_genes, num_top, corr_threshold)
+output.cv.gbm <- sprintf("/home/quim/PHD/Projects/camda/results/crossvalidation/correlated_samples/cv_%s_%s_top%s_%s_correlated_gbm", database, type_genes, num_top, corr_threshold)
+output.ind.rf = sprintf("/home/quim/PHD/Projects/camda/camda_data/independent_validation/correlated_samples/JAguirre_predictions_%s_%s_top%s_%s_correlated_rf", database, type_genes, num_top, corr_threshold)
+output.ind.gbm = sprintf("/home/quim/PHD/Projects/camda/camda_data/independent_validation/correlated_samples/JAguirre_predictions_%s_%s_top%s_%s_correlated_gbm", database, type_genes, num_top, corr_threshold)
+output.cv.comb.rf <- sprintf("/home/quim/PHD/Projects/camda/results/crossvalidation/cv_%s_%s_comb_top%s_%s_correlated_rf", database, type_genes, num_top, corr_threshold)
+output.cv.comb.gbm <- sprintf("/home/quim/PHD/Projects/camda/results/crossvalidation/cv_%s_%s_comb_top%s_%s_correlated_gbm", database, type_genes, num_top, corr_threshold)
+output.single.ind.rf = sprintf("/home/quim/PHD/Projects/camda/camda_data/independent_validation/JAguirre_predictions_%s_%s_single_top%s_%s_correlated_rf", database, type_genes, num_top, corr_threshold)
+output.single.ind.gbm = sprintf("/home/quim/PHD/Projects/camda/camda_data/independent_validation/JAguirre_predictions_%s_%s_single_top%s_%s_correlated_gbm", database, type_genes, num_top, corr_threshold)
+output.comb.ind.rf = sprintf("/home/quim/PHD/Projects/camda/camda_data/independent_validation/JAguirre_predictions_%s_%s_comb_top%s_%s_correlated_rf", database, type_genes, num_top, corr_threshold)
+output.comb.ind.gbm = sprintf("/home/quim/PHD/Projects/camda/camda_data/independent_validation/JAguirre_predictions_%s_%s_comb_top%s_%s_correlated_gbm", database, type_genes, num_top, corr_threshold)
 
 
 ### Load files ###
@@ -55,16 +53,23 @@ load(dilirank_file)
 load(expression_file) # Requires cmapR
 
 
+### Get correlated samples ###
+corr_samples = read.csv(input_corr_samples, header = FALSE, stringsAsFactors = FALSE)[,1]
+
+
 #### Subset drugs ####
 drug.dataset <- subset.drug.dataset(drank.sel, outliers=outliers, remove.outliers=remove.outliers)
 
 
 ### Get genes associated to phenotypes from DisGeNET ###
-phenotype2gene_file <- "/home/quim/PHD/Projects/camda/guildify_data/phenotype2gene.tsv"
-phenotype2gene <- read.csv(phenotype2gene_file, header=TRUE, sep="\t")
-phenotypes <- unique(phenotype2gene$diseaseid)
-curated_phenotypes <- unique(phenotype2gene$diseaseid[phenotype2gene$source == "CURATED"])
-#curated_phenotypes <- c("C0023890", "C0239946")
+type_analysis <- paste(database, type_genes, sep='.')
+disgenet2gene <- read.csv(disease2gene_file, header=TRUE, sep="\t", stringsAsFactors = F)
+redundantphenotypes_df <- read.csv(redundantphenotypes_file, header=TRUE, sep="\t", stringsAsFactors = F)
+disgenet2gene_unique <- disgenet2gene[!disgenet2gene$diseaseid %in% redundantphenotypes_df$redundant.phenotype,]
+disgenet2gene_df <- disgenet2gene_unique[c("geneid", "diseaseid", "diseaseterm", type_analysis)]
+colnames(disgenet2gene_df) <- c("geneid", "diseaseid", "diseaseterm", "type_analysis")
+disgenet2gene_df <- disgenet2gene_df[disgenet2gene_df$type_analysis==1,]
+phenotypes <- unique(disgenet2gene_df$diseaseid)
 
 
 ### Define balanced drugs for machine learning datasets ###
@@ -76,26 +81,15 @@ disgenet.datasets.list <- list()
 disgenet.rf.list <- list()
 disgenet.gbm.list <- list()
 independent.datasets.list <- list()
-for (phenotype in curated_phenotypes){
-  curated_gene_ids <-unique(phenotype2gene$geneid[phenotype2gene$diseaseid==phenotype & phenotype2gene$source=="CURATED"])
-  name <- unique(phenotype2gene$name[phenotype2gene$diseaseid==phenotype])
+for (phenotype in phenotypes){
+  gene_ids <- unique(disgenet2gene_df$geneid[disgenet2gene_df$diseaseid == phenotype])
   name_and_extension <- paste(phenotype, '.txt', sep="")
-  if (length(curated_gene_ids)>=10) {
-    
-    ### Get genes from GUILDify ###
-    phenotype_file = paste(phenotype, "_CURATED.tsv", sep="")
-    guildify_file <- paste(guildify_dir, phenotype_file, sep="")
-    guildify_result <- read.csv(guildify_file, header=TRUE, sep="\t", stringsAsFactors=FALSE)
-    guildify_genes <- unique(guildify_result$gene.id)
-    if (length(guildify_genes) < length(curated_gene_ids)){
-      next
-    }
-    
+  if (length(gene_ids)>=minimum_genes) {
     ### Subset GCT object ###
-    # Subset the GCT object by cell ID PHH, 10 µM, 24 h
-    expression_df <- subset.expression(gct, guildify_genes, drug.dataset$drugs, drug.dataset$dilirank_df, cell_id="PHH", pert_idose="10 µM", pert_itime="24 h", merge_samples = TRUE)
+    # Subset the GCT object by correlated samples
+    expression_df <- subset.expression.by.samples(gct, gene_ids, corr_samples, drug.dataset$drugs, drug.dataset$dilirank_df, merge_samples=TRUE, merge_criteria="median")
     # Subset gene expression for independent drugs as well
-    expression_ind_df <- subset.expression(gct, guildify_genes, drug.dataset$independent_drugs, drug.dataset$independent_df, cell_id="PHH", pert_idose="10 µM", pert_itime="24 h", merge_samples = TRUE)
+    expression_ind_df <- subset.expression.by.samples(gct, gene_ids, corr_samples, drug.dataset$independent_drugs, drug.dataset$independent_df, merge_samples = TRUE, merge_criteria="median")
     independent.datasets.list[[length(independent.datasets.list)+1]] <- expression_ind_df
     
     ### Prepare balanced machine learning datasets ###

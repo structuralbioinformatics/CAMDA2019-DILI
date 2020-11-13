@@ -9,7 +9,7 @@ place = "home" #home or work
 feature_names <- c("disgenet")
 plot_names <- c("DisGeNET")
 type_genes = 'curated' # curated or all
-ml_algorithms <- c("rf") #c("rf", "gbm")
+ml_algorithms <- c("rf", "gbm") #c("rf", "gbm")
 fontsize <- 10 # 8 for both rf and gbm
 
 if (place=="work"){
@@ -23,8 +23,6 @@ if (place=="work"){
 
 ### Define directories and files ###
 output_dir <- paste(main_directory, "results/crossvalidation", sep="/")
-output_plot_pdf <- paste(main_directory, "results/plots/heatmap_results_phenotypes_disgenet_rf.pdf", sep="/")
-output_plot_png <- paste(main_directory, "results/plots/heatmap_results_phenotypes_disgenet_rf.png", sep="/")
 phenotype2gene_file <- paste(main_directory, "guildify_data/phenotype2gene.tsv", sep="/")
 disease2gene_file <- paste(main_directory, "guildify_data/disease2gene_disgenet_guildify.tsv", sep="/")
 redundantphenotypes_file <- paste(main_directory, "guildify_data/redundant_phenotypes.tsv", sep="/")
@@ -43,8 +41,10 @@ phenotypes <- phenotypes[order(phenotypes$diseaseterm),]
 
 
 ### Read cross-validation results and calculate the mean of all results ###
-results_phenotypes <- data.frame(matrix(ncol = 5, nrow = 0))
-colnames(results_phenotypes) <- c("name","Accuracy", "Precision", "Sensitivity", "Specificity")
+#cols <- c("name","Accuracy", "Precision", "Sensitivity", "Specificity")
+cols <- c("name","Accuracy", "Precision", "Sensitivity", "Specificity", "F1", "MCC")
+results_phenotypes <- data.frame(matrix(ncol = length(cols), nrow = 0))
+colnames(results_phenotypes) <- cols
 
 for (i in 1:nrow(phenotypes)){
   diseaseid <- phenotypes[i,c("diseaseid")]
@@ -63,8 +63,12 @@ for (i in 1:nrow(phenotypes)){
         feature_file <- paste(output_dir, feature_name, file_name, sep="/")
         if (file.exists(feature_file)){
           feature_df <- read.csv(feature_file, header=TRUE, sep="\t", stringsAsFactors=FALSE)
+          if (ncol(feature_df) == 5){
+            feature_df$f1 <- apply(feature_df[,2:5], 1, function(y) calculate.f1.from.metrics(precision = y['precision'], sensitivity = y['sensitivity']))
+            feature_df$mcc <- apply(feature_df[,2:5], 1, function(y) calculate.mcc.from.metrics(accuracy = y['accuracy'], precision = y['precision'], sensitivity = y['sensitivity'], specificity = y['specificity']))
+          }
           feature_data <- feature_df[!feature_df$model=="pred.comb",]
-          res <- apply(feature_data[,2:5], 2, mean)
+          res <- apply(feature_data[,2:length(cols)], 2, mean)
           #plot_name <- paste(diseaseterm, " (",formal_feature_name,", ", toupper(ml_algorithm), ")", sep="")
           if (length(ml_algorithms) > 1){
             plot_name <- paste(diseaseterm, " (", toupper(ml_algorithm), ")", sep="")
@@ -77,29 +81,94 @@ for (i in 1:nrow(phenotypes)){
     }
   }
 }
-res_phen <- apply(results_phenotypes[,2:5], 2, as.numeric) # Convert into numeric the content of the matrix
+res_phen <- apply(results_phenotypes[,2:length(cols)], 2, as.numeric) # Convert into numeric the content of the matrix
 res_mean <- apply(res_phen, 2, mean)
 results_phenotypes[nrow(results_phenotypes)+1,] <- c("Mean", res_mean)
 
 
 
+### Define output plots ###
+feature_name <- feature_names[1]
+if(length(ml_algorithms) == 1){
+  ml_algorithm <- ml_algorithms[1]
+  output_plot_pdf <- paste(main_directory, sprintf("results/plots/heatmap_results_phenotypes_%s_%s.pdf", feature_name, ml_algorithm), sep="/")
+  output_plot_png <- paste(main_directory, sprintf("results/plots/heatmap_results_phenotypes_%s_%s.png", feature_name, ml_algorithm), sep="/")
+  plot_width <- 8
+  plot_height <- 5
+} else {
+  ml_algorithm <- paste(ml_algorithms, collapse = "_")
+  output_plot_pdf <- paste(main_directory, sprintf("results/plots/heatmap_results_phenotypes_%s_%s.pdf", feature_name, ml_algorithm), sep="/")
+  output_plot_png <- paste(main_directory, sprintf("results/plots/heatmap_results_phenotypes_%s_%s.png", feature_name, ml_algorithm), sep="/")
+  plot_width <- 8
+  plot_height <- 8
+}
+
+
+
 ### Create a Heatmap with the results ###
-heat_df <- as.matrix(results_phenotypes[,2:5]) # Matrix needed to insert content into Heatmap
-colnames(heat_df) <- c("Accuracy", "Precision", "Sensitivity", "Specificity")
+
+# heat_df <- as.matrix(results_phenotypes[,2:5]) # Matrix needed to insert content into Heatmap
+# colnames(heat_df) <- c("Accuracy", "Precision", "Sensitivity", "Specificity")
+# heat_df <- apply(heat_df, 2, as.numeric) # Convert into numeric the content of the matrix
+# rownames(heat_df) <- results_phenotypes[,1]
+# Cairo::CairoPDF(output_plot_pdf, width = 6, height = 5) # Save in PDF
+# Heatmap(heat_df, name = "results", km = 0, 
+#         col = colorRamp2(c(min(heat_df, na.rm = TRUE), 0.5, max(heat_df, na.rm = TRUE)), c("red", "white", "green")), 
+#         na_col = "grey", # NA color
+#         cluster_rows=FALSE, cluster_columns=FALSE, 
+#         row_names_gp = gpar(fontsize = fontsize), column_names_gp =  gpar(fontsize = fontsize), column_names_rot = 45,
+#         cell_fun = function(j, i, x, y, width, height, fill) {
+#           grid.text(sprintf("%.2f", heat_df[i, j]), x, y, gp = gpar(fontsize = fontsize))
+#         }
+# )
+# dev.off()
+# Cairo::CairoPNG(output_plot_png, dpi=300, width = 6, height = 5, units = "in") # Resolution taken from: https://www.andrewheiss.com/blog/2017/09/27/working-with-r-cairo-graphics-custom-fonts-and-ggplot/
+# Heatmap(heat_df, name = "results", km = 0, 
+#         col = colorRamp2(c(min(heat_df, na.rm = TRUE), 0.5, max(heat_df, na.rm = TRUE)), c("red", "white", "green")), 
+#         na_col = "grey", # NA color
+#         cluster_rows=FALSE, cluster_columns=FALSE, 
+#         row_names_gp = gpar(fontsize = fontsize), column_names_gp =  gpar(fontsize = fontsize), column_names_rot = 60,
+#         cell_fun = function(j, i, x, y, width, height, fill) {
+#           grid.text(sprintf("%.2f", heat_df[i, j]), x, y, gp = gpar(fontsize = fontsize))
+#         }
+# )
+# dev.off()
+
+heat_df <- as.matrix(results_phenotypes[,2:6]) # Matrix needed to insert content into Heatmap
+colnames(heat_df) <- c("Accuracy", "Precision", "Sensitivity", "Specificity", "F1-score")
 heat_df <- apply(heat_df, 2, as.numeric) # Convert into numeric the content of the matrix
 rownames(heat_df) <- results_phenotypes[,1]
-Cairo::CairoPDF(output_plot_pdf, width = 6, height = 5) # Save in PDF
-Heatmap(heat_df, name = "results", km = 0, 
-        col = colorRamp2(c(min(heat_df, na.rm = TRUE), 0.5, max(heat_df, na.rm = TRUE)), c("red", "white", "green")), 
-        na_col = "grey", # NA color
-        cluster_rows=FALSE, cluster_columns=FALSE, 
-        row_names_gp = gpar(fontsize = fontsize), column_names_gp =  gpar(fontsize = fontsize), column_names_rot = 45,
-        cell_fun = function(j, i, x, y, width, height, fill) {
-          grid.text(sprintf("%.2f", heat_df[i, j]), x, y, gp = gpar(fontsize = fontsize))
-        }
+Cairo::CairoPDF(output_plot_pdf, width = plot_width, height = plot_height) # Save in PDF
+h1 <- Heatmap(heat_df, name = "results", km = 0, 
+              col = colorRamp2(c(min(heat_df, na.rm = TRUE), 0.5, max(heat_df, na.rm = TRUE)), c("red", "white", "green")), 
+              na_col = "grey", # NA color
+              cluster_rows=FALSE, cluster_columns=FALSE, 
+              row_names_gp = gpar(fontsize = fontsize), column_names_gp =  gpar(fontsize = fontsize), column_names_rot = 45,
+              cell_fun = function(j, i, x, y, width, height, fill) {
+                grid.text(sprintf("%.2f", heat_df[i, j]), x, y, gp = gpar(fontsize = fontsize))
+              }
 )
+mcc_df <- data.frame(matrix(ncol = 1, nrow = nrow(results_phenotypes)))
+colnames(mcc_df) <- c("MCC")
+mcc_df$MCC <- results_phenotypes[,7] # Matrix needed to insert content into Heatmap
+mcc_df <- apply(mcc_df, 2, as.numeric) # Convert into numeric the content of the matrix
+rownames(mcc_df) <- results_phenotypes[,1]
+h2 <- Heatmap(mcc_df, name = "MCC", km = 0, 
+              #col = colorRamp2(c(min(mcc_df, na.rm = TRUE), 0, max(mcc_df, na.rm = TRUE)), c("yellow", "white", "#00b8ff")),
+              col = colorRamp2(c(-1, 0, 1), c("yellow", "white", "#00b8ff")),
+              cluster_rows=FALSE, cluster_columns=FALSE, 
+              row_names_gp = gpar(fontsize = 10), column_names_gp =  gpar(fontsize = 10), column_names_rot = 45,
+              column_title_gp = gpar(fontsize = 10),
+              cell_fun = function(j, i, x, y, width, height, fill) {
+                grid.text(sprintf("%.2f", mcc_df[i, j]), x, y, gp = gpar(fontsize = 10))
+              }
+)
+ht_list = h1 + h2
+draw(ht_list, ht_gap = unit(2, "mm"))
 dev.off()
-Cairo::CairoPNG(output_plot_png, dpi=300, width = 6, height = 5, units = "in") # Resolution taken from: https://www.andrewheiss.com/blog/2017/09/27/working-with-r-cairo-graphics-custom-fonts-and-ggplot/
+
+
+Cairo::CairoPNG(output_plot_png, dpi=300, width = plot_width, height = plot_height, units = "in") # Resolution taken from: https://www.andrewheiss.com/blog/2017/09/27/working-with-r-cairo-graphics-custom-fonts-and-ggplot/
 Heatmap(heat_df, name = "results", km = 0, 
         col = colorRamp2(c(min(heat_df, na.rm = TRUE), 0.5, max(heat_df, na.rm = TRUE)), c("red", "white", "green")), 
         na_col = "grey", # NA color
@@ -109,4 +178,17 @@ Heatmap(heat_df, name = "results", km = 0,
           grid.text(sprintf("%.2f", heat_df[i, j]), x, y, gp = gpar(fontsize = fontsize))
         }
 )
+h2 <- Heatmap(mcc_df, name = "MCC", km = 0, 
+              #col = colorRamp2(c(min(mcc_df, na.rm = TRUE), 0, max(mcc_df, na.rm = TRUE)), c("yellow", "white", "#00b8ff")),
+              col = colorRamp2(c(-1, 0, 1), c("yellow", "white", "#00b8ff")),
+              cluster_rows=FALSE, cluster_columns=FALSE, 
+              row_names_gp = gpar(fontsize = 10), column_names_gp =  gpar(fontsize = 10), column_names_rot = 60,
+              column_title_gp = gpar(fontsize = 10),
+              cell_fun = function(j, i, x, y, width, height, fill) {
+                grid.text(sprintf("%.2f", mcc_df[i, j]), x, y, gp = gpar(fontsize = 10))
+              }
+)
+ht_list = h1 + h2
+draw(ht_list, ht_gap = unit(2, "mm"))
 dev.off()
+

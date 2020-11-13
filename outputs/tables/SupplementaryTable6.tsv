@@ -1,0 +1,144 @@
+Gene Symbol	Gene ID	Included in the following datasets
+ABCB11	8647	-
+ABCC2	1244	Biliary cirrhosis  (DisGeNET); Biliary cirrhosis  (GUILDify); Hepatitis, Drug-Induced  (DisGeNET)
+ACE	1636	Nonalcoholic Steatohepatitis  (DisGeNET); Nonalcoholic Steatohepatitis  (GUILDify)
+ACVRL1	94	-
+ADH1B	125	-
+ADH1C	126	-
+ADRA1A	148	Liver Cirrhosis  (DisGeNET); Liver Cirrhosis  (GUILDify)
+ADRA2A	150	-
+ADRB2	154	Landmark; DILI Landmark
+ADRB3	155	-
+AGTR1	185	-
+AKT1	207	Landmark
+ALB	213	Hepatitis, Drug-Induced  (DisGeNET); Liver Cirrhosis  (DisGeNET); Liver Cirrhosis  (GUILDify); Liver Failure, Acute  (DisGeNET); Liver Failure, Acute  (GUILDify)
+ALDH2	217	-
+APOBEC3G	60489	-
+AR	367	-
+BMPR1A	657	-
+BMPR2	659	Liver Failure, Acute  (GUILDify)
+C1S	716	-
+CCL2	6347	Landmark; Biliary cirrhosis  (GUILDify); Hepatitis, Drug-Induced  (DisGeNET); Liver Cirrhosis  (DisGeNET); Liver Cirrhosis  (GUILDify); Liver Dysfunction  (DisGeNET)
+CCR2	729230	Biliary cirrhosis  (GUILDify); Hepatitis, Drug-Induced  (DisGeNET); Liver Cirrhosis  (GUILDify); Liver Dysfunction  (DisGeNET)
+CCR5	1234	Biliary cirrhosis  (GUILDify)
+CELA1	-	-
+CFTR	1080	-
+CHRM3	1131	Hepatitis, Drug-Induced  (DisGeNET); Liver Cirrhosis  (DisGeNET)
+CHUK	1147	-
+CNR1	1268	Liver Cirrhosis  (DisGeNET)
+CNR2	1269	Liver Cirrhosis  (DisGeNET)
+COMT	1312	-
+CPT1A	1374	Hyperammonemia  (DisGeNET); Hyperammonemia  (GUILDify)
+CXCL8	3576	Steatohepatitis  (DisGeNET); Steatohepatitis  (GUILDify)
+CXCR1	3577	Steatohepatitis  (GUILDify)
+CYP11B2	1585	-
+CYP17A1	1586	Nonalcoholic Steatohepatitis  (DisGeNET); Nonalcoholic Steatohepatitis  (GUILDify)
+CYP19A1	1588	Steatohepatitis  (DisGeNET)
+CYP1A1	1543	-
+CYP1A2	1544	Hepatitis, Drug-Induced  (DisGeNET); Liver Cirrhosis  (DisGeNET); Liver Dysfunction  (DisGeNET); Nonalcoholic Steatohepatitis  (DisGeNET)
+CYP1B1	1545	Steatohepatitis  (DisGeNET); Steatohepatitis  (GUILDify)
+CYP2C19	1557	Hepatitis, Drug-Induced  (DisGeNET)
+CYP2D6	1565	-
+CYP2E1	1571	Hepatitis, Drug-Induced  (DisGeNET); Liver Cirrhosis, Alcoholic  (DisGeNET); Nonalcoholic Steatohepatitis  (DisGeNET); Nonalcoholic Steatohepatitis  (GUILDify); Steatohepatitis  (DisGeNET); Steatohepatitis  (GUILDify)
+CYP3A4	1576	Hepatitis, Drug-Induced  (DisGeNET)
+CYP3A5	1577	Hyperammonemia  (GUILDify)
+CYP4F2	8529	-
+DHCR7	1717	Liver Cirrhosis  (DisGeNET); Liver Cirrhosis  (GUILDify)
+DRD4	1815	-
+ECE1	1889	-
+EDNRA	1909	-
+EDNRB	1910	-
+EIF2AK2	5610	-
+ELANE	1991	-
+EPHX1	2052	Hepatitis, Drug-Induced  (DisGeNET)
+ESR1	2099	-
+ESR2	2100	-
+F2	2147	Liver Cirrhosis  (DisGeNET); Liver Cirrhosis  (GUILDify); Nonalcoholic Steatohepatitis  (DisGeNET); Nonalcoholic Steatohepatitis  (GUILDify); Steatohepatitis  (DisGeNET); Steatohepatitis  (GUILDify)
+F3	2152	Liver Cirrhosis  (DisGeNET); Liver Cirrhosis  (GUILDify)
+F7	2155	-
+F9	2158	-
+FGFR2	2263	Landmark; Liver Cirrhosis  (DisGeNET); Liver Cirrhosis  (GUILDify)
+FLT1	2321	Hepatitis, Drug-Induced  (DisGeNET); Liver Cirrhosis  (DisGeNET); Liver Cirrhosis  (GUILDify)
+GC	2638	Hepatitis, Drug-Induced  (DisGeNET); Liver Cirrhosis  (DisGeNET); Liver Cirrhosis  (GUILDify); Liver Failure, Acute  (DisGeNET); Liver Failure, Acute  (GUILDify)
+GLO1	2739	-
+GLS	2744	-
+GSTA1	2938	Nonalcoholic Steatohepatitis  (DisGeNET); Nonalcoholic Steatohepatitis  (GUILDify)
+GSTP1	2950	Hepatitis, Drug-Induced  (DisGeNET); Nonalcoholic Steatohepatitis  (DisGeNET); Nonalcoholic Steatohepatitis  (GUILDify)
+HBB	3043	-
+HDAC2	3066	Landmark; Liver Cirrhosis  (DisGeNET); Liver Cirrhosis  (GUILDify)
+HIF1A	3091	Landmark; Biliary cirrhosis  (DisGeNET); Biliary cirrhosis  (GUILDify)
+HSD11B2	3291	Liver Cirrhosis  (DisGeNET); Liver Cirrhosis  (GUILDify)
+HSPA5	3309	-
+HTR2B	3357	-
+IL2	3558	-
+IL6	3569	Hepatitis, Drug-Induced  (DisGeNET); Liver Cirrhosis  (DisGeNET); Liver Cirrhosis  (GUILDify); Liver Cirrhosis, Alcoholic  (DisGeNET)
+JAK1	3716	-
+JAK2	3717	Nonalcoholic Steatohepatitis  (DisGeNET); Nonalcoholic Steatohepatitis  (GUILDify)
+KCNA5	3741	-
+KDR	3791	-
+LOX	4015	Biliary cirrhosis  (DisGeNET); Biliary cirrhosis  (GUILDify); Liver Cirrhosis  (DisGeNET); Liver Cirrhosis  (GUILDify)
+MAPK8	5599	Liver Failure, Acute  (DisGeNET); Liver Failure, Acute  (GUILDify)
+MIF	4282	Landmark
+MMP1	4312	Landmark; Liver Failure, Acute  (GUILDify); Nonalcoholic Steatohepatitis  (DisGeNET); Nonalcoholic Steatohepatitis  (GUILDify)
+MMP12	4321	-
+MMP13	4322	Liver Cirrhosis  (GUILDify); Liver Failure, Acute  (GUILDify); Nonalcoholic Steatohepatitis  (GUILDify)
+MMP14	4323	-
+MMP15	4324	Liver Cirrhosis  (GUILDify)
+MMP2	4313	Landmark; Hepatitis, Drug-Induced  (DisGeNET); Liver Cirrhosis  (DisGeNET); Liver Cirrhosis  (GUILDify); Liver Cirrhosis, Alcoholic  (DisGeNET)
+MMP3	4314	Liver Cirrhosis  (GUILDify); Liver Failure, Acute  (GUILDify)
+MMP7	4316	Liver Cirrhosis  (GUILDify); Liver Failure, Acute  (GUILDify)
+MMP8	4317	Liver Failure, Acute  (GUILDify)
+MMP9	4318	Liver Cirrhosis  (GUILDify); Liver Dysfunction  (DisGeNET); Nonalcoholic Steatohepatitis  (GUILDify)
+MPO	4353	Liver Cirrhosis, Alcoholic  (DisGeNET)
+NFE2L2	4780	Landmark; Hepatitis, Drug-Induced  (DisGeNET); Liver Cirrhosis  (DisGeNET); Liver Cirrhosis  (GUILDify); Nonalcoholic Steatohepatitis  (DisGeNET); Nonalcoholic Steatohepatitis  (GUILDify); Steatohepatitis  (DisGeNET); Steatohepatitis  (GUILDify)
+NFKB1	4790	Biliary cirrhosis  (DisGeNET); Biliary cirrhosis  (GUILDify); Liver Dysfunction  (DisGeNET)
+NOS2	4843	Liver Dysfunction  (DisGeNET)
+NOS3	4846	Landmark; DILI Landmark
+NOX4	50507	Hepatitis, Drug-Induced  (DisGeNET); Steatohepatitis  (GUILDify)
+NPC1	4864	Landmark; DILI Landmark; Hyperammonemia  (DisGeNET); Hyperammonemia  (GUILDify); Liver Cirrhosis  (DisGeNET); Liver Cirrhosis  (GUILDify); Liver Dysfunction  (DisGeNET)
+NR1H4	9971	Hepatitis, Drug-Induced  (DisGeNET); Liver Dysfunction  (DisGeNET); Nonalcoholic Steatohepatitis  (DisGeNET); Nonalcoholic Steatohepatitis  (GUILDify); Steatohepatitis  (DisGeNET); Steatohepatitis  (GUILDify)
+NR1I2	8856	Hepatitis, Drug-Induced  (DisGeNET); Steatohepatitis  (DisGeNET); Steatohepatitis  (GUILDify)
+OGG1	4968	-
+PARP1	142	Landmark
+PCSK7	9159	-
+PDE5A	8654	-
+PLG	5340	Hepatitis, Drug-Induced  (DisGeNET)
+PPARA	5465	Hepatitis, Drug-Induced  (DisGeNET); Nonalcoholic Steatohepatitis  (DisGeNET); Nonalcoholic Steatohepatitis  (GUILDify); Steatohepatitis  (DisGeNET); Steatohepatitis  (GUILDify)
+PPARG	5468	Landmark
+PRKCA	5578	-
+PRKCB	5579	-
+PRKCG	5582	-
+PRKDC	5591	Hepatitis, Drug-Induced  (DisGeNET)
+PTGS2	5743	Landmark; Hepatitis, Drug-Induced  (DisGeNET)
+RARA	5914	-
+RARB	5915	-
+RARG	5916	-
+RELA	5970	Liver Cirrhosis, Alcoholic  (DisGeNET)
+REN	5972	Liver Cirrhosis  (DisGeNET); Liver Cirrhosis  (GUILDify)
+ROCK2	9475	-
+RUNX1	861	-
+S100A4	6275	Landmark
+SCNN1A	6337	-
+SERPINA6	866	Hepatitis, Drug-Induced  (DisGeNET); Liver Cirrhosis  (DisGeNET); Steatohepatitis  (DisGeNET)
+SERPINE1	5054	Landmark; DILI Landmark; Steatohepatitis  (DisGeNET); Steatohepatitis  (GUILDify)
+SHBG	6462	-
+SLC10A1	6554	-
+SLC10A2	6555	-
+SLC22A1	6580	-
+SLC22A8	9376	Hepatitis, Drug-Induced  (DisGeNET); Liver Cirrhosis  (DisGeNET); Steatohepatitis  (DisGeNET)
+SLC6A4	6532	-
+SMAD3	4088	Landmark; Liver Cirrhosis  (DisGeNET); Liver Cirrhosis  (GUILDify); Liver Cirrhosis, Alcoholic  (DisGeNET)
+SRD5A2	-	-
+SULT1A1	6817	-
+TGFBR1	7046	Hepatitis, Drug-Induced  (DisGeNET); Liver Cirrhosis  (DisGeNET); Liver Cirrhosis  (GUILDify)
+TGFBR2	7048	Landmark
+TIE1	7075	-
+TLR2	7097	-
+TLR7	51284	-
+TNF	7124	Biliary cirrhosis  (GUILDify); Hepatitis, Drug-Induced  (DisGeNET); Liver Cirrhosis, Alcoholic  (DisGeNET); Liver Dysfunction  (DisGeNET); Liver Failure, Acute  (DisGeNET); Liver Failure, Acute  (GUILDify); Steatohepatitis  (DisGeNET); Steatohepatitis  (GUILDify)
+TP53	7157	Landmark
+TYK2	7297	Biliary cirrhosis  (DisGeNET); Biliary cirrhosis  (GUILDify)
+UGT1A1	-	-
+VDR	7421	-
+XBP1	7494	Landmark; Nonalcoholic Steatohepatitis  (DisGeNET); Nonalcoholic Steatohepatitis  (GUILDify); Steatohepatitis  (DisGeNET); Steatohepatitis  (GUILDify)
+XDH	7498	-

@@ -9,8 +9,8 @@ if (place=="work"){
   main_directory = "/home/quim/PHD/Projects/camda"
   bigmem_directory = "/sbi/users/interchange/emre/quim/camda"
 } else {
-  main_directory = "/Users/quim/Dropbox/UPF/PhD/Projects/camda"
-  bigmem_directory = "/Users/quim/Documents/Projects/camda"
+  main_directory = "/Users/quim/Dropbox/UPF/PHD/Projects/camda"
+  bigmem_directory = "/Users/quim/Documents/DATA/camda"
 }
 
 

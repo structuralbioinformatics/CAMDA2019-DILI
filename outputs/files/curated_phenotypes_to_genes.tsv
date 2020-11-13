@@ -1,0 +1,11 @@
+DILI Phenotypes	UMLS	Number of genes associated in DisGeNET	Number of genes associated in GUILDify
+Biliary cirrhosis	C0023892	33	86
+Hepatitis, Drug-Induced	C1262760	315	278
+Hyperammonemia	C0220994	104	148
+Liver Cirrhosis	C0023890	97	145
+Liver Cirrhosis, Alcoholic	C0023891	30	26
+Liver Dysfunction	C0086565	67	0
+Liver Failure, Acute	C0162557	22	118
+Nonalcoholic Steatohepatitis	C3241937	42	67
+Steatohepatitis	C2711227	86	167
+Number of different genes associated to DILI phenotypes	-	641	805

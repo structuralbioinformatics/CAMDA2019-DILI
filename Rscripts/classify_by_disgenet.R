@@ -17,7 +17,7 @@ if (place=="work"){
   bigmem_directory = "/sbi/users/interchange/emre/quim/camda"
 } else {
   main_directory = "/Users/quim/Dropbox/UPF/PhD/Projects/camda"
-  bigmem_directory = "/Users/quim/Documents/Projects/camda"
+  bigmem_directory = "/Users/quim/Documents/DATA/camda"
 }
 
 
@@ -33,7 +33,6 @@ cell_info_file <- paste(main_directory, "additional_data/GSE92742_Broad_LINCS_ce
 functions_file <- paste(main_directory, "Rscripts/camda_functions.R", sep="/")
 # Specific data files
 phenotype2gene_file <- paste(main_directory, "guildify_data/phenotype2gene.tsv", sep="/")
-redundantphenotypes_file <- paste(main_directory, "guildify_data/redundant_phenotypes.tsv", sep="/")
 # Output files
 output.cv.rf <- paste(main_directory, "results/crossvalidation/disgenet/cv_disgenet_rf", sep="/")
 output.cv.gbm <- paste(main_directory, "results/crossvalidation/disgenet/cv_disgenet_gbm", sep="/")

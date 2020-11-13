@@ -17,7 +17,7 @@ if (place=="work"){
   bigmem_directory = "/sbi/users/interchange/emre/quim/camda"
 } else {
   main_directory = "/Users/quim/Dropbox/UPF/PhD/Projects/camda"
-  bigmem_directory = "/Users/quim/Documents/Projects/camda"
+  bigmem_directory = "/Users/quim/Documents/DATA/camda"
 }
 
 

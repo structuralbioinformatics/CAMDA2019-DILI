@@ -10,8 +10,8 @@ feature_names <- c("landmark",
                    "disgenet_curated_top2_0.5_correlated",
                    "guildify_curated_top2_0.5_correlated",
                    "signature_top2_0.5_correlated",
-                   #"targets",
-                   #"smiles",
+                   "targets",
+                   "smiles",
                    "disgenet_curated_smiles_top2_0.5_correlated",
                    "guildify_curated_smiles_top2_0.5_correlated",
                    "signature_smiles_top2_0.5_correlated"
@@ -21,8 +21,8 @@ plot_names <- c("Landmark",
                 "DisGeNET",
                 "GUILDify",
                 "DILI landmark",
-                #"Targets",
-                #"SMILES",
+                "Targets",
+                "SMILES",
                 "DisGeNET + SMILES",
                 "GUILDify + SMILES",
                 "DILI landmark + SMILES"
@@ -61,8 +61,9 @@ vm = read.csv(validation_file, header=TRUE, sep="\t", stringsAsFactors=FALSE)
 
 
 ### Read cross-validation results and calculate the mean of all results ###
-results <- data.frame(matrix(ncol = 9, nrow = 0))
-colnames(results) <- c("name","Accuracy", "Precision", "Sensitivity", "Specificity", "Accuracy", "Precision", "Sensitivity", "Specificity")
+cols <- c("name","Accuracy", "Precision", "Sensitivity", "Specificity", "F1", "MCC", "Accuracy", "Precision", "Sensitivity", "Specificity", "F1", "MCC")
+results <- data.frame(matrix(ncol = length(cols), nrow = 0))
+colnames(results) <- cols
 ml_algorithms <- c("rf", "gbm")
 
 for (i in 1:length(feature_names)){
@@ -74,14 +75,15 @@ for (i in 1:length(feature_names)){
     print(val_file_name)
     valres <- vm[vm["Name"] == val_file_name,][,2:5]
     if (nrow(valres)==0){
-      valres <- c(NA, NA, NA, NA)
+      valres <- rep(NA, 6)
     }
     print(valres)
     
     # Get the cross-validation results
     if (feature_name %in% c("disgenet_curated_top2_0.5_correlated", "disgenet_curated_smiles_top2_0.5_correlated", "guildify_curated_top2_0.5_correlated", "guildify_curated_smiles_top2_0.5_correlated")){
-      results_phenotypes <- data.frame(matrix(ncol = 5, nrow = 0))
-      colnames(results_phenotypes) <- c("name","accuracy", "precision", "sensitivity", "specificity")
+      cols <- c("name","accuracy", "precision", "sensitivity", "specificity", "f1", "mcc")
+      results_phenotypes <- data.frame(matrix(ncol = length(cols), nrow = 0))
+      colnames(results_phenotypes) <- cols
       plot_name <- paste(formal_feature_name, " (", toupper(ml_algorithm), ")", sep="")
       for (j in 1:nrow(phenotypes)){
         diseaseid <- phenotypes[j,c("diseaseid")]
@@ -96,8 +98,12 @@ for (i in 1:length(feature_names)){
           feature_file <- paste(output_dir, feature_name, file_name, sep="/")
           if (file.exists(feature_file)){
             feature_df <- read.csv(feature_file, header=TRUE, sep="\t", stringsAsFactors=FALSE)
+            if (ncol(feature_df) == 5){
+              feature_df$f1 <- apply(feature_df[,2:5], 1, function(y) calculate.f1.from.metrics(precision = y['precision'], sensitivity = y['sensitivity']))
+              feature_df$mcc <- apply(feature_df[,2:5], 1, function(y) calculate.mcc.from.metrics(accuracy = y['accuracy'], precision = y['precision'], sensitivity = y['sensitivity'], specificity = y['specificity']))
+            }
             feature_data <- feature_df[!feature_df$model=="pred.comb",]
-            res <- apply(feature_data[,2:5], 2, mean)
+            res <- apply(feature_data[,2:7], 2, mean)
             #print(file_name)
             #print(diseaseid)
             #print(res)
@@ -108,7 +114,7 @@ for (i in 1:length(feature_names)){
       #print(feature_name)
       #print(ml_algorithm)
       #print(results_phenotypes)
-      res <- apply(results_phenotypes[,2:5], 2, as.numeric) # Convert into numeric the content of the matrix
+      res <- apply(results_phenotypes[,2:7], 2, as.numeric) # Convert into numeric the content of the matrix
       res_mean <- apply(res, 2, mean)
       #print(plot_name)
       #print(res_mean)
@@ -117,7 +123,11 @@ for (i in 1:length(feature_names)){
       file_name <- paste("cv", feature_name, paste(ml_algorithm, ".txt", sep=""), sep="_")
       feature_file <- paste(output_dir, file_name, sep="/")
       cm = read.csv(feature_file, header=TRUE, sep="\t", stringsAsFactors=FALSE)
-      res <- apply(cm[1:10,2:5], 2, mean)
+      if (ncol(cm) == 5){
+        cm$f1 <- apply(cm[,2:5], 1, function(y) calculate.f1.from.metrics(precision = y['precision'], sensitivity = y['sensitivity']))
+        cm$mcc <- apply(cm[,2:5], 1, function(y) calculate.mcc.from.metrics(accuracy = y['accuracy'], precision = y['precision'], sensitivity = y['sensitivity'], specificity = y['specificity']))
+      }
+      res <- apply(cm[1:10,2:7], 2, mean)
       #print(file_name)
       #print(res)
       plot_name <- paste(formal_feature_name, " (", toupper(ml_algorithm), ")", sep="")
@@ -128,45 +138,110 @@ for (i in 1:length(feature_names)){
 
 
 ### Create a Heatmap with the results ###
-#heat_df <- as.matrix(results[,2:9]) # Matrix needed to insert content into Heatmap
-heat_df <- as.matrix(results[,2:5]) # Matrix needed to insert content into Heatmap
-#colnames(heat_df) <- c("Accuracy", "Precision", "Sensitivity", "Specificity", "Accuracy", "Precision", "Sensitivity", "Specificity")
-colnames(heat_df) <- c("Accuracy", "Precision", "Sensitivity", "Specificity")
+# #heat_df <- as.matrix(results[,2:9]) # Matrix needed to insert content into Heatmap
+# heat_df <- as.matrix(results[,2:5]) # Matrix needed to insert content into Heatmap
+# #colnames(heat_df) <- c("Accuracy", "Precision", "Sensitivity", "Specificity", "Accuracy", "Precision", "Sensitivity", "Specificity")
+# colnames(heat_df) <- c("Accuracy", "Precision", "Sensitivity", "Specificity")
+# heat_df <- apply(heat_df, 2, as.numeric) # Convert into numeric the content of the matrix
+# rownames(heat_df) <- results[,1]
+# Cairo::CairoPDF(output_plot_pdf) # Save in PDF
+# #Heatmap(heat_df, name = "results", km = 0, 
+# #        col = colorRamp2(c(min(heat_df), max(heat_df)), c("white", "red")), 
+# #        cluster_rows=FALSE, cluster_columns=FALSE, 
+# #        row_names_gp = gpar(fontsize = 8), column_names_gp =  gpar(fontsize = 8),
+# #        cell_fun = function(j, i, x, y, width, height, fill) {
+# #          grid.text(sprintf("%.2f", heat_df[i, j]), x, y, gp = gpar(fontsize = 10))
+# #        }
+# #)
+# Heatmap(heat_df, name = "results", km = 0, 
+#         col = colorRamp2(c(min(heat_df, na.rm = TRUE), 0.5, max(heat_df, na.rm = TRUE)), c("red", "white", "green")), 
+#         na_col = "grey", # NA color
+#         cluster_rows=FALSE, cluster_columns=FALSE, 
+#         row_names_gp = gpar(fontsize = 8), column_names_gp =  gpar(fontsize = 8), column_names_rot = 45,
+#         #column_title_gp = gpar(fontsize = 12),
+#         #column_split = c(rep("Testing set", 4), rep("Validation set", 4)),
+#         #column_gap = unit(5, "mm"),
+#         cell_fun = function(j, i, x, y, width, height, fill) {
+#           grid.text(sprintf("%.2f", heat_df[i, j]), x, y, gp = gpar(fontsize = 8))
+#         }
+# )
+# dev.off()
+# Cairo::CairoPNG(output_plot_png, dpi=300, width = 6, height = 6, units = "in") # Resolution taken from: https://www.andrewheiss.com/blog/2017/09/27/working-with-r-cairo-graphics-custom-fonts-and-ggplot/
+# Heatmap(heat_df, name = "results", km = 0, 
+#         col = colorRamp2(c(min(heat_df, na.rm = TRUE), 0.5, max(heat_df, na.rm = TRUE)), c("red", "white", "green")), 
+#         na_col = "grey", # NA color
+#         cluster_rows=FALSE, cluster_columns=FALSE, 
+#         row_names_gp = gpar(fontsize = 8), column_names_gp =  gpar(fontsize = 8), column_names_rot = 60,
+#         #column_title_gp = gpar(fontsize = 12),
+#         #column_split = c(rep("Testing set", 4), rep("Validation set", 4)),
+#         #column_gap = unit(5, "mm"),
+#         cell_fun = function(j, i, x, y, width, height, fill) {
+#           grid.text(sprintf("%.2f", heat_df[i, j]), x, y, gp = gpar(fontsize = 8))
+#         }
+# )
+# dev.off()
+
+
+
+heat_df <- as.matrix(results[,2:6]) # Matrix needed to insert content into Heatmap
+colnames(heat_df) <- c("Accuracy", "Precision", "Sensitivity", "Specificity", "F1-score")
 heat_df <- apply(heat_df, 2, as.numeric) # Convert into numeric the content of the matrix
 rownames(heat_df) <- results[,1]
-Cairo::CairoPDF(output_plot_pdf) # Save in PDF
-#Heatmap(heat_df, name = "results", km = 0, 
-#        col = colorRamp2(c(min(heat_df), max(heat_df)), c("white", "red")), 
-#        cluster_rows=FALSE, cluster_columns=FALSE, 
-#        row_names_gp = gpar(fontsize = 8), column_names_gp =  gpar(fontsize = 8),
-#        cell_fun = function(j, i, x, y, width, height, fill) {
-#          grid.text(sprintf("%.2f", heat_df[i, j]), x, y, gp = gpar(fontsize = 10))
-#        }
-#)
-Heatmap(heat_df, name = "results", km = 0, 
-        col = colorRamp2(c(min(heat_df, na.rm = TRUE), 0.5, max(heat_df, na.rm = TRUE)), c("red", "white", "green")), 
-        na_col = "grey", # NA color
-        cluster_rows=FALSE, cluster_columns=FALSE, 
-        row_names_gp = gpar(fontsize = 8), column_names_gp =  gpar(fontsize = 8), column_names_rot = 45,
-        #column_title_gp = gpar(fontsize = 12),
-        #column_split = c(rep("Testing set", 4), rep("Validation set", 4)),
-        #column_gap = unit(5, "mm"),
-        cell_fun = function(j, i, x, y, width, height, fill) {
-          grid.text(sprintf("%.2f", heat_df[i, j]), x, y, gp = gpar(fontsize = 8))
-        }
+Cairo::CairoPDF(output_plot_pdf, width = 7, height = 6) # Save in PDF
+h1 <- Heatmap(heat_df, name = "results", km = 0, 
+              col = colorRamp2(c(min(heat_df, na.rm = TRUE), 0.5, max(heat_df, na.rm = TRUE)), c("red", "white", "green")), 
+              na_col = "grey", # NA color
+              cluster_rows=FALSE, cluster_columns=FALSE, 
+              row_names_gp = gpar(fontsize = 8), column_names_gp =  gpar(fontsize = 8), column_names_rot = 45,
+              cell_fun = function(j, i, x, y, width, height, fill) {
+                grid.text(sprintf("%.2f", heat_df[i, j]), x, y, gp = gpar(fontsize = 8))
+              }
 )
-dev.off()
-Cairo::CairoPNG(output_plot_png, dpi=300, width = 6, height = 6, units = "in") # Resolution taken from: https://www.andrewheiss.com/blog/2017/09/27/working-with-r-cairo-graphics-custom-fonts-and-ggplot/
-Heatmap(heat_df, name = "results", km = 0, 
-        col = colorRamp2(c(min(heat_df, na.rm = TRUE), 0.5, max(heat_df, na.rm = TRUE)), c("red", "white", "green")), 
-        na_col = "grey", # NA color
-        cluster_rows=FALSE, cluster_columns=FALSE, 
-        row_names_gp = gpar(fontsize = 8), column_names_gp =  gpar(fontsize = 8), column_names_rot = 60,
-        #column_title_gp = gpar(fontsize = 12),
-        #column_split = c(rep("Testing set", 4), rep("Validation set", 4)),
-        #column_gap = unit(5, "mm"),
-        cell_fun = function(j, i, x, y, width, height, fill) {
-          grid.text(sprintf("%.2f", heat_df[i, j]), x, y, gp = gpar(fontsize = 8))
-        }
+mcc_df <- data.frame(matrix(ncol = 1, nrow = nrow(results)))
+colnames(mcc_df) <- c("MCC")
+mcc_df$MCC <- results[,7] # Matrix needed to insert content into Heatmap
+mcc_df <- apply(mcc_df, 2, as.numeric) # Convert into numeric the content of the matrix
+rownames(mcc_df) <- results[,1]
+h2 <- Heatmap(mcc_df, name = "MCC", km = 0, 
+              #col = colorRamp2(c(min(mcc_df, na.rm = TRUE), 0, max(mcc_df, na.rm = TRUE)), c("yellow", "white", "#00b8ff")),
+              col = colorRamp2(c(-1, 0, 1), c("yellow", "white", "#00b8ff")),
+              cluster_rows=FALSE, cluster_columns=FALSE, 
+              row_names_gp = gpar(fontsize = 8), column_names_gp =  gpar(fontsize = 8), column_names_rot = 45,
+              column_title_gp = gpar(fontsize = 8),
+              cell_fun = function(j, i, x, y, width, height, fill) {
+                grid.text(sprintf("%.2f", mcc_df[i, j]), x, y, gp = gpar(fontsize = 8))
+              }
 )
+ht_list = h1 + h2
+draw(ht_list, ht_gap = unit(5, "mm"))
 dev.off()
+
+
+Cairo::CairoPNG(output_plot_png, dpi=300, width = 7, height = 6, units = "in") # Resolution taken from: https://www.andrewheiss.com/blog/2017/09/27/working-with-r-cairo-graphics-custom-fonts-and-ggplot/
+h1 <- Heatmap(heat_df, name = "results", km = 0, 
+              col = colorRamp2(c(min(heat_df, na.rm = TRUE), 0.5, max(heat_df, na.rm = TRUE)), c("red", "white", "green")), 
+              na_col = "grey", # NA color
+              cluster_rows=FALSE, cluster_columns=FALSE, 
+              row_names_gp = gpar(fontsize = 8), column_names_gp =  gpar(fontsize = 8), column_names_rot = 60,
+              #column_title_gp = gpar(fontsize = 12),
+              #column_split = c(rep("Testing set", 4), rep("Validation set", 4)),
+              #column_gap = unit(5, "mm"),
+              cell_fun = function(j, i, x, y, width, height, fill) {
+                grid.text(sprintf("%.2f", heat_df[i, j]), x, y, gp = gpar(fontsize = 8))
+              }
+)
+h2 <- Heatmap(mcc_df, name = "MCC", km = 0, 
+              #col = colorRamp2(c(min(mcc_df, na.rm = TRUE), 0, max(mcc_df, na.rm = TRUE)), c("yellow", "white", "#00b8ff")),
+              col = colorRamp2(c(-1, 0, 1), c("yellow", "white", "#00b8ff")),
+              cluster_rows=FALSE, cluster_columns=FALSE, 
+              row_names_gp = gpar(fontsize = 8), column_names_gp =  gpar(fontsize = 8), column_names_rot = 60,
+              column_title_gp = gpar(fontsize = 8),
+              cell_fun = function(j, i, x, y, width, height, fill) {
+                grid.text(sprintf("%.2f", mcc_df[i, j]), x, y, gp = gpar(fontsize = 8))
+              }
+)
+ht_list = h1 + h2
+draw(ht_list, ht_gap = unit(5, "mm"))
+dev.off()
+
+

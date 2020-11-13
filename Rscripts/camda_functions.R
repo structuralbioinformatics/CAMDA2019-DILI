@@ -49,7 +49,7 @@ subset.drug.dataset<-function(drank.sel, outliers=c('daunorubicin', 'vorinostat'
 #### Function to subset the expression of a set of genes from samples
 #### of a specific cell ID, dose and time, and merging the repeated
 #### samples.
-subset.expression<-function(gct, selected_genes, drugs, drugs_df, cell_id="PHH", pert_idose="10 µM", pert_itime="24 h", merge_samples=FALSE) {
+subset.expression<-function(gct, selected_genes, drugs, drugs_df, cell_id="PHH", pert_idose="10 ??M", pert_itime="24 h", merge_samples=FALSE) {
   
   # Subset the gct object by cell line, dose, time and genes
   id_selected_samples <- which(gct@cdesc$cell_id == cell_id & gct@cdesc$pert_idose == pert_idose & gct@cdesc$pert_itime == pert_itime)
@@ -101,6 +101,11 @@ prepare.balanced.datasets<-function(expression_data, num_datasets, most_concern_
 
   fraction_test <- 1 - fraction_train
   
+  # Make sure that the drugs considered are the ones that are in expression_data
+  most_concern_drugs <- most_concern_drugs[most_concern_drugs %in% expression_data$pert_iname]
+  less_concern_drugs <- less_concern_drugs[less_concern_drugs %in% expression_data$pert_iname]
+  no_concern_drugs <- no_concern_drugs[no_concern_drugs %in% expression_data$pert_iname]
+  
   # Calculate the number of less/most drugs taking into account the
   # proportions of less/most drugs and that the sum must be equal to
   # the number of no-concern drugs
@@ -114,6 +119,7 @@ prepare.balanced.datasets<-function(expression_data, num_datasets, most_concern_
   # Get the drugs for the testing dataset
   drugs_testing <- c(sample(less_concern_drugs, round(num_less*fraction_test), replace=F), sample(most_concern_drugs, round(num_most*fraction_test), replace=F), sample(no_concern_drugs, round(min_number_drugs*fraction_test), replace=F))
   testing <- expression_data[expression_data$pert_iname %in% drugs_testing,]
+  testing_with_names <- expression_data[expression_data$pert_iname %in% drugs_testing,]
   testing$pert_iname <- NULL
   if (type_analysis == "discrete"){
     testing$severity <- NULL
@@ -127,11 +133,13 @@ prepare.balanced.datasets<-function(expression_data, num_datasets, most_concern_
   
   # Get the drugs for the training datasets
   training_datasets <- list()
+  training_datasets_with_names <- list()
   for (i in 1:num_datasets){
     # Get drugs
     drugs_training <- c(sample(less_concern_drugs[!less_concern_drugs%in%drugs_testing], round(num_less*fraction_train), replace=F), sample(most_concern_drugs[!most_concern_drugs%in%drugs_testing], round(num_most*fraction_train), replace=F), sample(no_concern_drugs[!no_concern_drugs%in%drugs_testing], round(min_number_drugs*fraction_train), replace=F))
     # Get gene expression
     training <- expression_data[expression_data$pert_iname %in% drugs_training,]
+    training_with_names <- expression_data[expression_data$pert_iname %in% drugs_training,]
     # Prepare table
     training$pert_iname <- NULL
     if (type_analysis == "discrete"){
@@ -144,8 +152,9 @@ prepare.balanced.datasets<-function(expression_data, num_datasets, most_concern_
       colnames(training)[match("severity", colnames(training))] <- "cat"
     }
     training_datasets[[length(training_datasets)+1]] <- training
+    training_datasets_with_names[[length(training_datasets_with_names)+1]] <- training_with_names
   }
-  return(list(testing=testing, training_datasets=training_datasets));
+  return(list(testing=testing, training_datasets=training_datasets, testing_with_names=testing_with_names, training_datasets_with_names=training_datasets_with_names));
 }
 #####################################################################
 #####################################################################
@@ -628,6 +637,41 @@ subset.expression.by.samples<-function(gct, selected_genes, selected_samples, dr
     }
   }
   return(expression_df);
+}
+#####################################################################
+#####################################################################
+
+
+#####################################################################
+#################### calculate.mcc.from.metrics #####################
+#####################################################################
+#####################################################################
+
+#### Function to calculate MCC from accuracy/precision/sensitivity/
+#### specificity
+calculate.mcc.from.metrics<-function(accuracy, precision, sensitivity, specificity) {
+  A <- accuracy
+  P <- precision
+  N <- sensitivity
+  S <- specificity
+  mcc.1st <- (P/(1-P)) * (S/(1-S)) - (P/(A*(1-P))) - (S/(A*(1-S))) + 1 + (P/(1-P)) + (S/(1-S))
+  mcc.2nd <- ((P/(1-P)) + 1) * ( (P/(1-P)) + (P/(A*(1-P))) + (S/(A*(1-S))) - 1 - (P/(1-P)) - (S/(1-S)) ) * ((S/(1-S)) + 1) * ( (S/(1-S)) + (P/(A*(1-P))) + (S/(A*(1-S))) - 1 - (P/(1-P)) - (S/(1-S)) )
+  mcc <- mcc.1st / sqrt(mcc.2nd)
+  return(mcc);
+}
+#####################################################################
+#####################################################################
+
+
+#####################################################################
+##################### calculate.mcc.from.rates ######################
+#####################################################################
+#####################################################################
+
+#### Function to calculate MCC from TP/TN/FP/FN rates
+calculate.mcc.from.rates<-function(tp, tn, fp, fn) {
+  mcc <- ( tp*tn - fp*fn ) / sqrt( (tp+fp)*(tp+fn)*(tn+fp)*(tn+fn) )
+  return(mcc);
 }
 #####################################################################
 #####################################################################
