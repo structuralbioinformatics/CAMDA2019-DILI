@@ -41,14 +41,14 @@ We retrieved the gene expression data from the GCT object `CAMDA_l1000_1314compo
 
 Script: `calculate_tanimoto.R`.
 We calculated the similarity between all compounds, creating a matrix of chemical similarity. We used the R package RxnSim to calculate the similarity matrix using the Tanimoto distance.
-The resulting table is called `tanimoto_smiles.tsv`.
+The resulting table is called `tanimoto_smiles.tsv` (Supplementary Table 3).
 
 #### 2.3. Drug target
 
 The targets of the compounds (drugs) considered in the study were retrieved from three different databases: DGIdb, HitPick and SEA. 
 * **DGIdb**: The compound names were used to retrieve the targets from the web server.
 * **SEA and HitPick**: The SMILES of the compounds were used to get predictions in batch mode from the web servers.
-The summary table is called `targets_dgidb_hitpick_sea.tsv`.
+The summary table is called `targets_dgidb_hitpick_sea.tsv` (Supplementary Table 4).
 
 ### 3. Identification of gene signatures to separate DILI and no-DILI drugs
 
@@ -62,10 +62,16 @@ The output table of redundant phenotypes is: `redundant_phenotypes.tsv`
 #### 3.2. GUILDify expansions of phenotype-gene associations
 Script: `gene_sets_phenotypes.R`.
 We used the R package `guildifyR` to make the expansions of the genes associated to the 15 phenotypes. 
+
 #### 3.3. Non-parametric test
-Script: `gene_signature.Rmd`.
+Script: `gene_signature.R`.
 First, we retrieved the gene expression samples from cell line PHH (liver primary cell), dose concentration 10 µM and time 24 h. 
-Then, for each landmark gene, we calculated a Wilcoxon test between the gene expression values of the DILI and no-DILI drugs. We written a summary of the output values in the table `reverse_signature_phh_notcorrected_info.txt`.
+Then, for each landmark gene, we calculated a Wilcoxon test between the gene expression values of the DILI and no-DILI drugs. We written a summary of the output values in the table `reverse_signature_phh_notcorrected_info.txt` (Supplementary Table 7).
+
+#### 3.4. Correlated samples
+Script: `analyse_top_correlated_samples.R` and `get_signature_from_top_correlated_samples.R`.
+First, we calculate the Pearson's correlation between all the samples.
+Then, we select the samples with a correlation threshold above 0.5, or otherwise the two most correlated samples.
 
 
 ### 4. Machine learning classification
@@ -85,9 +91,9 @@ We used different scripts to classify the drugs depending on the feature:
 The validations are in the folder `outputs/validations`.
 
 
-### 5. Plots
+### 5. Plots and Tables
 
-* **Figure 1 & Supplementary Figure 8**: `check_means_results.R`
+* **Figure 1 & Supplementary Figure 8**: `check_means_results_with_F1_and_MCC.R`
 * **Figure 2**: PowerPoint.
 * **Figure 3 & Supplementary Figures 4 & 9**: `check_means_by_phenotype.R`
 * **Figure 4**: `plot_heatmap_signature.R`
@@ -97,7 +103,14 @@ The validations are in the folder `outputs/validations`.
 * **Supplementary Figure 5**: `plot_heatmap_smiles.R`
 * **Supplementary Figure 6**: `plot_targets_percentage.R`
 * **Supplementary Figure 7**: `check_means_results_correlated.R`
-
-
+* **Table 1**: Manual.
+* **Table 2**: `compare_genes.R`
+* **Supplementary Table 1**: `create_data_files.R`
+* **Supplementary Table 2**: `create_data_files.R`
+* **Supplementary Table 3**: `calculate_tanimoto.R`
+* **Supplementary Table 4**: Information retrieved using the web servers.
+* **Supplementary Table 5**: `analysis_of_types_of_compounds.R`
+* **Supplementary Table 6**: `comparison_genes.R`
+* **Supplementary Table 7**: `gene_signature.R`
 
 

@@ -111,13 +111,15 @@ prepare.balanced.datasets<-function(expression_data, num_datasets, most_concern_
   # the number of no-concern drugs
   most_less_concern_drugs <- union(most_concern_drugs, less_concern_drugs)
   min_number_drugs <- min(length(most_less_concern_drugs), length(no_concern_drugs))
+  num_train_drugs <- round(min_number_drugs*fraction_train)
+  num_test_drugs <- round(min_number_drugs*fraction_test)
   proportion_most = length(most_concern_drugs) / length(most_less_concern_drugs)
   proportion_less = length(less_concern_drugs) / length(most_less_concern_drugs)
-  num_most = round(proportion_most * min_number_drugs)
-  num_less = round(proportion_less * min_number_drugs)
+  #num_most = round(proportion_most * min_number_drugs)
+  #num_less = round(proportion_less * min_number_drugs)
   
   # Get the drugs for the testing dataset
-  drugs_testing <- c(sample(less_concern_drugs, round(num_less*fraction_test), replace=F), sample(most_concern_drugs, round(num_most*fraction_test), replace=F), sample(no_concern_drugs, round(min_number_drugs*fraction_test), replace=F))
+  drugs_testing <- c(sample(less_concern_drugs, round(proportion_less*num_test_drugs), replace=F), sample(most_concern_drugs, round(proportion_most*num_test_drugs), replace=F), sample(no_concern_drugs, num_test_drugs, replace=F))
   testing <- expression_data[expression_data$pert_iname %in% drugs_testing,]
   testing_with_names <- expression_data[expression_data$pert_iname %in% drugs_testing,]
   testing$pert_iname <- NULL
@@ -136,7 +138,7 @@ prepare.balanced.datasets<-function(expression_data, num_datasets, most_concern_
   training_datasets_with_names <- list()
   for (i in 1:num_datasets){
     # Get drugs
-    drugs_training <- c(sample(less_concern_drugs[!less_concern_drugs%in%drugs_testing], round(num_less*fraction_train), replace=F), sample(most_concern_drugs[!most_concern_drugs%in%drugs_testing], round(num_most*fraction_train), replace=F), sample(no_concern_drugs[!no_concern_drugs%in%drugs_testing], round(min_number_drugs*fraction_train), replace=F))
+    drugs_training <- c(sample(less_concern_drugs[!less_concern_drugs%in%drugs_testing], round(proportion_less*num_train_drugs), replace=F), sample(most_concern_drugs[!most_concern_drugs%in%drugs_testing], round(proportion_most*num_train_drugs), replace=F), sample(no_concern_drugs[!no_concern_drugs%in%drugs_testing], num_train_drugs, replace=F))
     # Get gene expression
     training <- expression_data[expression_data$pert_iname %in% drugs_training,]
     training_with_names <- expression_data[expression_data$pert_iname %in% drugs_training,]
@@ -422,19 +424,21 @@ prepare.balanced.drugs<-function(num_datasets, most_concern_drugs, less_concern_
   # the category with minimum number of drugs (DILI or NO-DILI)
   most_less_concern_drugs <- union(most_concern_drugs, less_concern_drugs)
   min_number_drugs <- min(length(most_less_concern_drugs), length(no_concern_drugs))
+  num_train_drugs <- round(min_number_drugs*fraction_train)
+  num_test_drugs <- round(min_number_drugs*fraction_test)
   proportion_most = length(most_concern_drugs) / length(most_less_concern_drugs)
   proportion_less = length(less_concern_drugs) / length(most_less_concern_drugs)
-  num_most = round(proportion_most * min_number_drugs)
-  num_less = round(proportion_less * min_number_drugs)
+  #num_most = round(proportion_most * min_number_drugs)
+  #num_less = round(proportion_less * min_number_drugs)
   
   # Get the drugs for the testing dataset
-  drugs_testing <- c(sample(less_concern_drugs, round(num_less*fraction_test), replace=F), sample(most_concern_drugs, round(num_most*fraction_test), replace=F), sample(no_concern_drugs, round(min_number_drugs*fraction_test), replace=F))
+  drugs_testing <- c(sample(less_concern_drugs, round(proportion_less*num_test_drugs), replace=F), sample(most_concern_drugs, round(proportion_most*num_test_drugs), replace=F), sample(no_concern_drugs, num_test_drugs, replace=F))
   
   # Get the drugs for the training datasets
   drugs_training_list <- list()
   for (i in 1:num_datasets){
     # Get drugs
-    drugs_training <- c(sample(less_concern_drugs[!less_concern_drugs%in%drugs_testing], round(num_less*fraction_train), replace=F), sample(most_concern_drugs[!most_concern_drugs%in%drugs_testing], round(num_most*fraction_train), replace=F), sample(no_concern_drugs[!no_concern_drugs%in%drugs_testing], round(min_number_drugs*fraction_train), replace=F))
+    drugs_training <- c(sample(less_concern_drugs[!less_concern_drugs%in%drugs_testing], round(proportion_less*num_train_drugs), replace=F), sample(most_concern_drugs[!most_concern_drugs%in%drugs_testing], round(proportion_most*num_train_drugs), replace=F), sample(no_concern_drugs[!no_concern_drugs%in%drugs_testing], num_train_drugs, replace=F))
     drugs_training_list[[length(drugs_training_list)+1]] <- drugs_training
   }
   return(list(drugs_testing=drugs_testing, drugs_training_list=drugs_training_list));
@@ -672,6 +676,34 @@ calculate.mcc.from.metrics<-function(accuracy, precision, sensitivity, specifici
 calculate.mcc.from.rates<-function(tp, tn, fp, fn) {
   mcc <- ( tp*tn - fp*fn ) / sqrt( (tp+fp)*(tp+fn)*(tn+fp)*(tn+fn) )
   return(mcc);
+}
+#####################################################################
+#####################################################################
+
+
+#####################################################################
+#################### calculate.f1.from.metrics #####################
+#####################################################################
+#####################################################################
+
+#### Function to calculate F1-score from precision/sensitivity
+calculate.f1.from.metrics<-function(precision, sensitivity) {
+  f1 <- 2 * precision * sensitivity / (precision + sensitivity) 
+  return(f1);
+}
+#####################################################################
+#####################################################################
+
+
+#####################################################################
+#################### calculate.f1.from.rates #####################
+#####################################################################
+#####################################################################
+
+#### Function to calculate F1-score from TP, FP and FN
+calculate.f1.from.rates<-function(TP, FP, FN) {
+  f1 <- 2*TP / (2*TP+FP+FN)
+  return(f1);
 }
 #####################################################################
 #####################################################################
