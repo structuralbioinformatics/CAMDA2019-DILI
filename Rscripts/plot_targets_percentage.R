@@ -24,6 +24,7 @@ width_pdf = 10
 height_pdf = 5
 name_plot_pdf = "barplot_targets_percentage.pdf"
 name_plot_png = "barplot_targets_percentage.png"
+name_table = "targets_interacting_independent_drugs.tsv"
 
 
 if (place=="work"){
@@ -51,6 +52,7 @@ output_plot_pdf <- paste(main_directory, "results/plots", name_plot_pdf, sep="/"
 output_plot_png <- paste(main_directory, "results/plots", name_plot_png, sep="/")
 output_venn_pdf <- paste(main_directory, "results/plots/venn_targets.pdf", sep="/")
 output_venn_png <- paste(main_directory, "results/plots/venn_targets.png", sep="/")
+output_table <- paste(main_directory, "outputs/files", name_table, sep="/")
 
 
 ### Load files ###
@@ -87,6 +89,8 @@ datasets.list <- prepare.balanced.datasets(targets_df, number.repetitions, drug.
 targets <- colnames(targets_df)[!(colnames(targets_df) %in% c("pert_iname", "dilirank", "severity"))]
 plot_df <- data.frame(matrix(ncol = 5, nrow = 0))
 colnames(plot_df) <- c("target","perc_dili", "perc_nodili", "perc_ind", "perc_total")
+targets_independent_df <- data.frame(matrix(ncol = 5, nrow = 0))
+colnames(targets_independent_df) <- c("target","num_ind", "perc_ind", "num_total", "perc_total")
 for (target in targets){
   tar_dili <- targets_df[targets_df$pert_iname %in% c(drug.dataset$most_concern_drugs, drug.dataset$less_concern_drugs), colnames(targets_df)==target]
   tar_nodili <- targets_df[targets_df$pert_iname %in% drug.dataset$no_concern_drugs, colnames(targets_df)==target]
@@ -95,8 +99,10 @@ for (target in targets){
   perc_dili <- length(which(tar_dili == 1)) / length(c(drug.dataset$most_concern_drugs, drug.dataset$less_concern_drugs)) * 100
   perc_nodili <- length(which(tar_nodili == 1)) / length(drug.dataset$no_concern_drugs)  * 100
   perc_ind <- length(which(tar_ind == 1)) / length(drug.dataset$independent_drugs) * 100
-  perc_total <- (length(which(tar_dili == 1))+length(which(tar_nodili == 1))+length(which(tar_ind == 1))) / length(c(drug.dataset$drugs, drug.dataset$independent_drugs)) * 100
+  num_total <- (length(which(tar_dili == 1))+length(which(tar_nodili == 1))+length(which(tar_ind == 1)))
+  perc_total <- num_total / length(c(drug.dataset$drugs, drug.dataset$independent_drugs)) * 100
   plot_df[nrow(plot_df)+1,] <- c(target, as.numeric(perc_dili), as.numeric(perc_nodili), as.numeric(perc_ind), as.numeric(perc_total))
+  targets_independent_df[nrow(targets_independent_df)+1,] <- c(target, as.numeric(length(which(tar_ind == 1))), as.numeric(perc_ind), as.numeric(num_total), as.numeric(perc_total))
 }
 plot_df <- transform(plot_df, perc_dili = as.numeric(perc_dili), perc_nodili = as.numeric(perc_nodili), perc_ind = as.numeric(perc_ind), perc_total = as.numeric(perc_total))
 plot_df <- plot_df[order(plot_df$perc_ind, plot_df$perc_total, plot_df$perc_dili, decreasing = T), ] # Order the data
@@ -145,4 +151,13 @@ ggplot(plot_reordered_df, aes(fill=type_drug, y=perc_drugs, x=target)) +
   #scale_fill_discrete(name = "Number of drugs")
   scale_fill_discrete(name = "% of drugs in each category", labels = c("% DILI-Concern", "% No-DILI-Concern", "% Ambiguous-DILI-Concern"))
 dev.off()
+
+
+### Write output table with the selection of targets that target the independent drugs ###
+targets_independent_df <- targets_independent_df[targets_independent_df$target %in% targets_order,]
+targets_independent_df <- targets_independent_df[order(targets_independent_df$perc_ind, targets_independent_df$perc_total, decreasing = T), ] # Order the data
+colnames(targets_independent_df) <- c("Target name", "Num. drugs targeted (Ambiguous-DILI)", "% drugs targeted (Ambiguous-DILI)", "Num. drugs targeted (Total)", "% drugs targeted (Total)")
+write.table(targets_independent_df, file = output_table, row.names=FALSE, na="-", col.names=TRUE, sep="\t", quote=FALSE)
+
+
 

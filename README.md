@@ -112,5 +112,6 @@ The validations are in the folder `outputs/validations`.
 * **Supplementary Table 5**: `analysis_of_types_of_compounds.R`
 * **Supplementary Table 6**: `comparison_genes.R`
 * **Supplementary Table 7**: `gene_signature.R`
+* **Supplementary Table 8**: `plot_targets_percentage.R`
 
 
