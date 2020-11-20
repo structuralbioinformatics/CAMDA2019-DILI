@@ -136,7 +136,7 @@ ggplot(plot_reordered_df, aes(fill=type_drug, y=perc_drugs, x=target)) +
   labs(x="Targets", y="% of drugs in each category") + 
   theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5)) +
   #scale_fill_discrete(name = "Number of drugs")
-  scale_fill_discrete(name = "% of drugs in each category", labels = c("% DILI-Concern", "% No-DILI-Concern", "% Ambiguous-DILI-Concern"))
+  scale_fill_discrete(name = "% of drugs in each category", labels = c("DILI-Concern", "No-DILI-Concern", "Ambiguous-DILI-Concern"))
 dev.off()
 
 Cairo::CairoPNG(output_plot_png, dpi=300, width = width_pdf, height = height_pdf, units="in") # Save in PDF
@@ -149,7 +149,7 @@ ggplot(plot_reordered_df, aes(fill=type_drug, y=perc_drugs, x=target)) +
   labs(x="Targets", y="% of drugs in each category") + 
   theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5)) +
   #scale_fill_discrete(name = "Number of drugs")
-  scale_fill_discrete(name = "% of drugs in each category", labels = c("% DILI-Concern", "% No-DILI-Concern", "% Ambiguous-DILI-Concern"))
+  scale_fill_discrete(name = "% of drugs in each category", labels = c("DILI-Concern", "No-DILI-Concern", "Ambiguous-DILI-Concern"))
 dev.off()
 
 
