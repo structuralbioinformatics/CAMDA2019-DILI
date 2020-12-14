@@ -28,7 +28,7 @@ if (place=="work"){
 ### Define files ###
 functions_file <- paste(main_directory, "Rscripts/camda_functions.R", sep="/")
 drugs_file <- paste(main_directory, "camda_data/CAMDA_l1000_1314compounds-pert_iname.rda", sep="/")
-expression_file <- paste(main_directory, "CAMDA_l1000_1314compounds-GSE92742_Level5_gct.rda", sep="/")
+expression_file <- paste(bigmem_directory, "CAMDA_l1000_1314compounds-GSE92742_Level5_gct.rda", sep="/")
 gene_info_file <- paste(main_directory, "additional_data/GSE92742_Broad_LINCS_gene_info.txt", sep="/")
 dilirank_file <- paste(main_directory, "camda_data/CAMDA_l1000_1314compounds-dilirank.v2.rda", sep="/")
 wilcox_file <- paste(main_directory, "results/reverse_engineering/reverse_signature_phh_notcorrected.txt", sep="/")
@@ -132,34 +132,37 @@ type <- c(rep("Most-DILI-Concern", length(drug.dataset$most_concern_drugs)), rep
 #annotation <- HeatmapAnnotation(df = data.frame(type = type))
 ##### Plot PDF
 #Cairo::CairoPDF(output_plot_pdf, width = 12, height = 8) # Save in PDF
-Cairo::CairoPDF(output_plot_pdf, width = 14, height = 10) # Save in PDF
+#Cairo::CairoPDF(output_plot_pdf, width = 14, height = 10) # Save in PDF
+Cairo::CairoPDF(output_plot_pdf, width = 18, height = 15) # Save in PDF
 Heatmap(heat_df_for_plot, name = "MODZscore", km = 0, 
         col = colorRamp2(c(min(heat_df), 0, max(heat_df)), c("blue", "white", "red")), 
         #top_annotation = annotation, 
         cluster_rows=TRUE, cluster_columns=FALSE, 
         #row_names_gp = gpar(fontsize = 7), column_names_gp = gpar(fontsize = 4),  
-        row_names_gp = gpar(fontsize = 9), column_names_gp = gpar(fontsize = 9),  
+        #row_names_gp = gpar(fontsize = 9), column_names_gp = gpar(fontsize = 9),  
+        row_names_gp = gpar(fontsize = 14), column_names_gp = gpar(fontsize = 14),  
         #column_split = c(rep("Most-DILI-Concern", length(drug.dataset$most_concern_drugs)), rep("Less-DILI-Concern", length(drug.dataset$less_concern_drugs)), rep("No-DILI-Concern", length(drug.dataset$no_concern_drugs))),
         column_split = c(rep("Most-DILI-Concern", length(drug.dataset$most_concern_drugs)), rep("No-DILI-Concern", length(drug.dataset$no_concern_drugs))),
         #column_title_gp = gpar(fontsize = 12),
-        column_title_gp = gpar(fill = c("#FFB448", "#FF6C65", "#99EE99"), fontsize = 12),
+        #column_title_gp = gpar(fill = c("#FFB448", "#FF6C65", "#99EE99"), fontsize = 12),
+        column_title_gp = gpar(fill = c("#FFB448", "#FF6C65", "#99EE99"), fontsize = 16),
         column_gap = unit(5, "mm"),
         border = TRUE
 )
 dev.off()
 ##### Plot PNG
 #Cairo::CairoPNG(output_plot_png, dpi=300, width = 10, height = 8, units = "in") # Resolution taken from: https://www.andrewheiss.com/blog/2017/09/27/working-with-r-cairo-graphics-custom-fonts-and-ggplot/
-Cairo::CairoPNG(output_plot_png, dpi=300, width = 14, height = 11, units = "in") # Resolution taken from: https://www.andrewheiss.com/blog/2017/09/27/working-with-r-cairo-graphics-custom-fonts-and-ggplot/
+Cairo::CairoPNG(output_plot_png, dpi=300, width = 18, height = 15, units = "in") # Resolution taken from: https://www.andrewheiss.com/blog/2017/09/27/working-with-r-cairo-graphics-custom-fonts-and-ggplot/
 Heatmap(heat_df_for_plot, name = "MODZscore", km = 0, 
         col = colorRamp2(c(min(heat_df), 0, max(heat_df)), c("blue", "white", "red")), 
         #top_annotation = annotation, 
         cluster_rows=TRUE, cluster_columns=FALSE, 
         #row_names_gp = gpar(fontsize = 7), column_names_gp = gpar(fontsize = 4),  
-        row_names_gp = gpar(fontsize = 10), column_names_gp = gpar(fontsize = 10),  
+        row_names_gp = gpar(fontsize = 14), column_names_gp = gpar(fontsize = 14),  
         #column_split = c(rep("Most-DILI-Concern", length(drug.dataset$most_concern_drugs)), rep("Less-DILI-Concern", length(drug.dataset$less_concern_drugs)), rep("No-DILI-Concern", length(drug.dataset$no_concern_drugs))),
         column_split = c(rep("Most-DILI-Concern", length(drug.dataset$most_concern_drugs)), rep("No-DILI-Concern", length(drug.dataset$no_concern_drugs))),
         #column_title_gp = gpar(fontsize = 12),
-        column_title_gp = gpar(fill = c("#FFB448", "#FF6C65", "#99EE99"), fontsize = 12),
+        column_title_gp = gpar(fill = c("#FFB448", "#FF6C65", "#99EE99"), fontsize = 16),
         column_gap = unit(5, "mm"),
         border = TRUE
 )
