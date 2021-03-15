@@ -38,6 +38,7 @@ sig_metrics_file <- paste(main_directory, "camda_data/GSE92742_Broad_LINCS_sig_m
 wilcox_file <- paste(main_directory, "results/reverse_engineering/reverse_signature_phh_notcorrected.txt", sep="/")
 #wilcox_file <- paste(main_directory, "results/reverse_engineering/reverse_signature_phh_noout_notcorrected.txt", sep="/")
 # Output files
+signature_data_file <- paste(main_directory, "/additional_data/dili_landmark.tsv", sep="/")
 output.cv.rf <- paste(main_directory, "results/crossvalidation/cv_signature_rf.txt", sep="/")
 output.cv.gbm <- paste(main_directory, "results/crossvalidation/cv_signature_gbm.txt", sep="/")
 output.cv.glm <- paste(main_directory, "results/crossvalidation/cv_signature_glm.txt", sep="/")
@@ -74,6 +75,14 @@ selected_genes <- unique(wilcox_df[,1])
 expression_wilcox_df <- subset.expression(gct, selected_genes, drug.dataset$drugs, drug.dataset$dilirank_df, cell_id="PHH", pert_idose="10 µM", pert_itime="24 h", merge_samples = TRUE)
 # Subset gene expression for independent drugs as well
 expression_wilcox_ind_df <- subset.expression(gct, selected_genes, drug.dataset$independent_drugs, drug.dataset$independent_df, cell_id="PHH", pert_idose="10 µM", pert_itime="24 h", merge_samples = TRUE)
+# Save it as a separated data file
+signature_df <- rbind(expression_wilcox_df, expression_wilcox_ind_df)
+signature_df$severity <- NULL
+signature_df$dilirank <- NULL
+wilcox_genes <- substring(names(expression_wilcox_df)[c(4:length(names(expression_wilcox_df)))], 2)
+col_names <- c('DrugName', wilcox_genes)
+names(signature_df) <- col_names
+write.table(signature_df, file = signature_data_file,row.names=FALSE, na="-",col.names=TRUE, sep="\t")
 
 
 ### Prepare balanced machine learning datasets ###

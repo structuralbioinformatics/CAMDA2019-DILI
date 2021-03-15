@@ -6,17 +6,18 @@ library(caret)
 
 ### Define variables ###
 place = "home" #home or work
-remove.outliers = TRUE
+remove.outliers = FALSE
 outliers = c('daunorubicin', 'vorinostat')
 number.cv = 10
 number.repetitions = 10
 fraction_train = 0.7
+
 if (place=="work"){
   main_directory = "/home/quim/PHD/Projects/camda"
   bigmem_directory = "/sbi/users/interchange/emre/quim/camda"
 } else {
-  main_directory = "/Users/quim/Dropbox/UPF/PhD/Projects/camda"
-  bigmem_directory = "/Users/quim/Documents/Projects/camda"
+  main_directory = "/Users/quim/Dropbox/UPF/PHD/Projects/camda"
+  bigmem_directory = "/Users/quim/Documents/DATA/camda"
 }
 
 
@@ -37,6 +38,7 @@ wilcox_file <- paste(main_directory, "results/reverse_engineering/reverse_signat
 #wilcox_file <- paste(main_directory, "results/reverse_engineering/reverse_signature_phh_noout_notcorrected.txt", sep="/")
 tanimoto_file <- paste(main_directory, "/additional_data/tanimoto_smiles.tsv", sep="/")
 # Output files
+signature_smiles_data_file <- paste(main_directory, "/additional_data/dili_landmark_smiles.tsv", sep="/")
 output.cv.rf <- paste(main_directory, "results/crossvalidation/cv_signature_smiles_rf.txt", sep="/")
 output.cv.gbm <- paste(main_directory, "results/crossvalidation/cv_signature_smiles_gbm.txt", sep="/")
 output.cv.glm <- paste(main_directory, "results/crossvalidation/cv_signature_smiles_glm.txt", sep="/")
@@ -89,9 +91,18 @@ combined_data <- merge(x = expression_wilcox_df, y = tanimoto_df, by = "pert_ina
 tanimoto_ind_df$dilirank <- NULL
 tanimoto_ind_df$severity <- NULL
 combined_data_ind <- merge(x = expression_wilcox_ind_df, y = tanimoto_ind_df, by = "pert_iname")
+# Combine everything and save it as a separated data file
+signature_smiles_df <- rbind(combined_data, combined_data_ind)
+signature_smiles_df$severity <- NULL
+signature_smiles_df$dilirank <- NULL
+wilcox_genes <- substring(names(expression_wilcox_df)[c(4:length(names(expression_wilcox_df)))], 2)
+col_names <- c('DrugName', wilcox_genes, names(combined_data)[c((length(wilcox_genes)+4):length(combined_data))])
+names(signature_smiles_df) <- col_names
+write.table(signature_smiles_df, file = signature_smiles_data_file,row.names=FALSE, na="-",col.names=TRUE, sep="\t")
 
 
 ### Prepare balanced machine learning datasets ###
+set.seed(21)
 datasets.list <- prepare.balanced.datasets(combined_data, number.repetitions, drug.dataset$most_concern_drugs, drug.dataset$less_concern_drugs, drug.dataset$no_concern_drugs, type_analysis = "discrete", fraction_train=fraction_train)
 
 

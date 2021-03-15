@@ -34,6 +34,7 @@ functions_file <- paste(main_directory, "Rscripts/camda_functions.R", sep="/")
 # Specific data files
 targets_file <- paste(main_directory, "additional_data/targets/targets_dgidb_hitpick_sea.tsv", sep="/")
 # Output files
+targets_data_file <- paste(main_directory, "/additional_data/targets.tsv", sep="/")
 output.cv.rf <- paste(main_directory, "results/crossvalidation/cv_targets_rf.txt", sep="/")
 output.cv.gbm <- paste(main_directory, "results/crossvalidation/cv_targets_gbm.txt", sep="/")
 output.cv.glm <- paste(main_directory, "results/crossvalidation/cv_targets_glm.txt", sep="/")
@@ -67,6 +68,14 @@ targets_ind_df$severity <- NULL
 colnames(targets_df)[match("DILIConcern", colnames(targets_df))] <- "dilirank"
 colnames(targets_df)[match("Severity.Class", colnames(targets_df))] <- "severity"
 targets_df <- targets_df[targets_df$pert_iname %in% drug.dataset$drugs,]
+# Save it as a separated data file
+targets_data_df <- targets_df
+targets_data_df$severity <- NULL
+targets_data_df$dilirank <- NULL
+targets_ind_data_df <- targets_ind_df[ order(targets_ind_df$pert_iname), ]
+targets_combined_df <- rbind(targets_data_df, targets_ind_data_df)
+names(targets_combined_df) <- c('DrugName', names(targets_combined_df)[2:length(targets_combined_df)])
+write.table(targets_combined_df, file = targets_data_file,row.names=FALSE, na="-",col.names=TRUE, sep="\t")
 
 
 ### Prepare balanced machine learning datasets ###
