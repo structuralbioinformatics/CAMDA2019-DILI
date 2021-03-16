@@ -36,6 +36,7 @@ sig_metrics_file <- paste(main_directory, "camda_data/GSE92742_Broad_LINCS_sig_m
 # Specific data files
 tanimoto_file <- paste(main_directory, "/additional_data/tanimoto_smiles.tsv", sep="/")
 # Output files
+smiles_data_file <- paste(main_directory, "/additional_data/smiles.tsv", sep="/")
 output.cv.rf <- paste(main_directory, "results/crossvalidation/cv_smiles_rf.txt", sep="/")
 output.cv.gbm <- paste(main_directory, "results/crossvalidation/cv_smiles_gbm.txt", sep="/")
 output.cv.glm <- paste(main_directory, "results/crossvalidation/cv_smiles_glm.txt", sep="/")
@@ -64,6 +65,12 @@ colnames(tanimoto_df)[match("DILIConcern", colnames(tanimoto_df))] <- "dilirank"
 tanimoto_df$vDILIConcern <- NULL
 tanimoto_ind_df <- tanimoto_df[colnames(tanimoto_df) %in% drug.dataset$independent_drugs, rownames(tanimoto_df) %in% drug.dataset$drugs]
 tanimoto_df<-tanimoto_df[colnames(tanimoto_df) %in% drug.dataset$drugs, rownames(tanimoto_df) %in% drug.dataset$drugs]
+# Save data as a separated file
+smiles_data_df <- rbind(tanimoto_df, tanimoto_ind_df)
+smiles_data_df$dilirank[smiles_data_df$pert_iname %in% tanimoto_ind_df$pert_iname] <- "Ambiguous DILI-concern"
+smiles_data_df$severity <- NULL
+smiles_data_final_df <- data.frame(DrugName = smiles_data_df$pert_iname, DILIrank = smiles_data_df$dilirank, smiles_data_df[!(names(smiles_data_df) %in% c("pert_iname", "dilirank"))])
+write.table(smiles_data_final_df, file = smiles_data_file,row.names=FALSE, na="-",col.names=TRUE, sep="\t")
 
 
 ### Prepare balanced machine learning datasets ###

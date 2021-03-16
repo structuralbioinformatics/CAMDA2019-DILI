@@ -78,9 +78,9 @@ expression_wilcox_ind_df <- subset.expression(gct, selected_genes, drug.dataset$
 # Save it as a separated data file
 signature_df <- rbind(expression_wilcox_df, expression_wilcox_ind_df)
 signature_df$severity <- NULL
-signature_df$dilirank <- NULL
+signature_df$dilirank[signature_df$pert_iname %in% expression_wilcox_ind_df$pert_iname] <- "Ambiguous DILI-concern"
 wilcox_genes <- substring(names(expression_wilcox_df)[c(4:length(names(expression_wilcox_df)))], 2)
-col_names <- c('DrugName', wilcox_genes)
+col_names <- c('DrugName', 'DILIrank', wilcox_genes)
 names(signature_df) <- col_names
 write.table(signature_df, file = signature_data_file,row.names=FALSE, na="-",col.names=TRUE, sep="\t")
 

@@ -71,11 +71,11 @@ targets_df <- targets_df[targets_df$pert_iname %in% drug.dataset$drugs,]
 # Save it as a separated data file
 targets_data_df <- targets_df
 targets_data_df$severity <- NULL
-targets_data_df$dilirank <- NULL
 targets_ind_data_df <- targets_ind_df[ order(targets_ind_df$pert_iname), ]
+targets_ind_data_df$dilirank <- "Ambiguous DILI-concern"
 targets_combined_df <- rbind(targets_data_df, targets_ind_data_df)
-names(targets_combined_df) <- c('DrugName', names(targets_combined_df)[2:length(targets_combined_df)])
-write.table(targets_combined_df, file = targets_data_file,row.names=FALSE, na="-",col.names=TRUE, sep="\t")
+targets_combined_final_df <- data.frame(DrugName = targets_combined_df$pert_iname, DILIrank = targets_combined_df$dilirank, targets_combined_df[!(names(targets_combined_df) %in% c("pert_iname", "dilirank"))])
+write.table(targets_combined_final_df, file = targets_data_file,row.names=FALSE, na="-",col.names=TRUE, sep="\t")
 
 
 ### Prepare balanced machine learning datasets ###

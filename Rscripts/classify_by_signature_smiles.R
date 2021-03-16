@@ -94,9 +94,9 @@ combined_data_ind <- merge(x = expression_wilcox_ind_df, y = tanimoto_ind_df, by
 # Combine everything and save it as a separated data file
 signature_smiles_df <- rbind(combined_data, combined_data_ind)
 signature_smiles_df$severity <- NULL
-signature_smiles_df$dilirank <- NULL
+signature_smiles_df$dilirank[signature_smiles_df$pert_iname %in% combined_data_ind$pert_iname] <- "Ambiguous DILI-concern"
 wilcox_genes <- substring(names(expression_wilcox_df)[c(4:length(names(expression_wilcox_df)))], 2)
-col_names <- c('DrugName', wilcox_genes, names(combined_data)[c((length(wilcox_genes)+4):length(combined_data))])
+col_names <- c('DrugName', 'DILIrank', wilcox_genes, names(combined_data)[c((length(wilcox_genes)+4):length(combined_data))])
 names(signature_smiles_df) <- col_names
 write.table(signature_smiles_df, file = signature_smiles_data_file,row.names=FALSE, na="-",col.names=TRUE, sep="\t")
 
