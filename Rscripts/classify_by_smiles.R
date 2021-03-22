@@ -66,10 +66,13 @@ tanimoto_df$vDILIConcern <- NULL
 tanimoto_ind_df <- tanimoto_df[colnames(tanimoto_df) %in% drug.dataset$independent_drugs, rownames(tanimoto_df) %in% drug.dataset$drugs]
 tanimoto_df<-tanimoto_df[colnames(tanimoto_df) %in% drug.dataset$drugs, rownames(tanimoto_df) %in% drug.dataset$drugs]
 # Save data as a separated file
-smiles_data_df <- rbind(tanimoto_df, tanimoto_ind_df)
-smiles_data_df$dilirank[smiles_data_df$pert_iname %in% tanimoto_ind_df$pert_iname] <- "Ambiguous DILI-concern"
-smiles_data_df$severity <- NULL
-smiles_data_final_df <- data.frame(DrugName = smiles_data_df$pert_iname, DILIrank = smiles_data_df$dilirank, smiles_data_df[!(names(smiles_data_df) %in% c("pert_iname", "dilirank"))])
+smiles_data_df1 <- rbind(tanimoto_df, tanimoto_ind_df)
+smiles_data_df1$dilirank[smiles_data_df1$pert_iname %in% tanimoto_ind_df$pert_iname] <- "Ambiguous DILI-concern"
+smiles_data_df1$severity <- NULL
+smiles_df <- drank.sel[c("pert_iname", "SMILES")][drank.sel$pert_iname %in% signature_smiles_df1$pert_iname,]
+smiles_data_df2 <- merge(x = smiles_data_df1, y = smiles_df, by = "pert_iname") # Include the SMILES
+smiles_data_df2 <- smiles_data_df2[match(smiles_data_df1$pert_iname, smiles_data_df2$pert_iname),] # To maintain the order of the drugs (first the training set, then the hold-out set)
+smiles_data_final_df <- data.frame(DrugName = smiles_data_df2$pert_iname, DILIrank = smiles_data_df2$dilirank, SMILES = smiles_data_df2$SMILES, smiles_data_df2[!(names(smiles_data_df2) %in% c("pert_iname", "dilirank", "SMILES"))])
 write.table(smiles_data_final_df, file = smiles_data_file,row.names=FALSE, na="-",col.names=TRUE, sep="\t")
 
 

@@ -92,13 +92,17 @@ tanimoto_ind_df$dilirank <- NULL
 tanimoto_ind_df$severity <- NULL
 combined_data_ind <- merge(x = expression_wilcox_ind_df, y = tanimoto_ind_df, by = "pert_iname")
 # Combine everything and save it as a separated data file
-signature_smiles_df <- rbind(combined_data, combined_data_ind)
-signature_smiles_df$severity <- NULL
-signature_smiles_df$dilirank[signature_smiles_df$pert_iname %in% combined_data_ind$pert_iname] <- "Ambiguous DILI-concern"
+signature_smiles_df1 <- rbind(combined_data, combined_data_ind)
+signature_smiles_df1$severity <- NULL
+signature_smiles_df1$dilirank[signature_smiles_df1$pert_iname %in% combined_data_ind$pert_iname] <- "Ambiguous DILI-concern"
+smiles_df <- drank.sel[c("pert_iname", "SMILES")][drank.sel$pert_iname %in% signature_smiles_df1$pert_iname,]
+signature_smiles_df2 <- merge(x = signature_smiles_df1, y = smiles_df, by = "pert_iname")
+signature_smiles_final_df <- data.frame(DrugName = signature_smiles_df2$pert_iname, DILIrank = signature_smiles_df2$dilirank, SMILES = signature_smiles_df2$SMILES, signature_smiles_df2[!(names(signature_smiles_df2) %in% c("pert_iname", "dilirank", "SMILES"))])
 wilcox_genes <- substring(names(expression_wilcox_df)[c(4:length(names(expression_wilcox_df)))], 2)
-col_names <- c('DrugName', 'DILIrank', wilcox_genes, names(combined_data)[c((length(wilcox_genes)+4):length(combined_data))])
-names(signature_smiles_df) <- col_names
-write.table(signature_smiles_df, file = signature_smiles_data_file,row.names=FALSE, na="-",col.names=TRUE, sep="\t")
+col_names <- c('DrugName', 'DILIrank', 'SMILES', wilcox_genes, names(combined_data)[c((length(wilcox_genes)+4):length(combined_data))]) # To remove the x from the name of the gene ids
+names(signature_smiles_final_df) <- col_names
+signature_smiles_final_df <- signature_smiles_final_df[match(signature_smiles_df1$pert_iname, signature_smiles_final_df$DrugName),] # To maintain the order of the drugs (first the training set, then the hold-out set)
+write.table(signature_smiles_final_df, file = signature_smiles_data_file,row.names=FALSE, na="-",col.names=TRUE, sep="\t")
 
 
 ### Prepare balanced machine learning datasets ###
